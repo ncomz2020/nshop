@@ -17,6 +17,8 @@
         <!-- commons depedencies -->
         <commons.lang.version>2.5</commons.lang.version>
         <java.mail-version>1.5.5</java.mail-version>
+        <maven.compiler.source>1.6</maven.compiler.source>
+        <maven.compiler.target>1.6</maven.compiler.target>
         <skipTests>true</skipTests>
     </properties>
     
@@ -39,12 +41,18 @@
             <version>4.0</version>
         </dependency> -->
 	    
-	    <dependency>
+	    <!-- <dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>5.0.5</version>
-		</dependency>
-			    
+		</dependency> -->
+		
+		<!-- Azure MySQL -->
+		<dependency>
+		    <groupId>mysql</groupId>
+		    <artifactId>mysql-connector-java</artifactId>
+		    <version>8.0.12</version>
+		</dependency>			    
 	    
         <!-- spring -->
         <dependency>
@@ -409,7 +417,7 @@
     
   
     <build>
-        <finalName>ROOT</finalName>
+        <finalName>nshop</finalName>
         
         <resources>
             <resource>
@@ -434,7 +442,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <path>/</path>
+                    <path>/nshop</path>
                     <port>8088</port>
                     <charset>UTF-8</charset>
                     <uriEncoding>UTF-8</uriEncoding>
