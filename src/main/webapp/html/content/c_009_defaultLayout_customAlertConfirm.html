@@ -1,0 +1,171 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2 class="snbAutoHide">
+				<span class="title">Alert / Confirm예제 - 사용법은 소스를 확인하세요</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">샘플 페이지</a>
+					>
+					<a href="#">기타페이지</a>
+					>
+					<a href="#">Alert/Confirm 예제</a>
+				</div>
+
+			</h2>
+			
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">Alert/Confirm 예제</span>
+					</h3>
+					<div class="unitBox" style="">
+						
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:15%;" />
+								<col style="" />
+								<col style="width:15%;" />
+								<col style="" />
+							</colgroup>
+							<tbody>
+								<th>alert 기본</th>
+									<td>
+										<a href="#" id="alertBasic" class="amb_btnstyle blue middle" >Alert 예제</a>
+
+										<script type="text/javascript">
+											$('#alertBasic').on('click', function() {
+												$.alertable.alert('여기에 alert내용이 들어갑니다.');
+											});
+										</script>
+										
+									</td>
+									<th>alert 버튼 커스텀</th>
+									<td>
+										<a href="#" id="alertButton" class="amb_btnstyle blue middle" >Alert 버튼 커스텀 예제</a>
+
+										<script type="text/javascript">
+											$('#alertButton').on('click', function() {
+												$.alertable.alert('여기에 alert내용이 들어갑니다 여기에 alert내용이 들어갑니다여기에 alert내용이 들어갑니다여기에 alert내용이 들어갑니다여기에 alert내용이 들어갑니다.', {												
+													//옵션 으로 처리
+													okButton: "<button class='alertable-ok' type='button'>이렇게</button>" 
+												});
+											});
+										</script>
+										
+									</td>
+								</tr>
+
+
+
+								<tr>
+									<th>Confirm 기본</th>
+									<td>
+										<a href="#" id="confirmBasic" class="amb_btnstyle blue middle" >Confirm 예제</a>
+
+										<script type="text/javascript">
+											$('#confirmBasic').on('click', function() {
+												$.alertable.confirm('여기에 내용이 들어갑니다.').then(function() {
+													$.alertable.alert('한번더 물어봅니다');//OK시 한번더 물어 봅니다
+												}, function() {
+													console.log('취소');      
+												});
+											});
+										</script>
+										
+									</td>
+									<th>Confirm 버튼 커스텀</th>
+									<td>
+										<a href="#" id="confirmButton" class="amb_btnstyle blue middle" >Confirm 버튼 커스텀 예제</a>
+
+										<script type="text/javascript">
+											$('#confirmButton').on('click', function() {
+												$.alertable.confirm('여기에 내용이 들어갑니다.', {												
+													//옵션 으로 처리
+													cancelButton: "<button class='alertable-cancel' type='button'>취소일때는</button>"	,
+													okButton: "<button class='alertable-ok' type='button'>확인일때는</button>" 
+												});
+											});
+										</script>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명</span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp>
+// alert 기본형 -----------------------------------
+<button type="button" id="alertBasic" class="amb_btnstyle blue middle" >Alert 예제</button>
+
+<script type="text/javascript">
+	$('#alertBasic').on('click', function() {
+		$.alertable.alert('여기에 alert내용이 들어갑니다.');
+	});
+</script>
+
+
+// alert 버튼 커스텀 형 -----------------------------------
+<button type="button" id="#alertButton" class="amb_btnstyle blue middle" >Alert 버튼 커스텀 예제</button>
+
+<script type="text/javascript">
+	$('#alertButton').on('click', function() {
+		$.alertable.alert('여기에 alert내용이 들어갑니다 여기에 alert내용이 들어갑니다여기에 alert내용이 들어갑니다여기에 alert내용이 들어갑니다여기에 alert내용이 들어갑니다.', {												
+			//옵션 으로 처리
+			okButton: "<button class='alertable-ok' type='button'>이렇게</button>" 
+		});
+	});
+</script>
+
+// Confirm 기본형  -----------------------------------
+<button type="button" id="#confirmBasic" class="amb_btnstyle blue middle" >Confirm 예제</button>
+
+<script type="text/javascript">
+	$('#confirmBasic').on('click', function() {
+		$.alertable.confirm('여기에 내용이 들어갑니다.').then(function() {
+			$.alertable.alert('한번더 물어봅니다');//OK시 한번더 물어 봅니다
+		}, function() {
+			console.log('취소');
+		});
+	});
+</script>
+
+// Confirm 버튼 커스텀 형  -----------------------------------
+<button type="button" id="#confirmButton" class="amb_btnstyle blue middle" >Confirm 버튼 커스텀 예제</button>
+
+<script type="text/javascript">
+	$('#confirmButton').on('click', function() {
+		$.alertable.confirm('여기에 내용이 들어갑니다.', {												
+			//옵션 으로 처리
+			cancelButton: "<button class='alertable-cancel' type='button'>취소일때는</button>"	,
+			okButton: "<button class='alertable-ok' type='button'>확인일때는</button>" 
+		});
+	});
+</script>
+						</xmp>
+						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

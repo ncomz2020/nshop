@@ -1,0 +1,1109 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">각종 테이블 스타일</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">공통</a>
+					>
+					<a href="#">각종 테이블 예제</a>
+				</div>
+
+			</h2>
+			
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">테이블 Form형</span>
+						<div class="fr btnArea small">							
+							<a href="#" class="amb_btnstyle green middle">신규</a>
+							<a href="#" class="amb_btnstyle green middle">추가</a>
+						</div>
+					</h3>
+					<div class="unitBox" style="">
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:15%;" />
+								<col style="" />
+							</colgroup>	
+							<tbody>
+								<tr>
+									<th>Job Status Name <i class="bullet mandatory"></i></th>
+									<td>
+										<input type="text" value="" class="inp" />
+									</td>
+								</tr>
+								<tr>
+									<th>Base M/Y</th>
+									<td>
+										<input type="text" value="" class="inp datepicker" readonly="readonly" style="width:120px;" placeholder="yyyy.mm.dd" />
+									</td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>
+
+					<div class="unitBox mgT10" style="">
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:15%;" />
+								<col style="" />
+								<col style="width:15%;" />
+								<col style="" />
+							</colgroup>	
+							<tbody>
+								<tr>
+									<th>Job Status Name <i class="bullet mandatory"></i></th>
+									<td>
+										<select class=""  style="width:90%;">
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+									</td>
+									<th>Keyword <i class="bullet mandatory"></i></th>
+									<td>
+										<select class=""  style="width:30%;">
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+										<input type="text" value="" class="inp" style="width:60%;" />
+									</td>
+								</tr>
+								<tr>
+									<th>Base M/Y</th>
+									<td colspan="3">
+										<input type="text" value="" class="inp" />
+									</td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>
+
+					<div class="unitBox mgT10" style="">
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:15%;" />
+								<col style="" />
+								<col style="width:15%;" />
+								<col style="" />
+								<col style="width:15%;" />
+								<col style="" />
+							</colgroup>	
+							<tbody>
+								<tr>
+									<th>Job Status Branch Name</th>
+									<td>
+										<input type="text" value="" class="inp" />
+									</td>
+									<th>Job Status Branch Name</th>
+									<td>
+										<select class=""  style="width:90%;">
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+									</td>
+									<th>Job Status Branch Name</th>
+									<td>
+										<select class=""  style="width:90%;">
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>Base M/Y</th>
+									<td colspan="5">
+										<input type="text" value="" class="inp" />
+									</td>
+								</tr>								
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i></span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp class="codeView" style="height:200px; display:block;">
+<table class="amb_form_table lineAll">
+	<colgroup>
+		<col style="width:15%;" />
+		<col style="" />
+		<col style="width:15%;" />
+		<col style="" />
+	</colgroup>	
+	<tbody>
+		<tr>
+			<th>Job Status Branch Name</th>
+			<td>
+				<select class=""  style="width:90%;">  // width를 하드 코딩형식으로 넣어 필요한 넓이로 수정 // 하드코딩 하지않을시 text길이에 따라 넓이 가 결정됨
+					<option>Select Item</option>
+					<option>Select Item</option>
+				</select>
+			</td>
+			<th>Keyword</th>
+			<td>
+				<select class=""  style="width:30%;">
+					<option>Select Item</option>
+					<option>Select Item</option>
+					<option>Select Item</option>
+				</select>
+				<input type="text" value="" class="inp" style="width:60%;" /> // width를 하드 코딩형식으로 넣어 필요한 넓이로 수정 // 하드코딩 하지않을시 css에 의해 기본 80%로 설정됨
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+---- 연관 css ---
+css/amb_table.css
+css/amb_admin_layout_temp_01.css -> /* **************** detault table style **************** */ 아래 부분
+
+						</xmp>
+						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;">
+
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">테이블 일반형</span>
+						<div class="fr btnArea small">
+							<span class="inline">Total List <strong class="pColor_01">226</strong></span>&nbsp;&nbsp;
+							<select class="">
+								<option>10 line</option>
+								<option>20 line</option>
+								<option>50 line</option>
+							</select>
+						</div>
+					</h3>
+					<div class="unitBox" style="">						
+						<table class="amb_table">	
+							<colgroup>
+								<col style="width:40px;" />
+								<col style="width:10%" />
+								<col style="width:10%" />
+								<col style="width:12%" />
+								<col style="" />
+								<col style="width:12%" />
+								<col style="width:12%" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="checkBox_01" disabled checked/><label for="checkBox_01" class="inp_func"></label></th>
+									<th>Basy M/Y</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+									<th>Customer ID</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>							
+									<td><input type="checkbox" id="checkBox_02" disabled /><label for="checkBox_02" class="inp_func"></label></td>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>05/09/2016</td>
+									<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+									<td>G05</td>
+									<td>05/09/2016</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" id="checkBox_03" checked /><label for="checkBox_03" class="inp_func"></label></td>
+									<td class="left">텍스트 좌정렬시</td>
+									<td class="right">텍스트 우정렬시</td>
+									<td>05/09/2016</td>
+									<td class="left"><a href="#">텍스트의 길이가 두줄이상 텍스트의 길이가 두줄이상 모두 표현 될때의 모습 표현 될때의 모습표현 될때의 모습표현 될때의 모습 표현 될때의 모습 표현 될때의 모습 표현 될때의 모습표현 될때의 모습표현 될때의 모습</a></td>
+									<td>G08</td>
+									<td>06/09/2016</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" id="checkBox_04" /><label for="checkBox_04" class="inp_func"></label></td>
+									<td class="left">텍스트 좌정렬시</td>
+									<td class="right">텍스트 우정렬시</td>
+									<td>05/09/2016</td>
+									<td class="left ellipsis"><a href="#">말줄임 필요시 td class에  ellipsis추가 말줄임 필요시 td class에  ellipsis추가말줄임 필요시 td class에  ellipsis추가말줄임 필요시 td class에  ellipsis추가말줄임 필요시 td class에  ellipsis추가</a></td>
+									<td>G10</td>
+									<td>07/09/2016</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i></span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp class="codeView" style="height:200px;">
+<table class="amb_table" >	
+	<colgroup>                      // colgroup 아래의 col의 수는 tbody tr의 td객수와 같아야함
+		<col style="width:40px;" /> // col에 width를 하드코딩하여 각 column의 간격을 조절함 // 모든 col의 width합은 100%를 넘으면 깨어짐
+		<col style="width:10%" />
+		<col style="width:10%" />
+		<col style="width:12%" />
+		<col style="" />
+		<col style="width:12%" />
+		<col style="width:12%" />
+	</colgroup>					
+	<thead>                         
+		<tr>
+			<th><input type="checkbox" id="checkBox_01" disabled checked/><label for="checkBox_01" class="inp_func"></label></th>
+			<th>Basy M/Y</th>
+			<th>Billing Period</th>
+			<th>Process Day</th>
+			<th>Customer ID</th>
+			<th>Billing Period</th>
+			<th>Process Day</th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>							
+			<td><input type="checkbox" id="checkBox_02" /><label for="checkBox_02" class="inp_func"></label></td>
+			<td class="left">텍스트 좌정렬시</td>
+			<td class="right">텍스트 우정렬시</td>
+			<td>05/09/2016</td>
+			<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+			<td>G05</td>
+			<td>05/09/2016</td>
+		</tr>
+		<tr>
+			<td><input type="checkbox" id="checkBox_04" /><label for="checkBox_04" class="inp_func"></label></td>
+			<td class="left">텍스트 좌정렬시</td>
+			<td class="right">텍스트 우정렬시</td>
+			<td>05/09/2016</td>
+			<td class="left ellipsis"><a href="#">말줄임 필요시 td class에  ellipsis추가 말줄임 필요시 td class에  ellipsis추가말줄임 </a></td>
+			<td>G10</td>
+			<td>07/09/2016</td>
+		</tr>
+	</tbody>
+</table>
+
+---- 연관 css ---
+css/amb_table.css
+css/amb_admin_layout_temp_01.css -> /* **************** detault table style **************** */ 아래 부분
+
+						</xmp>
+						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;">
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">테이블 일반형 - tfoot이 필요한 경우</span>
+						<div class="fr btnArea small">
+							<span class="inline">Total List <strong class="pColor_01">226</strong></span>&nbsp;&nbsp;
+							<select class="">
+								<option>10 line</option>
+								<option>20 line</option>
+								<option>50 line</option>
+							</select>
+						</div>
+					</h3>
+					<div class="unitBox" style="">						
+						<table class="amb_table" >	
+							<colgroup>
+								<col style=";" />
+								<col style="" />
+								<col style="" />
+								<col style="" />
+								<col style="" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th></th>
+									<th>thead</th>
+									<th>thead</th>
+									<th>thead</th>
+									<th>thead</th>
+								</tr>
+							</thead>							
+							<tbody>
+								<tr>							
+									<th>1월</th>
+									<td><input type="text"  class="inp" placeholder="input text 기본 좌정렬" /></td>
+									<td><input type="text"  class="inp" placeholder="input text 기본 좌정렬" /></td>
+									<td><input type="text"  class="inp" placeholder="input text 기본 좌정렬" /></td>
+									<td><input type="text"  class="inp" placeholder="input text 기본 좌정렬" /></td>
+								</tr>
+								<tr>							
+									<th>2월</th>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+								</tr>
+								<tr>							
+									<th>3월</th>
+									<td><input type="text"  class="inp center" placeholder="input text 중앙정렬" /></td>
+									<td><input type="text"  class="inp center" placeholder="input text 중앙정렬" /></td>
+									<td><input type="text"  class="inp center" placeholder="input text 중앙정렬" /></td>
+									<td><input type="text"  class="inp center" placeholder="input text 중앙정렬" /></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>							
+									<th>소계</th>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i></span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp class="codeView" style="height:200px;">
+<table class="amb_table" >	
+	<colgroup>
+		~~~~
+	</colgroup>					
+	<thead>
+		~~~
+	</thead>							
+	<tbody>
+		~~~~
+	</tbody>
+	<tfoot>
+		여기에 소계등 tfoot가 필요한 경우 넣어 주세요
+	</tfoot>
+</table>
+
+---- 연관 css ---
+css/amb_table.css
+css/amb_admin_layout_temp_01.css -> /* **************** detault table style **************** */ 아래 부분
+						</xmp>
+						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;">
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">테이블 일반형 - 테이블 아래에 페이징 추가 또는 아래 우측 버튼 추가시</span>
+						<div class="fr btnArea small">
+							<span class="inline">Total List <strong class="pColor_01">226</strong></span>&nbsp;&nbsp;
+							<select class="">
+								<option>10 line</option>
+								<option>20 line</option>
+								<option>50 line</option>
+							</select>
+						</div>
+					</h3>
+					<div class="unitBox" style="">						
+						<table class="amb_table">
+							<colgroup>
+								<col style="width:40px;" />
+								<col style="width:10%" />
+								<col style="width:10%" />
+								<col style="width:12%" />
+								<col style="" />
+								<col style="width:12%" />
+								<col style="width:12%" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="checkBox_2_01" disabled checked/><label for="checkBox_2_01" class="inp_func"></label></th>
+									<th>Basy M/Y</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+									<th>Customer ID</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>							
+									<td><input type="checkbox" id="checkBox_2_02" disabled /><label for="checkBox_2_02" class="inp_func"></label></td>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>05/09/2016</td>
+									<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+									<td>G05</td>
+									<td>05/09/2016</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" id="checkBox_2_03" /><label for="checkBox_2_03" class="inp_func"></label></td>
+									<td class="right">09/2015</td>
+									<td class="left">G05</td>
+									<td>05/09/2016</td>
+									<td class="left ellipsis"><a href="#">말줄임 필요시 td class에  ellipsis추가 말줄임 필요시 td class에  ellipsis추가말줄임 필요시 td class에  ellipsis추가말줄임 필요시 td class에  ellipsis추가말줄임 필요시 td class에  ellipsis추가</a></td>
+									<td>G10</td>
+									<td>07/09/2016</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+					<div class="paging left">
+						<ul class="paginglist">
+							
+							<li class="first"><a href="#"><i class="ambicon-006_arrow_first"></i></a></li>
+							<li class="prev"><a href="#"><i class="ambicon-002_arrow_left"></i></a></li>
+
+							<li><a href="#"> 1 </a></li>
+							<li><a href="#"> 2 </a></li>
+							<li class="active"><a href="#"> 3 </a></li>
+							<li><a href="#"> 4 </a></li>
+							<li><a href="#"> 5 </a></li>
+							<li><a href="#"> 6 </a></li>
+							<li><a href="#"> 7 </a></li>
+							<li><a href="#"> 8 </a></li>
+							<li><a href="#"> 9 </a></li>
+							<li><a href="#"> 10 </a></li>
+
+							<li class="next"><a href="#"><i class="ambicon-001_arrow_right"></i></a></li>
+							<li class="last"><a href="#"><i class="ambicon-005_arrow_last"></i></a></li>
+						</ul>
+
+						<div class="fr btnArea middle">
+							<a href="#" class="amb_btnstyle gray middle">삭제</a>
+							<a href="#" class="amb_btnstyle gray middle">해지</a>
+							<a href="#" class="amb_btnstyle gray middle">반려</a>
+							<a href="#" class="amb_btnstyle blue middle">목록</a>
+							<a href="#" class="amb_btnstyle blue middle">수정</a>
+							<a href="#" class="amb_btnstyle blue middle">상위</a>
+						</div>
+
+
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i></span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp class="codeView" style="height:200px;">
+<div class="unitBox" style="">						
+	<table class="amb_table">
+		테이블 부분
+	</table>
+</div>
+<div class="paging left">   // 페이징 부분 / class에 left -> 좌정렬, right -> 우정렬, center -> 센터 정렬
+	<ul class="paginglist">
+		
+		<li class="first"><a href="#"><i class="ambicon-006_arrow_first"></i></a></li>
+		<li class="prev"><a href="#"><i class="ambicon-002_arrow_left"></i></a></li>
+
+		<li><a href="#"> 1 </a></li>
+		<li><a href="#"> 2 </a></li>
+		<li class="active"><a href="#"> 3 </a></li>
+		<li><a href="#"> 4 </a></li>
+		<li><a href="#"> 5 </a></li>
+		<li><a href="#"> 6 </a></li>
+		<li><a href="#"> 7 </a></li>
+		<li><a href="#"> 8 </a></li>
+		<li><a href="#"> 9 </a></li>
+		<li><a href="#"> 10 </a></li>
+
+		<li class="next"><a href="#"><i class="ambicon-001_arrow_right"></i></a></li>
+		<li class="last"><a href="#"><i class="ambicon-005_arrow_last"></i></a></li>
+	</ul>
+
+	<div class="fr btnArea middle">
+		<a href="#" class="amb_btnstyle gray middle">삭제</a>
+		<a href="#" class="amb_btnstyle gray middle">해지</a>
+		<a href="#" class="amb_btnstyle gray middle">반려</a>
+		<a href="#" class="amb_btnstyle blue middle">목록</a>
+		<a href="#" class="amb_btnstyle blue middle">수정</a>
+	</div>
+
+
+</div>
+
+---- 연관 js, css ---
+css/amb_admin_layout_temp_01.css -> /* **************** paging **************** */ 아래 부분
+
+						</xmp>
+						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->			
+
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;">
+
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">테이블 일반형(에제1) - tr active필요시 table class에 trActive 추가 (tr부분을 클륵해 보삼)  </span>
+					</h3>
+					<div class="unitBox">						
+					
+						<table class="amb_table trActive">
+							<colgroup>
+								<col style="width:10%" />
+								<col style="width:12%" />
+								<col style="" />
+								<col style="width:15%" />
+								<col style="width:12%" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th>Billing</th>
+									<th>Process</th>
+									<th>Customer</th>
+									<th>Billing</th>
+									<th>Process</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>G05</td>
+									<td>111111</td>
+									<td><a href="#">ccccccccccccccc ccc</a></td>
+									<td>가가가가가각</td>
+									<td>222222</td>
+								</tr>
+								<tr>
+									<td>G05</td>
+									<td>22222</td>
+									<td><a href="#">aaaaaaaaa aaaaaaaaaaa </a></td>
+									<td>다다다다다닫</td>
+									<td>999999</td>
+								</tr>
+								<tr>
+									<td>G05</td>
+									<td>22222</td>
+									<td><a href="#">aaaaaaaaa aaaaaaaaaaa </a></td>
+									<td>다다다다다닫</td>
+									<td>999999</td>
+								</tr>
+								<tr>
+									<td>G05</td>
+									<td>22222</td>
+									<td><a href="#">aaaaaaaaa aaaaaaaaaaa </a></td>
+									<td>다다다다다닫</td>
+									<td>999999</td>
+								</tr>
+							</tbody>
+						</table>
+
+					</div>
+
+				</div>
+
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">테이블 일반형(에제2) - tr active필요시 table class에 trActive 추가 (tr부분을 클륵해 보삼) </span>
+					</h3>
+					<div class="unitBox">						
+					
+						<table class="amb_table trActive" ><!-- tr active필요시 table class에 trActive 추가 -->
+							<colgroup>
+								<col style="width:10%;" />
+								<col style="" />
+								<col style="" />
+								<col style="" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th></th>
+									<th>thead</th>
+									<th>thead</th>
+									<th>thead</th>
+								</tr>
+							</thead>							
+							<tbody>
+								<tr>							
+									<th>1월</th>
+									<td><input type="text"  class="inp" placeholder="input text 기본 좌정렬" /></td>
+									<td><input type="text"  class="inp" placeholder="input text 기본 좌정렬" /></td>
+									<td><input type="text"  class="inp" placeholder="input text 기본 좌정렬" /></td>
+								</tr>
+								<tr>							
+									<th>2월</th>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+								</tr>
+								<tr>							
+									<th>3월</th>
+									<td><input type="text"  class="inp center" placeholder="input text 중앙정렬" /></td>
+									<td><input type="text"  class="inp center" placeholder="input text 중앙정렬" /></td>
+									<td><input type="text"  class="inp center" placeholder="input text 중앙정렬" /></td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>							
+									<th>소계</th>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+									<td><input type="text"  class="inp right" placeholder="input text 우정렬" /></td>
+								</tr>
+							</tfoot>
+						</table>
+
+					</div>
+
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i></span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp class="codeView" style="height:100px;">
+table일반형에서 tr active필요시 table class에 trActive 추가
+
+<table class="amb_table trActive" ><!-- tr active필요시 table class에 trActive 추가 -->
+	~~~
+</table>
+
+---- 연관 js, css ---
+js/amb_ui_common.js -> /******** 일반 table tr 클릭시 해당 tr부분을 활성화표시하는 스크립트 *******/
+css/amb_admin_layout_temp_01.css -> /* trActived */ 아래 부분
+						</xmp>						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;">
+
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">테이블 일반형 - 테이블 thead Fixed만 필요한 경우 // amb_ui_common.js에 의해 thead 부분이 자동 copy되어 생성</span>
+						<div class="fr btnArea small">
+							<span class="inline">Total List <strong class="pColor_01">226</strong></span>&nbsp;&nbsp;
+							<select class="">
+								<option>10 line</option>
+								<option>20 line</option>
+								<option>50 line</option>
+							</select>
+						</div>
+					</h3>
+					<div class="unitBox">						
+					
+						<table class="amb_table theadFix" data-role-height="150" >
+						<!-- fixed thead를 사용하고자 할때시는 class에 theadFix를 추가하고 data-role-height="150"을 이용하여 원하는 높이를 설정해주어야함. // 스크립트에 의해 를fixed thead table의 thead부분을 copy하여 자신의 뒤에 복사하여 자동 생성함 // 높이 미설정시는 기본 200으로 설정됨 -->
+							<colgroup>
+								<col style="width:10%" />
+								<col style="width:10%" />
+								<col style="width:12%" />
+								<col style="" />
+								<col style="width:12%" />
+								<col style="width:12%" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th>Basy M/Y</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+									<th>Customer ID</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>111111</td>
+									<td><a href="#">ccccccccccccccc ccc</a></td>
+									<td>가가가가가각</td>
+									<td>222222</td>
+								</tr>
+								<tr>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>22222</td>
+									<td><a href="#">aaaaaaaaa aaaaaaaaaaa </a></td>
+									<td>다다다다다닫</td>
+									<td>999999</td>
+								</tr>
+								<tr>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+									<td>5555555</td>
+								</tr>
+								<tr>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+									<td>5555555</td>
+								</tr>
+								<tr>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+									<td>5555555</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>							
+									<td>tfoot</td>
+									<td>tfoot</td>
+									<td>tfoot</td>
+									<td><a href="#">tfoot</a></td>
+									<td>tfoot</td>
+									<td>tfoot</td>
+								</tr>
+							</tfoot>
+						</table>
+
+					</div>
+
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i></span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp class="codeView" style="height:200px;">
+// fixed thead를 사용하고자 할때시는 원하는 table class에 theadFix를 추가하고 data-role-height="150"을 이용하여 원하는 높이를 설정해주어야함. 
+// 스크립트에 의해 를fixed thead table의 thead부분을 copy하여 자신의 뒤에 복사하여 자동 생성함 
+// 높이 미설정시는 기본 200으로 설정됨 -->
+
+<table class="amb_table theadFix" data-role-height="150" >
+	<colgroup>
+		~~~~
+	</colgroup>					
+	<thead>
+		~~~~
+	</thead>
+	<tbody>
+		~~~~
+	</tbody>
+</table>
+
+---- 연관 js, css ---
+js/amb_ui_common.js -> /******** table sortable,  table thead fixed 스크립트 *******/
+css/amb_admin_layout_temp_01.css -> /* **************** table thead fixed **************** */ 아래 부분
+
+						</xmp>						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;">
+
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">테이블 일반형 - table Sortable만 필요한 경우 </span>
+					</h3>
+					<div class="unitBox">						
+					
+						<table class="amb_table tableSortable"><!-- class에 tableSortable -->
+							<colgroup>
+								<col style="width:10%" />
+								<col style="width:10%" />
+								<col style="width:16%" />
+								<col style="" />
+								<col style="width:16%" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th class="sorter-false">Basy</th> <!-- sorter가 필용없는 column일 경우 th에 class="sorter-false" 추가 -->
+									<th class="sorter-false">Billing</th>
+									<th>Process</th>
+									<th>Customer ID</th>
+									<th>Billing</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>G05</td>
+									<td>111111</td>
+									<td><a href="#">ccccccccccccccc ccc</a></td>
+									<td>가가가가가각</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>G05</td>
+									<td>22222</td>
+									<td><a href="#">aaaaaaaaa aaaaaaaaaaa </a></td>
+									<td>다다다다다닫</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>							
+									<td>tfoot</td>
+									<td>tfoot</td>
+									<td>tfoot</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>tfoot</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+
+
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">테이블 일반형 - tableSortable 과 theadFix이 동시에 필요한 경우</span>
+					</h3>
+					<div class="unitBox">	
+					
+						<table class="amb_table tableSortable theadFix" data-role-height="259" ><!-- class에 tableSortable ,  theadFix를 복합 연산자로 넣어줌-->
+							<colgroup>
+								<col style="width:10%" />
+								<col style="width:10%" />
+								<col style="width:16%" />
+								<col style="" />
+								<col style="width:16%" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th class="sorter-false">Basy</th> <!-- sorter가 필용없는 column일 경우 th에 class="sorter-false" 추가 -->
+									<th class="sorter-false">Billing</th>
+									<th>Process</th>
+									<th>Customer ID</th>
+									<th>Billing</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>1</td>
+									<td>G05</td>
+									<td>111111</td>
+									<td><a href="#">ccccccccccccccc ccc</a></td>
+									<td>가가가가가각</td>
+								</tr>
+								<tr>
+									<td>2</td>
+									<td>G05</td>
+									<td>22222</td>
+									<td><a href="#">aaaaaaaaa aaaaaaaaaaa </a></td>
+									<td>다다다다다닫</td>
+								</tr>
+								<tr>
+									<td>3</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+								</tr>
+								<tr>
+									<td>4</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+								</tr>
+								<tr>
+									<td>5</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+								</tr>
+								<tr>
+									<td>6</td>
+									<td>G05</td>
+									<td>33333</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>카카카카카카</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>							
+									<td>tfoot</td>
+									<td>tfoot</td>
+									<td>tfoot</td>
+									<td><a href="#">bbbbbb bbbbbbbbbbbb</a></td>
+									<td>tfoot</td>
+								</tr>
+							</tfoot>
+						</table>
+					</div>
+				</div>
+
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i> // amb_ui_common.js에 의행 자동생성</span>
+					</h3>
+					<div class="unitBox grayBox">
+						<xmp class="codeView" style="height:200px;">
+// table class에 tableSortable 추가하고 
+// thead 에서 sorter가 필요없는 Column의 경우 해당 th에 class="sorter-false" 추가 
+
+<table class="amb_table tableSortable">
+	<colgroup>
+		~~~
+	</colgroup>					
+	<thead>
+		<tr>
+			<th class="sorter-false">Basy M/Y</th> <!-- sorter가 필용없는 column일 경우 th에 class="sorter-false" 추가 -->
+			<th class="sorter-false">Billing Period</th>
+			<th>Process Day</th>
+			<th>Customer ID</th>
+			<th>Billing Period</th>
+		</tr>
+	</thead>
+	<tbody>
+		~~~~
+	</tbody>
+</table>
+
+---- 연관 js, css ---
+js/amb_ui_common.js -> /******** table sortable,  table thead fixed 스크립트 *******/
+js/jquery/jquery.tablesorter.js
+js/jquery/jquery.tablesorter.widgets.js
+css/amb_admin_layout_temp_01.css -> /* **************** table sortable **************** */  아래 부분
+
+						</xmp>						
+					</div>
+				</div>
+
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i> // amb_ui_common.js에 의해 자동생성</span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp class="codeView" style="height:200px;">
+// table class에 tableSortable 과 theadFix 추가하고 data-role-height="150"을 이용하여 원하는 높이 설정 , 높이 미설정시 css에 의해 기본 200px로 설정됨
+// thead 에서 sorter가 필요없는 Column의 경우 해당 th에 class="sorter-false" 추가 
+
+<table class="amb_table tableSortable theadFix" data-role-height="150" >
+	<colgroup>
+		~~~
+	</colgroup>					
+	<thead>
+		<tr>
+			<th class="sorter-false">Basy M/Y</th> <!-- sorter가 필용없는 column일 경우 th에 class="sorter-false" 추가 -->
+			<th class="sorter-false">Billing Period</th>
+			<th>Process Day</th>
+			<th>Customer ID</th>
+			<th>Billing Period</th>
+		</tr>
+	</thead>
+	<tbody>
+		~~~~
+	</tbody>
+</table>
+
+---- 연관 js, css ---
+js/amb_ui_common.js -> /******** table sortable,  table thead fixed 스크립트 *******/
+js/jquery/jquery.tablesorter.js
+js/jquery/jquery.tablesorter.widgets.js
+css/amb_admin_layout_temp_01.css -> /* **************** table sortable **************** */  아래 부분
+
+						</xmp>						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				
+			</div>
+			<!-- rowBox 반복단위 -->
+
+
+			
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

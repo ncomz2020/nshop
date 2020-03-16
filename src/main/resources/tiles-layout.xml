@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+       "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+       "<DTDURL>/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+	<definition name=".nonLayout" template="/WEB-INF/views/template/non-layout.jsp">
+		<put-attribute name="body" value="/WEB-INF/views/template/body.jsp" />
+	</definition>
+	
+	<definition name=".adminLoginLayout" template="/WEB-INF/views/template/adminLogin-layout.jsp">
+		<put-attribute name="body" value="/WEB-INF/views/template/body.jsp" />
+	</definition>	
+
+	<definition name=".frontLoginLayout" template="/WEB-INF/views/template/frontLogin-layout.jsp">
+		<put-attribute name="body" value="/WEB-INF/views/template/body.jsp" />
+	</definition>	
+	
+	<definition name="login/admin/*" extends=".adminLoginLayout">
+		<put-attribute name="body" value="/WEB-INF/views/login/admin/{1}.jsp" />
+	</definition>
+	
+	<definition name="login/front/*" extends=".frontLoginLayout">
+		<put-attribute name="body" value="/WEB-INF/views/login/front/{1}.jsp" />
+	</definition>	
+
+	<definition name=".admin" template="/WEB-INF/views/template/admin-layout.jsp">
+		<put-attribute name="header" value="/WEB-INF/views/template/admin_header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/template/body.jsp" />
+		<put-attribute name="snb" value="/WEB-INF/views/template/admin_snb.jsp" />
+		<put-attribute name="footer" value="/WEB-INF/views/template/admin_footer.jsp" />
+	</definition>
+	<definition name=".front" template="/WEB-INF/views/template/front-layout.jsp">
+		<put-attribute name="nav" value="/WEB-INF/views/template/front_nav.jsp" />
+		<put-attribute name="header" value="/WEB-INF/views/template/front_header.jsp" />
+		<put-attribute name="body" value="/WEB-INF/views/template/body.jsp" />		
+		<put-attribute name="footer" value="/WEB-INF/views/template/front_footer.jsp" />
+	</definition>
+
+	<definition name="admin/*/*/*/*/*" extends=".admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/{1}/{2}/{3}/{4}/{5}.jsp" />
+	</definition>
+	<definition name="admin/*/*/*/*" extends=".admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+	<definition name="admin/*/*/*" extends=".admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name="admin/*/*" extends=".admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/{1}/{2}.jsp" />
+	</definition>
+	<definition name="admin/*" extends=".admin">
+		<put-attribute name="body" value="/WEB-INF/views/admin/{1}.jsp" />
+	</definition>
+	<definition name="front/*/*/*/*" extends=".front">
+		<put-attribute name="body" value="/WEB-INF/views/front/{1}/{2}/{3}/{4}.jsp" />
+	</definition>
+	<definition name="front/*/*/*" extends=".front">
+		<put-attribute name="body" value="/WEB-INF/views/front/{1}/{2}/{3}.jsp" />
+	</definition>
+	<definition name="front/*/*" extends=".front">
+		<put-attribute name="body" value="/WEB-INF/views/front/{1}/{2}.jsp" />
+	</definition>
+	<definition name="front/*" extends=".front">
+		<put-attribute name="body" value="/WEB-INF/views/front/{1}.jsp" />
+	</definition>
+	<definition name="common/*" extends=".nonLayout">
+		<put-attribute name="body" value="/WEB-INF/views/common/{1}.jsp" />
+	</definition>
+	<definition name="login/front/searchId" extends=".front">
+		<put-attribute name="body" value="/WEB-INF/views/login/front/searchId.jsp" />
+	</definition>
+</tiles-definitions>
+

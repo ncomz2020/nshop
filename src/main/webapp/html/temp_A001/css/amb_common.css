@@ -1,0 +1,62 @@
+@charset "UTF-8";
+/** @Ncomz amb_layout_01  V 0.7.1 | @Ncomz Design -  @mo @joo **/
+
+/********** amb_layout commom **********/
+.amb_layout_common .rowBox {}
+.amb_layout_common .rowBox:before,
+.amb_layout_common .rowBox:after {display:block; content:''; clear:both;}
+
+.amb_layout_common h3 {height:30px; }
+.amb_layout_common h3:after {display:block; content:''; clear:both;}
+
+.amb_layout_common .unitBox {background:rgba(255,255,255,0.3); border:1px solid rgba(0,0,0,0.0); overflow:auto;}
+
+/* grid column */
+.amb_layout_common .g_column       {display:inline-block; float:left; padding-right:20px;}
+.amb_layout_common .w_1_1          {width:100%;}
+.amb_layout_common .w_2_1          {width:50%;}
+.amb_layout_common .w_3_1          {width:33.33%; *width:33.3%; }
+.amb_layout_common .w_3_2          {width:66.66%; *width:66.6%; }
+.amb_layout_common .w_4_1          {width:25%;  }
+.amb_layout_common .w_4_2          {width:50%;  }
+.amb_layout_common .w_4_3          {width:75%;  }
+.amb_layout_common .g_column:last-child {padding-right:0px;}
+.amb_layout_common .g_column:last-of-type {padding-right:0px;}
+
+.amb_layout_common .mgT5   {margin-top:5px !important;}
+.amb_layout_common .mgT10  {margin-top:10px !important;}
+.amb_layout_common .mgT20  {margin-top:20px !important;}
+.amb_layout_common .mgT30  {margin-top:30px !important;}
+.amb_layout_common .mgT40  {margin-top:40px !important;}
+.amb_layout_common .mgT50  {margin-top:60px !important;}
+.amb_layout_common .mgT80  {margin-top:80px !important;}
+.amb_layout_common .mgT100 {margin-top:100px !important;}
+
+.amb_layout_common .pdLR10 {padding-left:10px !important; padding-right:10px !important;}
+.amb_layout_common .pdLR20 {padding-left:20px !important; padding-right:20px !important;}
+.amb_layout_common .pdLR30 {padding-left:30px !important; padding-right:30px !important;}
+.amb_layout_common .pdLR40 {padding-left:40px !important; padding-right:40px !important;}
+.amb_layout_common .pdLR50 {padding-left:50px !important; padding-right:50px !important;}
+.amb_layout_common .pdLR80 {padding-left:80px !important; padding-right:80px !important;}
+
+.amb_layout_common .pd0  {padding:0 0 0 0 !important;}
+.amb_layout_common .pd10 {padding:10px 10px 10px 10px !important;}
+.amb_layout_common .pd20 {padding:20px 20px 20px 20px !important;}
+.amb_layout_common .pd30 {padding:30px 30px 30px 30px !important;}
+
+
+.amb_layout_common .fl {float:left;}
+.amb_layout_common .fr {float:right;}
+
+.amb_layout_common .center {text-align:center;}
+.amb_layout_common .right  {text-align:right;}
+.amb_layout_common .left   {text-align:left;}
+
+.amb_layout_common .relative {position:relative;}
+
+.amb_layout_common .overflow {overflow:auto;}
+.amb_layout_common .clearBoth {clear:both;}
+
+.amb_layout_common .bold   {font-weight:500;}
+
+

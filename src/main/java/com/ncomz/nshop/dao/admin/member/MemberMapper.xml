@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.admin.member.MemberMapper">
+
+	<sql id="where_clause">
+	
+		<if test='start_date != null and start_date != ""'>
+			AND JOIN_DATE <![CDATA[>=]]> STR_TO_DATE(#{start_date}, '%Y-%m-%d')
+		</if>
+		<if test='end_date != null and end_date != ""'>
+			AND JOIN_DATE <![CDATA[<]]> DATE_ADD(STR_TO_DATE(#{end_date}, '%Y-%m-%d'), INTERVAL 1 DAY)
+		</if>
+		
+		<if test='search_type != null and search_type != "" and search_txt != null and search_txt != ""'>
+			<choose>
+				<when test='search_type == "ALL"'></when>
+				<when test='search_type == "N"'>AND USR_NM LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "I"'>AND USR_ID LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "T"'>AND TEL_NO LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "M"'>AND MOBILE_NO LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "E"'>AND EMAIL LIKE concat('%',#{search_txt},'%')</when>
+			</choose>
+		</if>
+	</sql>
+	
+
+	<sql id="selectList">
+		SELECT /* MemberMapper.xml.getUserList */
+				T.USR_ID,
+				T.PWD,
+				T.USR_NM,
+				T.EMAIL,
+				T.TEL_NO,
+				T.MOBILE_NO,
+				DATE_FORMAT(T.JOIN_DATE, '%Y-%m-%d %H:%i:%s') AS JOIN_DATE,
+				T.BIRTH,
+				T.GENDER,
+				T.BASE_ADDR,
+				T.DTL_ADDR,
+				T.ZIP_CD
+		   FROM T_USER T
+		WHERE 1=1
+		  AND T.USR_GRP_ID=3
+		  AND T.USE_YN = 'Y'
+		<include refid="where_clause" />
+		ORDER BY T.USR_NM DESC
+	</sql>
+	
+	<sql id="selectsellerList">
+		SELECT /* MemberMapper.xml.getUserList */
+				T.USR_ID,
+				T.PWD,
+				T.USR_NM,
+				T.EMAIL,
+				T.TEL_NO,
+				T.MOBILE_NO,
+				DATE_FORMAT(T.JOIN_DATE, '%Y-%m-%d %H:%i:%s') AS JOIN_DATE,
+				T.BIRTH,
+				T.GENDER,
+				T.BASE_ADDR,
+				T.DTL_ADDR,
+				T.ZIP_CD,
+				S.STORE_NAME
+		   FROM T_USER T LEFT OUTER JOIN T_STORE S
+    								  ON T.USR_ID = S.STORE_ID
+		  WHERE 1=1
+		    AND T.USR_GRP_ID=2
+		    AND T.USE_YN = 'Y'
+		<include refid="where_clause" />
+		ORDER BY USR_NM DESC
+	</sql>
+
+	<select id="getUserListCount" resultType="int">
+		SELECT /* MemberMapper.xml.getUserList */
+				COUNT(*)
+		   FROM T_USER
+		WHERE 1=1
+		  AND USR_GRP_ID=3
+		  AND USE_YN = 'Y'
+		<include refid="where_clause" />
+		ORDER BY USR_NM DESC
+	</select>
+	
+	<select id="getsellerUserListCount" resultType="int">
+		SELECT /* MemberMapper.xml.getUserList */
+				COUNT(*)
+		   FROM T_USER
+		WHERE 1=1
+		  AND USR_GRP_ID=2
+		  AND USE_YN = 'Y'
+		<include refid="where_clause" />
+		ORDER BY USR_NM DESC
+	</select>
+
+	<!-- 유저  정보 출력.-->
+	<select id="getUserInfo" parameterType="com.ncomz.nshop.domain.authorization.User" resultType="com.ncomz.nshop.domain.authorization.User">
+		SELECT /* MemberMapper.xml.getUserInfo */
+				T.USR_ID,
+				T.PWD,
+				T.USR_NM,
+				T.EMAIL,
+				T.TEL_NO,
+				T.MOBILE_NO,
+				DATE_FORMAT(T.JOIN_DATE, '%Y-%m-%d %H:%i:%s') AS JOIN_DATE,
+				T.BIRTH,
+				T.GENDER,
+				T.BASE_ADDR,
+				T.DTL_ADDR,
+				T.ZIP_CD
+		   FROM T_USER T
+		  WHERE 1=1
+		    AND T.USR_ID= #{usr_id}
+	</select>
+	
+	<select id="getsellerUserInfo" parameterType="com.ncomz.nshop.domain.authorization.User" resultType="com.ncomz.nshop.domain.authorization.User">
+		SELECT /* MemberMapper.xml.getsellerUserInfo */
+				T.USR_ID,
+				T.PWD,
+				T.USR_NM,
+				T.EMAIL,
+				T.TEL_NO,
+				T.MOBILE_NO,
+				DATE_FORMAT(T.JOIN_DATE, '%Y-%m-%d %H:%i:%s') AS JOIN_DATE,
+				T.BIRTH,
+				T.GENDER,
+				T.BASE_ADDR,
+				T.DTL_ADDR,
+				T.ZIP_CD,
+				S.STORE_NAME
+		   FROM T_USER T LEFT OUTER JOIN T_STORE S
+    								  ON T.USR_ID = S.STORE_ID
+		  WHERE 1=1
+		    AND T.USR_ID= #{usr_id}
+	</select>
+	
+	<update id="deleteUser" parameterType="com.ncomz.nshop.domain.authorization.User">
+		UPDATE /* MemberMapper.xml.deleteUser */
+				T_USER
+		   SET
+				USE_YN = 'N',
+				WITHDRAWAL_DATE = DATE_FORMAT(NOW(), '%Y%m%d%H%i%s')
+		 WHERE
+				USR_ID=#{usr_id}
+	</update>
+	
+	<!-- 유저  리스트조회 페이징.-->
+ 	<select id="getUserList" parameterType="com.ncomz.nshop.domain.authorization.User" resultType="com.ncomz.nshop.domain.authorization.User">
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_header" />
+	   	<include refid="selectList" />
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_footer" />
+	</select>
+	
+ 	<select id="getsellerUserList" parameterType="com.ncomz.nshop.domain.authorization.User" resultType="com.ncomz.nshop.domain.authorization.User">
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_header" />
+	   	<include refid="selectsellerList" />
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_footer" />
+	</select>
+
+ 	<select id="listsellerExcel" resultType="java.util.LinkedHashMap">
+	 	SELECT /* MemberMapper.xml.getUserList */
+				T.USR_ID AS label_member_join_id,
+				T.USR_NM AS label_member_join_name,
+				T.EMAIL AS label_member_join_email,
+				T.TEL_NO AS label_member_join_telno,
+				T.MOBILE_NO AS label_member_join_mobileno,
+				DATE_FORMAT(T.JOIN_DATE, '%Y-%m-%d %H:%i:%s') AS label_member_join_date,
+				T.BIRTH AS label_member_join_birth,
+				T.GENDER AS label_member_join_gender,
+				T.BASE_ADDR AS label_common_addr,
+				T.DTL_ADDR AS label_common_addr_detail,
+				T.ZIP_CD AS label_common_postno,
+				S.STORE_NAME AS label_store_name
+		   FROM T_USER T LEFT OUTER JOIN T_STORE S
+    								  ON T.USR_ID = S.STORE_ID
+		  WHERE 1=1
+		    AND T.USR_GRP_ID=2
+		    AND T.USE_YN = 'Y'
+		<include refid="where_clause" />
+		ORDER BY USR_NM DESC
+	</select>
+	
+	<select id="listcustomerExcel" resultType="java.util.LinkedHashMap">
+	 	SELECT /* MemberMapper.xml.getUserList */
+				T.USR_ID AS label_member_join_id,
+				T.USR_NM AS label_member_join_name,
+				T.EMAIL AS label_member_join_email,
+				T.TEL_NO AS label_member_join_telno,
+				T.MOBILE_NO AS label_member_join_mobileno,
+				DATE_FORMAT(T.JOIN_DATE, '%Y-%m-%d %H:%i:%s') AS label_member_join_date,
+				T.BIRTH AS label_member_join_birth,
+				T.GENDER AS label_member_join_gender,
+				T.BASE_ADDR AS label_common_addr,
+				T.DTL_ADDR AS label_common_addr_detail,
+				T.ZIP_CD AS label_common_postno
+		   FROM T_USER T
+		WHERE 1=1
+		  AND T.USR_GRP_ID=3
+		  AND T.USE_YN = 'Y'
+		<include refid="where_clause" />
+		ORDER BY T.USR_NM DESC
+	</select>
+
+ </mapper>

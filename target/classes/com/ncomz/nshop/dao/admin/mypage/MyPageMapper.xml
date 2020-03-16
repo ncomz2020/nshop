@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.admin.mypage.MyPageMapper">
+	<update id="modifyPassword" parameterType="com.ncomz.nshop.domain.admin.mypage.MyPage">
+	  	UPDATE T_USER SET PWD = #{newPwd} WHERE USR_ID = #{usrId}
+	</update>
+	
+	<select id="myaccountselect" resultType="com.ncomz.nshop.domain.authorization.User">
+ 		SELECT /*	MyPageMapper.xml.myaccountselect	*/
+ 				*
+		  FROM T_USER
+		 WHERE 1=1
+		   AND USR_ID = #{user, jdbcType=VARCHAR}
+ 	</select>
+ 	
+ 	<update id="updateMemberInfo" parameterType="com.ncomz.nshop.domain.authorization.User">
+	  	 UPDATE T_USER
+   			SET EMAIL = #{email, jdbcType=VARCHAR}
+     			,TEL_NO = #{tel_no, jdbcType=VARCHAR}
+      			,MOBILE_NO = #{mobile_no, jdbcType=VARCHAR}
+      			,BIRTH = #{birth, jdbcType=VARCHAR}
+      			,GENDER = #{gender, jdbcType=VARCHAR}
+      			,BASE_ADDR = #{base_addr, jdbcType=VARCHAR}
+      			,DTL_ADDR = #{dtl_addr, jdbcType=VARCHAR}
+      			,ZIP_CD = #{zip_cd, jdbcType=VARCHAR}
+ 		  WHERE USR_ID = #{usr_id, jdbcType=VARCHAR}
+	</update>
+ </mapper>

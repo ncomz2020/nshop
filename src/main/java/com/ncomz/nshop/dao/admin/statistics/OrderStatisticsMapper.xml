@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.admin.statistics.OrderStatisticsMapper">
+ 
+ 	<sql id="getListFromWhere">
+		  FROM (SELECT * 
+                  FROM T_ORDER_INFO
+                 WHERE 1=1 
+                   <choose>
+				  <when test="os.date_clcd == '10'">
+				   AND ORDER_NO BETWEEN CONCAT(#{os.start_dt},'000000000000') AND CONCAT(#{os.end_dt},'235959999999')
+				  </when>
+				  <when test="os.date_clcd == '20'">
+				   AND ORDER_NO BETWEEN CONCAT(#{os.start_dt},'01000000000000') AND CONCAT(#{os.end_dt},'31235959999999')
+				  </when>
+				  <when test="os.date_clcd == '30'">
+				   AND ORDER_NO BETWEEN CONCAT(#{os.start_dt},'0101000000000000') AND CONCAT(#{os.end_dt},'1231235959999999')
+				  </when>
+				 </choose>
+                 ) X
+          JOIN (SELECT * 
+                  FROM T_PRODUCT_ORDER_REF
+                 WHERE 1 = 1
+                  <if test="os.store_id != null and os.store_id != ''" >
+				   AND STORE_ID = #{os.store_id}
+				  </if>
+				  <if test="os.prod_id != null and os.prod_id != ''" >
+				   AND PROD_ID = #{os.prod_id}
+				  </if>
+				 <choose>
+				  <when test="os.date_clcd == '10'">
+				   AND PROD_ORDER_NO BETWEEN CONCAT(#{os.start_dt},'000000000000') AND CONCAT(#{os.end_dt},'235959999999')
+				  </when>
+				  <when test="os.date_clcd == '20'">
+				   AND PROD_ORDER_NO BETWEEN CONCAT(#{os.start_dt},'01000000000000') AND CONCAT(#{os.end_dt},'31235959999999')
+				  </when>
+				  <when test="os.date_clcd == '30'">
+				   AND PROD_ORDER_NO BETWEEN CONCAT(#{os.start_dt},'0101000000000000') AND CONCAT(#{os.end_dt},'1231235959999999')
+				  </when>
+				 </choose>
+                   AND ORDER_STS_CD NOT IN('110','120','300','310','320','330')
+                 ) B
+            ON X.ORDER_SEQ = B.ORDER_SEQ
+          JOIN (SELECT * 
+                  FROM T_USER
+                 WHERE 1=1
+ 	</sql>
+ 	
+ 	<sql id="getListSelect">
+ 		<choose>
+		 <when test="os.date_clcd == '10'">
+		  , DATE_FORMAT(X.ORDER_DATETIME,'%Y-%m-%d')  ORDER_DATETIME
+		 </when>
+		 <when test="os.date_clcd == '20'">
+		  , DATE_FORMAT(X.ORDER_DATETIME,'%Y-%m')  ORDER_DATETIME
+		 </when>
+		 <when test="os.date_clcd == '30'">
+		  , DATE_FORMAT(X.ORDER_DATETIME,'%Y')  ORDER_DATETIME
+		 </when>
+		</choose>
+ 	</sql>
+ 	
+ 	<sql id="groupby">
+ 		<choose>
+		 <when test="os.date_clcd == '10'">
+		  GROUP BY DATE_FORMAT(X.ORDER_DATETIME,'%Y-%m-%d')  
+		 </when>
+		 <when test="os.date_clcd == '20'">
+		  GROUP BY DATE_FORMAT(X.ORDER_DATETIME,'%Y-%m')  
+		 </when>
+		 <when test="os.date_clcd == '30'">
+		  GROUP BY DATE_FORMAT(X.ORDER_DATETIME,'%Y')  
+		 </when>
+		</choose>
+ 	</sql>
+ 	
+ 	<sql id="gridListfromWhere">
+ 		 <choose>
+	      <when test="os.date_clcd == '10'">
+		  FROM (SELECT DATE_FORMAT(A.DATE,'%Y-%m-%d') DATE
+		  </when>
+		  <when test="os.date_clcd == '20'">
+		  FROM (SELECT DATE_FORMAT(A.DATE,'%Y-%m') DATE
+		  </when>
+		  <when test="os.date_clcd == '30'">
+		  FROM (SELECT DATE_FORMAT(A.DATE,'%Y') DATE
+		  </when>
+	     </choose>
+			    FROM (SELECT CURDATE() - INTERVAL (A.A + (10*B.A) + (100*C.A) + (1000*D.A)) DAY AS DATE
+			             FROM (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS A
+			             CROSS JOIN (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS B
+			             CROSS JOIN (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS C
+			             CROSS JOIN (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS D
+			           )A
+		WHERE 1=1
+		<choose>
+		 <when test="os.date_clcd == '10'">
+		  AND A.DATE BETWEEN #{os.start_dt} AND #{os.end_dt}
+		GROUP BY DATE_FORMAT(A.DATE,'%Y-%m-%d')
+		 </when>
+		 <when test="os.date_clcd == '20'">
+		  AND A.DATE BETWEEN CONCAT(#{os.start_dt},'01') AND CONCAT(#{os.end_dt},'31')
+		GROUP BY DATE_FORMAT(A.DATE,'%Y-%m')
+		 </when>
+		 <when test="os.date_clcd == '30'">
+		  AND A.DATE BETWEEN CONCAT(#{os.start_dt},'0101') AND CONCAT(#{os.end_dt},'1231')
+		GROUP BY DATE_FORMAT(A.DATE,'%Y')
+		 </when>
+		</choose> ) X
+		 LEFT OUTER JOIN ( SELECT Z.ORDER_DATETIME 
+		                        , SUM(AA) AA
+		                        , SUM(BA) AB
+		                        , SUM(CA) AC
+		                        , SUM(DA) AD
+		                        , SUM(EA) AE
+		                        , SUM(FA) AF
+		                        , SUM(GA) AG
+		                    FROM(
+		                        SELECT COUNT(B.PROD_ORDER_NO) AA
+		                             , '' BA
+		                             , '' CA
+		                             , '' DA
+		                             , '' EA
+		                             , '' FA
+		                             , '' GA
+		                          <include refid="getListSelect"></include>
+		          <include refid="getListFromWhere"></include>
+		                                   AND BIRTH >= DATE_FORMAT(DATE_ADD(now(),INTERVAL -19 YEAR), '%Y')
+		                                   AND BIRTH NOT IN('')
+		                                ) C
+		                            ON X.USER_ID = C.USR_ID
+		                        <include refid="groupby"></include>
+		                        UNION
+		                        SELECT '' AA
+		                             , COUNT(B.PROD_ORDER_NO) BA
+		                             , '' CA
+		                             , '' DA
+		                             , '' EA
+		                             , '' FA
+		                             , '' GA
+		                          <include refid="getListSelect"></include>
+		          <include refid="getListFromWhere"></include>
+		                                   AND  BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -29 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -20 YEAR), '%Y')
+		                                   AND BIRTH NOT IN('')
+		                                ) C
+		                            ON X.USER_ID = C.USR_ID
+		                        <include refid="groupby"></include>
+		                        UNION
+		                        SELECT '' AA
+		                             , '' BA
+		                             , COUNT(B.PROD_ORDER_NO) CA
+		                             , '' DA
+		                             , '' EA
+		                             , '' FA
+		                             , '' GA
+		                          <include refid="getListSelect"></include>
+		          <include refid="getListFromWhere"></include>
+		                                   AND BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -39 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -30 YEAR), '%Y')
+		                                   AND BIRTH NOT IN('')
+		                                ) C
+		                            ON X.USER_ID = C.USR_ID
+		                        <include refid="groupby"></include>
+		                        UNION
+		                        SELECT '' AA
+		                             , '' BA
+		                             , '' CA
+		                             , COUNT(B.PROD_ORDER_NO) DA
+		                             , '' EA
+		                             , '' FA
+		                             , '' GA
+		                          <include refid="getListSelect"></include>
+		          <include refid="getListFromWhere"></include>
+		                                   AND  BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -49 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -40 YEAR), '%Y')
+		                                   AND BIRTH NOT IN('')
+		                                ) C
+		                            ON X.USER_ID = C.USR_ID
+		                        <include refid="groupby"></include>
+		                            
+		                        UNION
+		                        
+		                        SELECT '' AA
+		                             , '' BA
+		                             , '' CA
+		                             , '' DA
+		                             , COUNT(B.PROD_ORDER_NO) EA
+		                             , '' FA
+		                             , '' GA
+		                          <include refid="getListSelect"></include>
+		          <include refid="getListFromWhere"></include>
+		                                   AND  BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -59 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -50 YEAR), '%Y')
+		                                   AND BIRTH NOT IN('')
+		                                ) C
+		                            ON X.USER_ID = C.USR_ID
+		                        <include refid="groupby"></include>
+		                        UNION
+		                        SELECT '' AA
+		                             , '' BA
+		                             , '' CA
+		                             , '' DA
+		                             , '' EA
+		                             , COUNT(B.PROD_ORDER_NO) F
+		                             , '' G
+		                          <include refid="getListSelect"></include>
+		          <include refid="getListFromWhere"></include>
+		                                   AND  BIRTH <![CDATA[<=]]> DATE_FORMAT(DATE_ADD(now(),INTERVAL -60 YEAR), '%Y')
+		                                   AND BIRTH NOT IN('')
+		                                ) C
+		                            ON X.USER_ID = C.USR_ID
+		                        <include refid="groupby"></include>
+		                        UNION
+		                        SELECT '' AA
+		                             , '' BA
+		                             , '' CA
+		                             , '' DA
+		                             , '' EA
+		                             , '' FA
+		                             , COUNT(B.PROD_ORDER_NO) GA
+		                          <include refid="getListSelect"></include>
+		          <include refid="getListFromWhere"></include>
+		                                   AND BIRTH = ''
+		                                ) C
+		                            ON X.USER_ID = C.USR_ID
+		                        <include refid="groupby"></include>
+		                        ) Z
+		                        GROUP BY 1)  V        
+		   ON X.DATE = V.ORDER_DATETIME
+ 	</sql>
+ 
+ 	<select id="getOrderChartStatisticsList" parameterType="com.ncomz.nshop.domain.admin.statistics.OrderStatistics" resultType="com.ncomz.nshop.domain.admin.statistics.OrderStatistics">
+ 		SELECT CAST(MAX(AA) as unsigned) AA	/*10대 이하	*/
+		     , CAST(MAX(BA) as unsigned) BA	/*20대		*/
+		     , CAST(MAX(CA) as unsigned) CA	/*30대		*/
+		     , CAST(MAX(DA) as unsigned) DA	/*40대		*/
+		     , CAST(MAX(EA) as unsigned) EA	/*50대		*/
+		     , CAST(MAX(FA) as unsigned) FA	/*60대이상	*/
+		     , CAST(MAX(GA) as unsigned) GA	/*생년정보 없음	*/
+		  FROM (SELECT COUNT(B.PROD_ORDER_NO) AA
+		             , '' BA
+		             , '' CA
+		             , '' DA
+		             , '' EA
+		             , '' FA
+		             , '' GA
+		          <include refid="getListFromWhere"></include>
+		                   AND BIRTH <![CDATA[>=]]> DATE_FORMAT(DATE_ADD(now(),INTERVAL -19 YEAR), '%Y')
+		                   AND BIRTH NOT IN('')
+		                ) C
+		            ON X.USER_ID = C.USR_ID
+		        UNION
+		        SELECT '' AA
+		             , COUNT(B.PROD_ORDER_NO) BA
+		             , '' CA
+		             , '' DA
+		             , '' EA
+		             , '' FA
+		             , '' GA
+		          <include refid="getListFromWhere"></include>
+		                   AND  BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -29 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -19 YEAR), '%Y')
+		                   AND BIRTH NOT IN('')
+		                ) C
+		            ON X.USER_ID = C.USR_ID
+		        UNION
+		        SELECT '' AA
+		             , '' BA
+		             , COUNT(B.PROD_ORDER_NO) CA
+		             , '' DA
+		             , '' EA
+		             , '' FA
+		             , '' GA
+		          <include refid="getListFromWhere"></include>
+		                   AND BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -39 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -29 YEAR), '%Y')
+		                   AND BIRTH NOT IN('')
+		                ) C
+		            ON X.USER_ID = C.USR_ID
+		        UNION
+		        SELECT '' AA
+		             , '' BA
+		             , '' CA
+		             , COUNT(B.PROD_ORDER_NO) DA
+		             , '' EA
+		             , '' FA
+		             , '' GA
+		          <include refid="getListFromWhere"></include>
+		                   AND  BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -49 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -39 YEAR), '%Y')
+		                   AND BIRTH NOT IN('')
+		                ) C
+		            ON X.USER_ID = C.USR_ID
+		        UNION
+		        SELECT '' AA
+		             , '' BA
+		             , '' CA
+		             , '' DA
+		             , COUNT(B.PROD_ORDER_NO) EA
+		             , '' FA
+		             , '' GA
+		          <include refid="getListFromWhere"></include>
+		                   AND  BIRTH BETWEEN DATE_FORMAT(DATE_ADD(now(),INTERVAL -59 YEAR), '%Y') AND DATE_FORMAT(DATE_ADD(now(),INTERVAL -49 YEAR), '%Y')
+		                   AND BIRTH NOT IN('')
+		                ) C
+		            ON X.USER_ID = C.USR_ID
+		        UNION
+		        SELECT '' AA
+		             , '' BA
+		             , '' CA
+		             , '' DA
+		             , '' EA
+		             , COUNT(B.PROD_ORDER_NO) F
+		             , '' G
+		          <include refid="getListFromWhere"></include>
+		                   AND  BIRTH <![CDATA[<=]]> DATE_FORMAT(DATE_ADD(now(),INTERVAL -60 YEAR), '%Y')
+		                   AND BIRTH NOT IN('')
+		                ) C
+		            ON X.USER_ID = C.USR_ID
+		        UNION
+		        SELECT '' AA
+		             , '' BA
+		             , '' CA
+		             , '' DA
+		             , '' EA
+		             , '' FA
+		             , COUNT(B.PROD_ORDER_NO) GA
+		          <include refid="getListFromWhere"></include>
+		                   AND BIRTH = ''
+		                ) C
+		            ON X.USER_ID = C.USR_ID) Z
+ 	</select>
+ 	<select id="getGridList" parameterType="com.ncomz.nshop.domain.admin.statistics.OrderStatistics" resultType="com.ncomz.nshop.domain.admin.statistics.OrderStatistics">
+	 	SELECT IFNULL(AA,0) TEN
+		     , IFNULL(AB,0) TWENTY
+		     , IFNULL(AC,0) THIRTY
+		     , IFNULL(AD,0) FORTY
+		     , IFNULL(AE,0) FIFTY
+		     , IFNULL(AF,0) SIXTY
+		     , IFNULL(AG,0) NONE
+			 , X.DATE  		ORDER_DATE
+		<include refid="gridListfromWhere"></include>
+ 	</select>
+ 	
+ 	<select id="getExcelList" parameterType="com.ncomz.nshop.domain.admin.statistics.OrderStatistics" resultType="java.util.LinkedHashMap">
+ 		SELECT IFNULL(AA,0) AS 'label_statistics_ten'
+		     , IFNULL(AB,0) AS 'label_statistics_twenty'
+		     , IFNULL(AC,0) AS 'label_statistics_thirty'
+		     , IFNULL(AD,0) AS 'label_statistics_forty'
+		     , IFNULL(AE,0) AS 'label_statistics_fifty'
+		     , IFNULL(AF,0) AS 'label_statistics_sixty'
+		     , IFNULL(AG,0) AS 'label_statistics_none'
+			 , X.DATE  		AS 'label_statistics_datetime'
+		<include refid="gridListfromWhere"></include>
+ 	</select>
+ </mapper>
