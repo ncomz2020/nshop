@@ -1,0 +1,486 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">레이아웃 예제02</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">공통</a>
+					>
+					<a href="#">레이아웃</a>
+					>
+					<a href="#">예제02</a>
+				</div>
+			</h2>
+
+
+			<div class="rowBox mgT30">
+				<ul class="tab-area clear">
+					<li class="on"><a href="#" id="tab01">기본정보</a></li>	
+					<li><a href="#" id="tab02">전력IoT사업계획</a></li>	
+				</ul>
+			</div>
+
+			<script type="text/javascript">
+				$(document).on("click", ".tab-area li a", function(){ 
+					var thisId = $(this).attr('id');
+					var thisParent = $(this).parent('li');
+
+					thisParent.siblings().removeClass('on');
+					thisParent.addClass('on');
+
+					if (thisId == 'tab01'){
+						$('#tab01_contBox').css('display' , 'block');	
+						$('#tab02_contBox').css('display' , 'none');
+					} else if (thisId == 'tab02'){
+						$('#tab01_contBox').css('display' , 'none');	
+						$('#tab02_contBox').css('display' , 'block');
+					}
+				});	
+			</script>
+
+			
+			<div id="tab01_contBox"><!-- 상단 tab틀릭시 show hide를 위해 div로 특정 영역을 감싼다 -->
+			
+				
+				
+				<!-- rowBox 반복단위 -->
+				<div class="rowBox mgT30">
+					<div class="g_column w_1_1">
+						<div class="unitBox" style="">
+							<table class="amb_form_table lineAll">
+								<colgroup>
+									<col style="width:20%;" />
+									<col style="" />
+								</colgroup>	
+								<tbody>
+									<tr>
+										<th>현재 비밀번호 <i class="bullet mandatory"></i></th>
+										<td>
+											<input type="text" class="inp" style="width:200px;" placeholder="" />
+										</td>
+									</tr>
+									<tr>
+										<th>새 비밀번호 <i class="bullet mandatory"></i></th>
+										<td>
+											<input type="text" class="inp" style="width:200px;" placeholder="" />
+											<span class="ex">※ 8자 이상 12자 이하의 영문, 숫자, 특수문자 조합 가능</span>
+
+										</td>
+									</tr>
+									<tr>
+										<th>새 비밀번호 확인 <i class="bullet mandatory"></i></th>
+										<td>
+											<input type="text" class="inp" style="width:200px;" placeholder="" />
+											<span class="ex pColor_02">불일치</span>
+										</td>
+									</tr>
+									<tr>
+										<th>등록 수단 <i class="bullet mandatory"></i></th>
+										<td>
+											<div class="blockBox">
+												<input type="radio" id="radio_1_01" name="radio_1" checked="checked"><label for="radio_1_01" class="inp_func">선택1</label>
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+												<input type="radio" id="radio_1_02" name="radio_1"><label for="radio_1_02" class="inp_func">선택2</label>
+											</div>
+											<div class="inTableBox">
+												<dl class="inputList">
+													<dt>카드명</dt>
+													<dd><input type="text" class="inp" style="width:300px;" placeholder="" /></dd>
+												</dl>
+												<dl class="inputList">
+													<dt>카드번호</dt>
+													<dd><input type="text" class="inp" style="width:300px;" placeholder="" /></dd>
+												</dl>
+												<dl class="inputList">
+													<dt>유효기간</dt>
+													<dd>
+														<input type="text" class="inp" style="width:60px;" placeholder="" /> 월 
+														&nbsp;&nbsp;&nbsp;
+														/
+														&nbsp;&nbsp;&nbsp;
+														<input type="text" class="inp" style="width:60px;" placeholder="" /> 년 
+
+														&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+														<button type="button" class="amb_btnstyle blue middle">확인버튼</button>
+
+
+													</dd>
+												</dl>
+												<div class="alertBox" style="width:380px;">* 행위가 완료 되었습니다.</div>
+											</div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="paging left">
+							
+							<span class="agreeBox">
+								<input type="checkbox" id="check_1_01" name="check_1_01" checked="checked"><label for="check_1_01" class="inp_func">이용약관 동의</label>
+								&nbsp;&nbsp;&nbsp;&nbsp;
+								<a href="#" class="underline">약관보기</a>
+								
+							</span>
+
+							<div class="fr btnArea middle">
+								<!--<a href="javascript:history.back();" class="amb_btnstyle gray middle">취소</a>-->
+								<a href="00_000_adminUseInfo.html" class="amb_btnstyle blue middle">비밀번호변경</a>
+							</div>
+
+						</div>
+					</div>
+				</div>
+				<!-- rowBox 반복단위 -->
+				
+				<!-- rowBox 반복단위 -->
+				<div class="rowBox">
+					<div class="g_column w_1_1">
+						<h3>
+							<span class="title">법인 회원 기본정보 </span>
+						</h3>
+						<div class="unitBox" style="">
+							<table class="amb_form_table lineAll" >	
+								<colgroup>
+									<col style="width:15%;" />
+									<col style="" />
+									<col style="width:15%;" />
+									<col style="" />
+								</colgroup>	
+								<tbody>
+
+									<tr>
+										<th>ID</th>
+										<td>asdflgl</td>
+										<th>가입일자</th>
+										<td>2016.05.05</td>
+									</tr>
+									
+									<tr>
+										<th>회사명</th>
+										<td><input type="text" value="" class="inp" style="" placeholder="회사명을 입력하세요" /></td>
+										<th>대표자명</th>
+										<td><input type="text" value="" class="inp" style="" placeholder="여기에 예제 텍스트" /></td>
+									</tr>
+									<tr>							
+										<th>회사주소</th>
+										<td><input type="text" value="" class="inp" style="width:100%;" placeholder="여기에 예제 텍스트" /></td>
+										<th>홈페이지</th>
+										<td>
+											<a href="http://home.kepco.co.kr" target="_blank">http://home.kepco.co.kr</a>
+										</td>
+									</tr>
+									<tr>							
+										<th>대표전화</th>
+										<td><input type="text" value="" class="inp" style="width:50%;" placeholder="여기에 예제 텍스트" /></td>
+										<th>FAX</th>
+										<td><input type="text" value="" class="inp" style="width:50%;" placeholder="여기에 예제 텍스트" /></td>
+									</tr>
+									<tr>							
+										<th>사업자 등록번호</th>
+										<td colspan="3"><input type="text" value="" class="inp" style="width:50%;" placeholder="여기에 예제 텍스트" /></td>
+									</tr>
+									<tr>
+										<th>사업자등록증 사본</th>
+										<td>
+											<a href="#" target="_blank">에너지사업자등록증.jpg</a>
+										</td>
+										<th>회사로고</th>
+										<td>
+											<a href="#" target="_blank">에너지회사로고.jpg</a>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- rowBox 반복단위 -->
+
+
+				<!-- rowBox 반복단위 -->
+				<div class="rowBox mgT30">
+					<div class="g_column w_1_1">
+						<h3>
+							<span class="title">담당자 정보  (<em class="pColor_01">2</em>명)</span>
+						</h3>
+						<div class="unitBox" style="">
+							<table class="amb_table" >	
+								<colgroup>
+									<col style="" />
+									<col style="" />
+									<col style="" />
+									<col style="" />
+									<col style="" />
+								</colgroup>	
+								<thead>
+									<tr>
+										<th>부서명</th>
+										<th>담당자명</th>
+										<th>직위</th>
+										<th>연락처</th>
+										<th>이메일주소</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td colspan="5">등록된 정보가 없습니다.</td>
+									</tr>
+
+									<tr>
+										<td>IoT 사업부</td>
+										<td>홍길동</td>
+										<td>과장</td>
+										<td>000-0000-0000</td>
+										<td>aaaaaa@bbbbb.com</td>
+									</tr>
+									<tr>
+										<td><input type="text" value="" class="inp" style="" placeholder="여기에 예제 텍스트" /></td>
+										<td><input type="text" value="" class="inp" style="" placeholder="여기에 예제 텍스트" /></td>
+										<td><input type="text" value="" class="inp" style="" placeholder="여기에 예제 텍스트" /></td>
+										<td><input type="text" value="" class="inp" style="" placeholder="여기에 예제 텍스트" /></td>
+										<td><input type="text" value="" class="inp" style="" placeholder="여기에 예제 텍스트" /></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- rowBox 반복단위 -->
+
+
+				<!-- rowBox 반복단위 -->
+				<div class="rowBox mgT30">
+					<div class="g_column w_1_1">
+						<h3>
+							<span class="title">기업현황</span>
+						</h3>
+						<div class="unitBox" style="">
+							<table class="amb_form_table lineAll" >	
+								<colgroup>
+									<col style="width:15%;" />
+									<col style="" />
+									<col style="width:15%;" />
+									<col style="" />
+								</colgroup>	
+								<tbody>								
+									<tr>
+										<th>자본금</th>
+										<td>2,000 (단위:백만원)</td>
+										<th>매출액</th>
+										<td>2,000 (단위:백만원)</td>
+									</tr>
+									<tr>
+										<th>종업원수</th>
+										<td>300명</td>
+										<th>설립년도</th>
+										<td>2014.05</td>
+									</tr>
+									<tr>
+										<th>주요생산품(주요연구분야)</th>
+										<td colspan="3">
+											<div class="inBox">
+											 여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력
+											 </div>
+										</td>
+									</tr>
+									<tr>
+										<th>연구비투자</th>
+										<td>2,000 (단위:백만원)</td>
+										<th>연구인력</th>
+										<td>30명</td>
+									</tr>
+									<tr>
+										<th>관심분야</th>
+										<td colspan="3">
+											스마트센서
+											&nbsp;&nbsp;&nbsp;
+											/
+											&nbsp;&nbsp;&nbsp;
+											GateWay/Network(통신장비)
+											&nbsp;&nbsp;&nbsp;
+											/
+											&nbsp;&nbsp;&nbsp;
+											IoT플랫폼(보안)
+											&nbsp;&nbsp;&nbsp;
+											/
+											&nbsp;&nbsp;&nbsp;
+											빅데이터활용 응용서비스
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- rowBox 반복단위 -->
+
+			</div>
+
+
+			<!----------------------->
+
+			<div id="tab02_contBox" style="display:none;"><!-- 상단 tab틀릭시 show hide를 위해 div로 특정 영역을 감싼다 -->
+
+				<!-- rowBox 반복단위 -->
+				<div class="rowBox mgT30">
+					<div class="g_column w_1_1">
+						<h3>
+							<span class="title">R&D현황 - IoT분야 연구실적</span>
+						</h3>
+						<div class="unitBox" style="">
+							<table class="amb_table" >	
+								<colgroup>
+									<col style="" />
+									<col style="" />
+									<col style="" />
+									<col style="" />
+								</colgroup>	
+								<thead>
+									<tr>
+										<th>과제명</th>
+										<th>연구기간</th>
+										<th>개발비</th>
+										<th>협력기관</th>
+									</tr>
+								</thead>
+								<tbody>								
+									<tr>
+										<td colspan="4">등록된 내용이 없습니다.</td>
+									</tr>
+									<tr>
+										<td>프로젝트01</td>
+										<td>2016.05.05 ~ 2016.07.31</td>
+										<td>1,000 (단위 백만원)</td>
+										<td>한전</td>
+									</tr>
+									<tr>
+										<td>프로젝트01</td>
+										<td>2016.05.05 ~ 2016.07.31</td>
+										<td>1,000 (단위 백만원)</td>
+										<td>한전</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- rowBox 반복단위 -->
+
+				<!-- rowBox 반복단위 -->
+				<div class="rowBox mgT30">
+					<div class="g_column w_1_1">
+						<h3>
+							<span class="title">R&D현황 - IoT분야 지식재산권</span>
+						</h3>
+						<div class="unitBox" style="">
+							<table class="amb_table" >	
+								<colgroup>
+									<col style="" />
+									<col style="" />
+									<col style="" />
+									<col style="" />
+								</colgroup>	
+								<thead>
+									<tr>
+										<th>종류</th>
+										<th>명칭</th>
+										<th>출원 / 등록일</th>
+										<th>비고</th>
+									</tr>
+								</thead>
+								<tbody>								
+									<tr>
+										<td colspan="4">등록된 내용이 없습니다.</td>
+									</tr>
+									<tr>
+										<td>특허</td>
+										<td>명칭이 보여집니다.</td>
+										<td>
+											출시 
+											/
+											2015.10.10
+										</td>
+										<td>
+											특허 3건
+										</td>
+									</tr>
+									<tr>
+										<td>의장등록</td>
+										<td>명칭이 보여집니다.</td>
+										<td>
+											대기
+											/
+											2015.10.10
+										</td>
+										<td>
+											특허 2건
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- rowBox 반복단위 -->
+
+				<!-- rowBox 반복단위 -->
+				<div class="rowBox mgT30">
+					<div class="g_column w_1_1">
+						<h3>
+							<span class="title">사업역량</span>
+						</h3>
+						<div class="unitBox" style="">
+							<table class="amb_form_table lineAll" >	
+								<colgroup>
+									<col style="width:15%;" />
+									<col style="" />
+								</colgroup>
+								<tbody>									
+									<tr>
+										<td colspan="2" class="center">등록된 내용이 없습니다.</td>
+									</tr>
+									<tr>
+										<th>IoT사업역량</th>
+										<td>
+											<div class="inBox">
+											 여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력여기에 내용 출력
+											 </div>
+										</td>
+									</tr>
+									<tr>
+										<th>전력분야 IoT사업계획</th>
+										<td>
+											 <div class="inBox">
+											 여기에 내용 출력여기에 내용 출력
+											 </div>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<!-- rowBox 반복단위 -->
+				
+			</div>
+
+
+
+			<div class="paging left">
+				<div class="fr btnArea middle">
+					<a href="#" class="amb_btnstyle blue middle">목록으로</a>
+					<a href="#" class="amb_btnstyle gray middle">강테탈퇴</a>
+				</div>
+				
+			</div>
+			
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

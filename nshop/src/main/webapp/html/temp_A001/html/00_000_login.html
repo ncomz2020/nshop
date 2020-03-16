@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--[if IE 7]><html class="ie7" lang="ko"><![endif]-->
+<!--[if IE 8]><html class="ie8" lang="ko"><![endif]-->
+<!--[if IE 9]><html class="ie9" lang="ko"><![endif]-->
+<!--[if gt IE 9]><!--><html lang="ko"><!--<![endif]-->
+<head>
+<meta charset="utf-8">
+
+<!--  head 공통 부분으로 meta 및 css, js 등 사이트 공통 요소를 불러옵니다  -->
+<!--#include virtual="inc_headMeta.html" -->
+
+<!--  페이지 특화 css / js 는 이부분에 추가 -->
+
+</head>
+
+<body class="">
+
+<!--  default layout 구조 -->
+<div class="amb_layout_common amb_admin_layout_temp_01"><!-- class명 amb_layout_common :필수  / amb_admin_layout_temp_01:필수(사이트 레이아웃 결정) -->
+
+	<!-- header영역을 불러 옵니다 -->
+	<!--#include virtual="../../content/inc_header.html" -->
+	
+	<!-- Snb(LNB)를 포함한 실제 컨텐츠가 들어 가는 부분 -->
+	<div id="contentWrap" class="contentWrap wrap">
+
+		<!-- snb영역을 불러 옵니다  -->
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!--#include virtual="../../content/c_000_login.html" -->
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+	</div>
+
+	<!-- footer 영역을 불러 옵니다 -->
+
+</div>
+
+
+</body>
+</html>
+
+
+

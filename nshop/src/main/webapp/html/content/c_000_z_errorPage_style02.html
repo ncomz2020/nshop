@@ -1,0 +1,152 @@
+<!--  default layout 구조 -->
+<div class="amb_layout_common amb_admin_layout_temp_01"><!-- class명 amb_layout_common :필수  / amb_admin_layout_temp_01:필수(사이트 레이아웃 결정) -->
+
+	<div class="errorPage errorStyle02">
+		<h1 id="gradientBg">
+			<div class="tit">
+				404
+			</div>
+		</h1>
+		<div class="detail">
+			요청 하신 페이지가 존재하지 않습니다.<br/>
+			잠시후 다시 접속해 주시기 바랍니다.
+
+			<!-- 버튼이 필요한 경우는 이렇게 추가 -->
+			<div class="mgT30">
+				<a href="#" class="amb_btnstyle gray middle">이전페이지</a>
+				<a href="#" class="amb_btnstyle blue middle">메인으로</a>
+			</div>
+			<!-- // 버튼이 필요한 경우는 이렇게 추가 -->
+		</div>
+			
+		<div class="copy">
+			Copyright @2016 Ncomz All Rights Reserved
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		//background color gradient change
+		var $div = document.getElementById("gradientBg"); // 타겟 id
+		var gradients = [
+		  { start: [49,141,231], stop: [37,109,179] },
+		  { start: [85,217,132], stop: [34,122,65] },
+		  { start: [125,125,125], stop: [85,61,81] }
+		];
+		
+		var transition_time = 4; // time
+
+		var currentIndex = 0; 
+		var nextIndex = 1; 
+		var steps_count = 0; // steps counter
+		var steps_total = Math.round(transition_time*60); // total amount of steps
+		var rgb_steps = {
+		  start: [0,0,0],
+		  stop: [0,0,0]
+		};
+		var rgb_values = {
+		  start: [0,0,0],
+		  stop: [0,0,0]
+		}; 
+		var prefixes = ["-webkit-","-moz-","-o-","-ms-",""]; 
+		var div_style = $div.style;
+		var color1, color2;
+
+		function set_next(num) {
+		  return (num + 1 < gradients.length) ? num + 1 : 0;
+		}
+
+		function calc_step_size(a,b) {
+		  return (a - b) / steps_total;
+		}
+		function calc_steps() {
+		  for (var key in rgb_values) {
+			if (rgb_values.hasOwnProperty(key)) {
+			  for(var i = 0; i < 3; i++) {
+				rgb_values[key][i] = gradients[currentIndex][key][i];
+				rgb_steps[key][i] = calc_step_size(gradients[nextIndex][key][i],rgb_values[key][i]);
+			  }
+			}
+		  }
+		}
+
+		function updateGradient(){
+		  for (var key in rgb_values) {
+			if (rgb_values.hasOwnProperty(key)) {
+			  for(var i = 0; i < 3; i++) {
+				rgb_values[key][i] += rgb_steps[key][i];
+			  }
+			}
+		  }
+
+		  var t_color1 = "rgb("+(rgb_values.start[0] | 0)+","+(rgb_values.start[1] | 0)+","+(rgb_values.start[2] | 0)+")";
+		  var t_color2 = "rgb("+(rgb_values.stop[0] | 0)+","+(rgb_values.stop[1] | 0)+","+(rgb_values.stop[2] | 0)+")";
+
+		  if (t_color1 != color1 || t_color2 != color2) {
+
+			color1 = t_color1;
+			color2 = t_color2;
+
+			div_style.backgroundImage = "-webkit-gradient(linear, left bottom, right top, from("+color1+"), to("+color2+"))";
+			for (var i = 0; i < 4; i++) {
+			  div_style.backgroundImage = prefixes[i]+"linear-gradient(90deg, "+color1+", "+color2+")";
+			}
+		  }
+
+		  steps_count++;
+		  if (steps_count > steps_total) {
+			steps_count = 0;
+			currentIndex = set_next(currentIndex);
+			nextIndex = set_next(nextIndex);
+			calc_steps();
+		  }
+
+		  if (div_style.backgroundImage.indexOf("gradient") != -1) {
+			window.requestAnimationFrame(updateGradient)
+		  }
+		}
+
+		calc_steps();
+
+		window.requestAnimationFrame(updateGradient);
+	</script>
+
+
+
+
+	<script type="text/javascript">
+		// 브라우저 센터 정렬을 위해
+		$(document).ready( function(){
+			var _this = $('.errorPage');
+			var thisWidth = _this.outerWidth();
+			var thisHeight = _this.outerHeight();
+			var marginLeftValue = thisWidth/2;
+			var marginTopValue = thisHeight/2;
+
+			//fullPageError
+			if ($('body').hasClass('fullPage'))
+			{
+				_this.parent('.amb_admin_layout_temp_01').css('height','100%');
+				_this.css({'margin-left': - marginLeftValue + 'px' , 'margin-top': - marginTopValue + 'px'});
+			} 
+			
+			//insidePageError
+			else 			
+			{				
+				//자신의 상위에 #content 가 있을시
+				if (_this.parents('#content').hasClass('content'))
+				{
+					_this.parents('#content').addClass('insidePageError');
+					_this.parent('.amb_admin_layout_temp_01').removeClass('amb_layout_common amb_admin_layout_temp_01');
+				} 
+				
+				//자신의 상위에 #content 가 없을시
+				else 
+				{
+					_this.parent('.amb_admin_layout_temp_01').addClass('content insidePageError').attr('id', 'content');
+					_this.parent('.amb_admin_layout_temp_01').removeClass('amb_layout_common amb_admin_layout_temp_01');
+				}			    
+			}			
+		});		
+	</script>
+
+</div>

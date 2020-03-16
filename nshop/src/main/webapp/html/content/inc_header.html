@@ -1,0 +1,87 @@
+<div id="header" class="header">
+	<div class="wrap">
+		<button type="button" class="subMenuIcon close"></button>
+		<h1><a href="00_001_defaultLayout_ex01.html"><span>AMB_UI</span></a></h1>
+			
+		
+
+		<div class="loginInfo">
+			<div class="setting">
+				<span class="photo"><img src="../img/member_icon_02.png"></span> 
+				<a href="#"><i class="ambicon-033_human"></i> <span>사용자 정보</span></a>
+			</div>
+			<div class="logout">
+				<a href="#"><i class="ambicon-074_get_out"></i> <span>LOGOUT</span></a>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- 여기서 부터는 레이아웃 이동을 위한 것으로 실제 제작시에는 사용하지 않음 -->
+<style type="text/css">
+	#styleLink {position:fixed; right:0; z-index:99; bottom:20px;}
+	#styleLink ul {width:150px; border:1px solid #ccc; overflow:hidden; background:#fff; padding:10px 10px; box-shadow:0 -1px 3px rgba(0,0,0,0.1);}
+	#styleLink ul li {}
+	#styleLink ul li a:hover {background:#f1f1f1;}
+	#styleLink ul li a {display:block; padding:10px 10px;}
+	#styleLink a,
+	#styleLink a:hover {color:#333; font-weight:bold;}
+	#styleLink button.setting {border:1px solid #ccc; border-right:none; height:40px; width:28px; position:absolute; bottom:0; left:-27px; z-index:2; background:#fff; border-radius:4px 0 0 4px; vertical-align:top;}
+	#styleLink button.setting:focus {outline:none;}
+	#styleLink button.setting span {display:none; vertical-align:top;}
+	#styleLink button:before {
+		font-family: 'AMB-iconfont' !important; speak: none; font-style: normal; font-weight: normal; font-variant: normal; text-transform: none; line-height: 1;
+		display:inline-block; margin-right:8px; position:absolute;
+		-webkit-font-smoothing: antialiased;
+		-moz-osx-font-smoothing: grayscale;
+		content: "\e91a"; display:block; position:absolute; bottom:0;
+		height:100%; line-height:40px; width:100%; vertical-align:top; font-size:18px; color:#999;
+	}
+</style>
+
+<div id="styleLink" class="styleLink open">
+	<ul>
+		<li><a href="javascript:void(0);" title="temp_A001">layout 01</a></li>
+		<li><a href="javascript:void(0);" title="temp_A002">layout 02</a></li>
+		<li><a href="javascript:void(0);" title="temp_A003">layout 03</a></li>
+	</ul>
+	<button type="button" class="setting" onClick="rightAniAction();"><span>설정</span></button>
+</div>
+
+<script>
+$(document).one('ready',function(event){
+	rightAniAction();
+	thisLocation();
+});
+function rightAniAction() {
+	var rnb = $('#styleLink');
+	var w = rnb.outerWidth(true);
+	if (rnb.hasClass('open')) {
+		rnb.removeClass('open');
+		rnb.addClass('close');
+		rnb.animate({right: -w}, 100);
+		return false;
+	} else if (rnb.hasClass('close')) {
+		rnb.removeClass('close');
+		rnb.addClass('open');
+		rnb.animate({right: '0px'}, 100);
+		return false;
+	}
+}
+
+function thisLocation() {
+	$('#styleLink ul li a').on('click',function(){
+		var category = $(this).attr('title');
+		var loc = window.location;
+		var pathName1 = loc.pathname.substring(0);
+		var pathName2 = loc.pathname.substring(0, loc.pathname.indexOf('/html'));
+		var nweUrl1 = pathName1.replace(pathName2, '');
+		var nweUrl2 = '../../' + category + nweUrl1;
+		console.log(pathName1);
+		console.log(pathName2);
+		console.log(nweUrl2);
+		$(location).attr('href',nweUrl2);	
+	});
+}
+</script>

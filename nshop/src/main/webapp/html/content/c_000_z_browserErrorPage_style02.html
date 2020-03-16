@@ -1,0 +1,45 @@
+
+<!--  default layout 구조 -->
+<div class="amb_layout_common amb_admin_layout_temp_01"><!-- class명 amb_layout_common :필수  / amb_admin_layout_temp_01:필수(사이트 레이아웃 결정) -->
+
+	<div class="browser_up browserUp_Style02">
+		<div class="tit">
+			<span class="bTit">현재 사용하시는 브라우저는 <br>저희 사이트에서 정상적으로 지원하지 않습니다.</span>
+			<span>권장 브라우저 이외의 타 브라우저를 사용하시는 경우, 일부 기능 이용이 제한되거나 오류가 발생할 수 있습니다.<br><strong class="pColor_01">아래 링크를 통해 </strong>브라우저를 업데이트 하시거나 지원 가능한 새로운 브라우저를 설치하시기 바랍니다.</span>
+		</div>
+		<div class="nowBrowser">
+			접속하신 브라우저 : <strong class="pColor_01">Internet Explorer 7</strong>
+		</div>
+		<div class="browserDown">
+			<h3>권장하는 브라우저</h3>
+			<span class="browserUnit ie">
+				<a href="#" target="_blank">
+					<span class="">Internet Explorer<br>버전 10 이상</span>
+					<span class="ex">(Windows용)</span>
+				</a>
+			</span>
+			<span class="browserUnit chrome">
+				<a href="#" target="_blank">
+					<span class="">Chrome<br>버전 30 이상</span>
+					<span class="ex">(Windows용)</span>
+				</a>
+			</span>
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		// 브라우저 센터 정렬을 위해
+		
+		$(document).ready( function(){
+			var thisWidth = $('.browser_up').outerWidth();
+			var thisHeight = $('.browser_up').outerHeight();
+			var marginLeftValue = thisWidth/2;
+			var marginTopValue = thisHeight/2;
+
+			$('.browser_up').parents('.amb_admin_layout_temp_01').css('height','100%');
+			$('.browser_up').css({'margin-left': - marginLeftValue + 'px' , 'margin-top': - marginTopValue + 'px'});
+		});	
+		
+	</script>
+
+</div>

@@ -1,0 +1,186 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">상점상세정보</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">샘플 페이지</a>
+					>
+					<a href="#">상점정보</a>
+					>
+					<a href="#">상점정보관리</a>
+				</div>
+			</h2>
+				
+				
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<h3>
+					<span class="title">
+						상태 
+						&nbsp;&nbsp;
+						<em class="pColor_01">[승인완료]</em> 
+					</span>
+
+					<div class="fr btnArea middle">
+						<span class="inline pColor_01">등록일시 : 2017-06-09 19:00</span>
+					</div>
+				</h3>
+				
+				<!-- 왼쪽 이미지 영역 -->
+				<div class="g_column w_3_1">
+					<div id="sameHeight_01" class="unitBox lineBox">
+						<div class="photoBox">
+							<span class="photoBox_imgBox"><img src="../img/service_popup" class="pdImg" alt="이미지 설명이 들어감" /><span>
+						</div>
+					</div>
+				</div>
+
+				<script>
+					//좌측 높이를 우측의 컨텐츠 사이즈에 맞추는 스크립트 //필요시에만 사용
+					$(document).ready(function(){ 
+						var _this   = $('#sameHeight_01'),   //높이가 조절되어야하는 자신
+						    _target = $('#sameHeight_02'), //높이의 기준이 되는 대상
+							_contH; 
+						
+						_contH = _target.height(); //높이를 구함
+						_this.css('height' , _contH + 'px'); //최소높이를 셋팅함
+					});					
+				</script>
+				
+
+				<!-- 오른쪽 정보영역 -->
+				<div class="g_column w_3_2">
+					<div id="sameHeight_02" class="unitBox" style="">
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:20%;" />
+								<col style="" />
+								<col style="width:20%;" />
+								<col style="" />
+							</colgroup>	
+							<tbody>
+								<tr>
+									<th>상품명</th>
+									<td>활빈당</td>
+
+									<th>상점 iD</th>
+									<td>0000000</td>
+								</tr>
+								<tr>
+									<th>상점분류</th>
+									<td>보안용품 > 용품</td>
+
+									<th>등록상품 수</th>
+									<td>150 개</td>
+								</tr>
+								<tr>
+									<th>업체명</th>
+									<td>(주)0000000000</td>
+
+									<th>대표자명</th>
+									<td>아무개</td>
+								</tr>
+								<tr>
+									<th>회사주소</th>
+									<td colspan="3">서울시 000 00000 00000 0000 1356-51 5층</td>
+								</tr>
+								<tr>
+									<th>대표전화번호</th>
+									<td>00-0000-0000</td>
+
+									<th>FAX</th>
+									<td>00-0000-0000</td>
+								</tr>
+								<tr>
+									<th>사업자등록번호</th>
+									<td>000-00-00000</td>
+
+									<th>사업자등록증 사본</th>
+									<td>파일명.jpg</td>
+								</tr>
+								<tr>
+									<th>운영상태</th>
+									<td colspan="3">
+										운영중지
+										&nbsp;&nbsp;&nbsp;
+										<a href="#" class="amb_btnstyle blue middle">운영</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+			
+			
+
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">담당자 정보  (<em class="pColor_01">3</em>명)</span>
+					</h3>
+					<div class="unitBox" style="">
+						<table class="amb_table" >	
+							<colgroup>
+								<col style="" />
+								<col style="width:15%;" />
+								<col style="width:15%;" />
+								<col style="" />
+								<col style="" />
+							</colgroup>	
+							<thead>
+								<tr>
+									<th>부서명</th>
+									<th>담당자명</th>
+									<th>직위</th>
+									<th>연락처</th>
+									<th>이메일주소</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="5">등록된 정보가 없습니다.</td>
+								</tr>
+
+								<tr>
+									<td>IoT 사업부</td>
+									<td>홍길동</td>
+									<td>과장</td>
+									<td>000-0000-0000</td>
+									<td>aaaaaa@bbbbb.com</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+
+
+
+			
+
+
+
+			<div class="paging left">
+				<div class="fr btnArea middle">
+					<a href="#" class="amb_btnstyle blue middle">목록으로</a>
+				</div>
+				
+			</div>
+			
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

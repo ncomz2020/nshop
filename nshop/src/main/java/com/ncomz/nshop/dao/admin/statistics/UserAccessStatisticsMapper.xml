@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.admin.statistics.UserAccessStatisticsMapper">
+ 
+ 	<sql id="getListFromWhere">
+		<choose>
+	      <when test="ua.date_clcd == '10'">
+		  FROM (SELECT DATE_FORMAT(A.DATE,'%Y-%m-%d') DATE
+		  </when>
+		  <when test="ua.date_clcd == '20'">
+		  FROM (SELECT DATE_FORMAT(A.DATE,'%Y-%m') DATE
+		  </when>
+		  <when test="ua.date_clcd == '30'">
+		  FROM (SELECT DATE_FORMAT(A.DATE,'%Y') DATE
+		  </when>
+	     </choose>
+		          FROM (SELECT CURDATE() - INTERVAL (A.A + (10*B.A) + (100*C.A) + (1000*D.A)) DAY AS DATE
+			             FROM (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS A
+			             CROSS JOIN (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS B
+			             CROSS JOIN (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS C
+			             CROSS JOIN (SELECT 0 AS A UNION ALL SELECT 1 UNION ALL SELECT 2 UNION ALL SELECT 3 UNION ALL SELECT 4 UNION ALL SELECT 5 UNION ALL SELECT 6 UNION ALL SELECT 7 UNION ALL SELECT 8 UNION ALL SELECT 9) AS D
+			           )A
+				 WHERE 1=1
+	   <choose>
+		 <when test="ua.date_clcd == '10'">
+				   AND A.DATE BETWEEN #{ua.start_dt} AND #{ua.end_dt}
+				 GROUP BY DATE_FORMAT(A.DATE,'%Y-%m-%d')
+				) A
+		  LEFT OUTER JOIN ( SELECT DATE_FORMAT(STR_TO_DATE(VIEW_DATE,'%Y%m%d'),'%Y-%m-%d') VIEW_DATE
+		 </when>
+		 <when test="ua.date_clcd == '20'">
+				   AND A.DATE BETWEEN CONCAT(#{ua.start_dt},'01') AND CONCAT(#{ua.end_dt},'31')
+				 GROUP BY DATE_FORMAT(A.DATE,'%Y-%m')
+				) A
+		  LEFT OUTER JOIN ( SELECT DATE_FORMAT(STR_TO_DATE(VIEW_DATE,'%Y%m'),'%Y-%m') VIEW_DATE
+		 </when>
+		 <when test="ua.date_clcd == '30'">
+				   AND A.DATE BETWEEN CONCAT(#{ua.start_dt},'0101') AND CONCAT(#{ua.end_dt},'1231')
+				 GROUP BY DATE_FORMAT(A.DATE,'%Y')
+				) A
+		  LEFT OUTER JOIN ( SELECT DATE_FORMAT(STR_TO_DATE(VIEW_DATE,'%Y'),'%Y') VIEW_DATE
+		 </when>
+		</choose>
+		  						 , COUNT(USER_ID) USER_ID 
+		                      FROM T_PRODUCT_VIEW_HIST
+		                     WHERE 1=1
+		                       AND USER_ID IS NOT NULL
+		                     <if test="ua.store_id != null and ua.store_id != ''" >
+							   AND STORE_ID = #{ua.store_id}
+							 </if>
+							 <if test="ua.prod_id != null and ua.prod_id != ''" >
+							   AND PROD_ID = #{ua.prod_id}
+							 </if>
+		                     <choose>
+							  <when test="ua.date_clcd == '10'">
+							    AND DATE_FORMAT(VIEW_DATE,'%Y%m%d') BETWEEN #{ua.start_dt} AND #{ua.end_dt}
+		 GROUP BY DATE_FORMAT(VIEW_DATE,'%Y-%m-%d')
+							  </when>
+							  <when test="ua.date_clcd == '20'">
+							    AND DATE_FORMAT(VIEW_DATE,'%Y%m') BETWEEN #{ua.start_dt} AND #{ua.end_dt}
+		 GROUP BY DATE_FORMAT(VIEW_DATE,'%Y-%m')
+							  </when>
+							  <when test="ua.date_clcd == '30'">
+							    AND DATE_FORMAT(VIEW_DATE,'%Y') BETWEEN #{ua.start_dt} AND #{ua.end_dt}
+		 GROUP BY DATE_FORMAT(VIEW_DATE,'%Y')
+							  </when>
+							 </choose>
+		                     ) B 
+		    ON A.DATE = VIEW_DATE
+		 ORDER BY 1
+	  
+ 	</sql>
+ 
+ 	<select id="getList" parameterType="com.ncomz.nshop.domain.admin.statistics.UserAccessStatistics" resultType="com.ncomz.nshop.domain.admin.statistics.UserAccessStatistics">
+ 		SELECT A.DATE ACCESS_DATE
+     		 , IFNULL(USER_ID,0) COUNT_USER_ID
+		<include refid="getListFromWhere"></include>
+ 	</select>
+ 	
+ 	<insert id="insertAccessInfo">
+ 		INSERT INTO T_PRODUCT_VIEW_HIST(
+		       VIEW_SEQ
+		     , USER_ID
+		     , STORE_ID
+		     , PROD_ID
+		     , VIEW_DATE
+		     , VIEW_DATETIME
+		)VALUES(
+		       (SELECT COALESCE(max(A.VIEW_SEQ) + 1, 1) FROM T_PRODUCT_VIEW_HIST A)
+		     , #{user_id}
+		     , #{store_id}
+		     , #{prod_id}
+		     , DATE_FORMAT(NOW(),'%Y%m%d')
+		     , NOW()
+		)
+ 	</insert>
+ 	
+ 	<select id="getExcelList" parameterType="com.ncomz.nshop.domain.admin.statistics.UserAccessStatistics" resultType="java.util.LinkedHashMap">
+ 		SELECT A.DATE AS 'label_statistics_datetime'
+     		 , IFNULL(USER_ID,0) AS 'label_statistics_access_user'
+		<include refid="getListFromWhere"></include>
+ 	</select>
+ 
+ </mapper>

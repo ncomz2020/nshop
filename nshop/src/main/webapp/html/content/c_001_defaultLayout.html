@@ -1,0 +1,315 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">레이아웃</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">공통</a>
+					>
+					<a href="#">레이아웃</a>
+					>
+					<a href="#">기본 레이아웃</a>
+				</div>
+			</h2>
+			
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<div class="unitBox searchBox" style="">
+						<table class="amb_form_table">
+							<colgroup>
+								<col style="width:16%;" />
+								<col style="" />
+								<col style="width:16%;" />
+								<col style="" />
+							</colgroup>	
+							<tbody>
+								<tr>
+									<th>Name <i class="bullet mandatory"></i></th>
+									<td>
+										<select class="" style="width:90%;" >
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+									</td>
+									<th>Batch Group</th>
+									<td>
+										<select class=""  style="width:90%;" >
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>Base M/Y <i class="bullet mandatory"></i></th>
+									<td>
+										<input type="text" value="" class="inp datepicker" readonly="readonly" style="width:120px;" placeholder="date" />
+									</td>
+									<th>Job Date</th>
+									<td>
+										<input type="text" value="" class="inp datepicker startDate" readonly="readonly" style="width:120px;" placeholder="date" />
+										~
+										<input type="text" value="" class="inp datepicker endDate" readonly="readonly" style="width:120px;" placeholder="date" />
+									</td>
+								</tr>
+								<tr>
+									<th>Job Status Branch Name</th>
+									<td>
+										<select class=""  style="width:90%;">
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+									</td>
+									<th>Keyword</th>
+									<td>
+										<select class=""  style="width:30%;">
+											<option>Select Item</option>
+											<option>Select Item</option>
+											<option>Select Item</option>
+										</select>
+										<input type="text" value="" class="inp" style="width:60%;" />
+									</td>
+								</tr>	
+							</tbody>
+						</table>
+
+						<span class="searchFormBtn"><a href="#" class="amb_btnstyle black middle">SEARCH</a></span>
+					</div>
+				</div>
+			</div>
+
+			
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">Billing Calculation History</span>
+						<div class="fr btnArea middle">
+							<span class="inline">Total List <strong class="pColor_01">226</strong></span>&nbsp;&nbsp;
+							<select class="">
+								<option>10 line</option>
+								<option>20 line</option>
+								<option>50 line</option>
+							</select>
+						</div>
+					</h3>
+					<div class="unitBox" style="">
+						<script>
+						$(document).ready(function(){
+							$('#text thead th').resizable({
+								handles: 'e',
+								// set correct COL element and original size
+								start: function(event, ui) {
+									var colIndex = ui.helper.index() + 1;
+									var table = $(this).parents('table');
+									colElement = table.find("colgroup > col:nth-child(" + colIndex + ")");
+								
+								  // get col width (faster than .width() on IE)
+									colWidth = parseInt(colElement.get(0).style.width, 10);
+									originalSize = ui.size.width;
+								},
+								 
+								 // set COL width
+								resize: function(event, ui) {
+									var resizeDelta = ui.size.width - originalSize;
+								 
+									var newColWidth = colWidth + resizeDelta;
+									colElement.width(newColWidth);
+								 
+									// height must be set in order to prevent IE9 to set wrong height
+									//$(this).css("height", "auto");
+								}
+							});
+						});
+						</script>
+						<table class="amb_table"  id="">	
+							<colgroup>
+								<col style="width:40px;" />
+								<col style="width:10%;" />
+								<col style="width:10%;" />
+								<col style="width:10%;" />
+								<col style="" />
+								<col style="width:10%;" />
+								<col style="width:10%;" />
+							</colgroup>
+							<thead>
+								<tr class="colHeaders">
+									<th><input type="checkbox" id="checkBox_01" disabled checked/><label for="checkBox_01" class="inp_func"></label></th>
+									<th>Basy M/Y</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+									<th>Customer ID</th>
+									<th>Billing Period</th>
+									<th>Process Day</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>							
+									<td><input type="checkbox" id="checkBox_02" disabled /><label for="checkBox_02" class="inp_func"></label></td>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>05/09/2016</td>
+									<td><a href="#">여기에 컨텐츠가 들어갑니다. 여기에 컨텐츠가 들어갑니다.</a></td>
+									<td>G05</td>
+									<td>05/09/2016</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" id="checkBox_03" checked /><label for="checkBox_03" class="inp_func"></label></td>
+									<td class="left">09/2015</td>
+									<td class="right">G05</td>
+									<td>05/09/2016</td>
+									<td class="left"><a href="#">여기에 컨텐츠가 들어갑니다. 여기에 컨텐츠가 들어갑니다.여기에 컨텐츠가 들어갑니다.여기에 컨텐츠가 들어갑니다.여기에 컨텐츠가 들어갑니다.여기에 컨텐츠가 들어갑니다.</a></td>
+									<td>G08</td>
+									<td>06/09/2016</td>
+								</tr>
+								<tr>
+									<td><input type="checkbox" id="checkBox_04" /><label for="checkBox_04" class="inp_func"></label></td>
+									<td class="right">09/2015</td>
+									<td class="left">G05</td>
+									<td>05/09/2016</td>
+									<td class="left ellipsis"><a href="#">여기에 컨텐츠가 들어갑니다. 말줄임이 필요할때의 상태 여기에 컨텐츠가 들어갑니다.여기에 컨텐츠가 들어갑니다.</a></td>
+									<td>G10</td>
+									<td>07/09/2016</td>
+								</tr>
+								<tr>							
+									<td><input type="checkbox" id="checkBox_05" /><label for="checkBox_05" class="inp_func"></label></td>
+									<td>09/2015</td>
+									<td>G05</td>
+									<td>05/09/2016</td>
+									<td><a href="#">여기에 컨텐츠가 들어갑니다. 여기에 컨텐츠가 들어갑니다. </a></td>
+									<td>G25</td>
+									<td>08/09/2016</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+					<div class="paging left">
+						<ul class="paginglist">
+							
+							<li class="first"><a href="#"><i class="ambicon-006_arrow_first"></i></a></li>
+							<li class="prev"><a href="#"><i class="ambicon-002_arrow_left"></i></a></li>
+
+							<li><a href="#"> 1 </a></li>
+							<li><a href="#"> 2 </a></li>
+							<li class="active"><a href="#"> 3 </a></li>
+							<li><a href="#"> 4 </a></li>
+							<li><a href="#"> 5 </a></li>
+							<li><a href="#"> 6 </a></li>
+							<li><a href="#"> 7 </a></li>
+							<li><a href="#"> 8 </a></li>
+							<li><a href="#"> 9 </a></li>
+							<li><a href="#"> 10 </a></li>
+
+							<li class="next"><a href="#"><i class="ambicon-001_arrow_right"></i></a></li>
+							<li class="last"><a href="#"><i class="ambicon-005_arrow_last"></i></a></li>
+						</ul>
+
+
+						<div class="fr btnArea middle">
+							<a href="#" class="amb_btnstyle gray middle">Cencel</a>
+							<a href="#" class="amb_btnstyle gray middle">Delete</a>
+							<a href="#" class="amb_btnstyle blue middle">List</a>
+							<a href="#" class="amb_btnstyle blue middle">Save</a>
+							<a href="#" class="amb_btnstyle blue middle disabled">OK</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">Billing Calculation History</span>
+						<div class="fr btnArea middle">
+							<span class="inline">Total List <strong class="pColor_01">226</strong></span>&nbsp;&nbsp;
+							<select class="">
+								<option>10 line</option>
+								<option>20 line</option>
+								<option>50 line</option>
+							</select>
+						</div>
+					</h3>
+					<div class="unitBox" style="">
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:20%;" />
+								<col style="" />
+								<col style="width:20%;" />
+								<col style="" />
+							</colgroup>	
+							<tbody>
+								<tr>
+									<th>Name <i class="bullet mandatory"></i></th>
+									<td>
+										<a href="#">link- underline link- underline link- underline</a>
+									</td>
+									<th>Name</th>
+									<td>
+										key
+									</td>
+								</tr>
+								<tr>
+									<th>Get File Content Test <i class="bullet mandatory"></i></th>
+									<td>
+										<a href="#">link- rollover(#018c71) link- rollover(#018c71) link- rollover(#018c71)</a>
+									</td>
+									<th>Get File Content Test</th>
+									<td>
+										vfs.file.contents[/etc/N-sentinel/test.log
+									</td>
+								</tr>
+								<tr> 
+									<th>JMX ThreadCount TAF MONITOR</th>
+									<td>
+										JmxClient[fartech.iptime.org:12345
+									</td>
+									<th>JMX ThreadCount TAF MONITOR</th>
+									<td>
+										JmxClient[fartech.iptime.org:12345
+									</td>
+								</tr>
+								<tr> 
+									<th>mysql</th>
+									<td>
+										<a href="#" class="amb_btnstyle blue middle">NO</a>
+										<a href="#" class="amb_btnstyle gray middle">NO</a>
+										<a href="#" class="amb_btnstyle green middle">NO</a>
+									</td>
+									<th>mysql</th>
+									<td>
+										system.run[netstat -naop | grep mysql]
+									</td>
+								</tr>	
+							</tbody>
+						</table>
+					</div>
+					<div class="paging left">
+						
+						<div class="fr btnArea middle">
+							<a href="#" class="amb_btnstyle gray middle">Cencel</a>
+							<a href="#" class="amb_btnstyle blue middle">List</a>
+							<a href="#" class="amb_btnstyle blue middle">Save</a>
+						</div>
+
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->			
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

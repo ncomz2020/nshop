@@ -1,0 +1,354 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">레이아웃 예제01</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">공통</a>
+					>
+					<a href="#">레이아웃</a>
+					>
+					<a href="#">예제01</a>
+				</div>
+			</h2>
+
+
+			
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<div class="unitBox searchBox" style="">
+						<table class="amb_form_table">
+							<colgroup>
+								<col style="width:12%;" />
+								<col style="" />
+								<col style="width:12%;" />
+								<col style="" />
+							</colgroup>	
+							<tbody>
+								<tr>
+									<th>가입일</th>
+									<td colspan="3">
+										<input type="text" value="" class="inp datepicker startDate" placeholder="date" />
+										~
+										<input type="text" value="" class="inp datepicker endDate" placeholder="date" />
+
+										&nbsp;&nbsp;&nbsp;&nbsp;
+
+										<span>
+											<button type="button" class="amb_btnstyle gray middle">1주일</button>
+											<button type="button" class="amb_btnstyle gray middle">1개월</button>
+											<button type="button" class="amb_btnstyle gray middle">3개월</button>
+											<button type="button" class="amb_btnstyle gray middle">6개월</button>
+											<button type="button" class="amb_btnstyle gray middle">12개월</button>
+										</span>
+									</td>
+								</tr>
+								<tr>
+									<th>사업계획등록</th>
+									<td>
+										<select style="width:40%;">
+											<option>전체</option>
+											<option>미등록</option>
+											<option>등록중</option>
+											<option>등록완료</option>
+										</select>
+									</td>
+									<th>가입승인상태</th>
+									<td>
+										<select style="width:40%;">
+											<option>전체</option>
+											<option>승인대기</option>
+											<option>승인완료 </option>
+										</select>
+									</td>
+								</tr>
+								<tr>
+									<th>진행상태</th>
+									<td colspan="3">
+										<input type="checkbox" id="check_1_02"><label for="check_1_02" class="inp_func">스마트센서</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_1_03"><label for="check_1_03" class="inp_func">GateWay/Network(통신장비)</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_1_04"><label for="check_1_04" class="inp_func">IoT플랫폼(보안)</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_1_05"><label for="check_1_05" class="inp_func">빅데이터활용 응용서비스</label>
+																	
+									</td>
+								</tr>
+								<tr>
+									<th>검색</th>
+									<td colspan="3">
+										<select style="width:15%;">
+											<option>전체</option>
+										</select>
+										<input type="text" value="" class="inp" style="width:50%;" placeholder="검색어입력" />
+									</td>
+								</tr>
+								
+								
+							</tbody>
+						</table>
+
+						<span class="searchFormBtn"><a href="#" class="amb_btnstyle black middle">검색</a></span>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			
+
+			
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">기업회원관리 검색 리스트 : <em class="pColor_01">총 30건</em></span> 
+						<div class="fr btnArea middle">
+							<span class="inline pColor_02">* ’승인완료’처리 시, ‘SPIN소개>참여기업소개’ 메뉴에 자동 노출. </span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="#" class="amb_btnstyle blue middle" >상태변경</a>
+						</div>
+						
+					</h3>
+					<div class="unitBox" style="">
+						<table class="amb_table" >	
+							<colgroup>
+								<col style="width:60px" />
+								<col style="width:70px" />
+								<col style="width:150px" />
+								<col style="width:100px" />
+								<col style="" />
+								<col style="width:110px;" />
+								<col style="width:150px" />
+								<col style="" />
+								<col style="width:220px;" />
+							</colgroup>					
+							<thead>
+								<tr>
+									<th><input type="checkbox" id="check_a_00"><label for="check_a_00" class="inp_func"></label></th>
+									<th>번호</th>
+									<th>기업명</th>
+									<th>대표자명</th>
+									<th>담당자명</th>
+									<th>사업계획</th>
+									<th>업체소개</th>
+									<th>가입일시</th>						
+									<th>진행상태</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td colspan="9" class="center">검색된 항목이 없습니다.</td>
+								</tr>
+								
+
+
+								<tr>
+									<td>
+										<input type="checkbox" id="check_a_01"><label for="check_a_01" class="inp_func"></label>
+									</td>
+									<td>5</td>
+									<td>
+										<a href="#">㈜에너지 에너지에너지 에너지 </a>
+
+									</td>
+									<td>
+										홍길동<br/>(energy11)
+									</td>
+									<td>박일식/이이식/사삼식</td>
+									<td>
+										등록중
+									</td>
+									<td>
+										<div class="stateBox2 before2">
+											<span class="state">숨김</span>
+											<button type="button" class="amb_btnstyle blue middle stateEdit">게시</button>
+										</div>
+									</td>
+									<td>
+										2016-06-17 08:30:12<br/>(2016-06-21 00:30:55수정)										
+									</td>
+									<td>
+										<div class="stateBox before">
+											<span class="state">승인대기</span>
+											<button type="button" class="amb_btnstyle blue middle stateEdit">승인</button>
+										</div>
+
+										<div class="stateBox after" style="display:none;">
+											<select class="stateSelect">
+												<option>승인대기</option>
+												<option>승인완료</option>
+											</select>
+											<button type="button" class="amb_btnstyle blue middle stateEdit">변경</button>
+											<button type="button" class="amb_btnstyle gray middle stateCencel">취소</button>
+										</div>
+									</td>
+								</tr>
+
+								<tr>
+									<td>
+										<input type="checkbox" id="check_a_02"><label for="check_a_02" class="inp_func"></label>
+									</td>
+									<td>5</td>
+									<td>
+										<a href="01_102_c_memberMagDetailView.html">㈜에너지<br/>(123-02-45534)</a>
+
+									</td>
+									<td>
+										홍길동<br/>(energy11)
+									</td>
+									<td>박일식/이이식/사삼식</td>
+									<td>
+										등록중
+									</td>
+									<td>
+										<div class="stateBox2 before2">
+											<span class="state">게시</span>
+											<button type="button" class="amb_btnstyle blue middle stateEdit">숨김</button>
+										</div>
+									</td>
+									<td>
+										2016-06-17 08:30:12<br/>(2016-06-21 00:30:55수정)
+
+										
+									</td>
+									<td>
+										<div class="stateBox before">
+											<span class="state">승인완료</span>
+											<button type="button" class="amb_btnstyle blue middle stateEdit">대기</button>
+										</div>
+
+										<div class="stateBox after" style="display:none;">
+											<select class="stateSelect">
+												<option>승인대기</option>
+												<option>승인완료</option>
+											</select>
+											<button type="button" class="amb_btnstyle blue middle stateEdit">변경</button>
+											<button type="button" class="amb_btnstyle gray middle stateCencel">취소</button>
+										</div>
+									</td>
+								</tr>
+
+								
+							</tbody>
+						</table>
+						
+						<script type="text/javascript">
+
+							
+							//.before 에서 변경 클릭시
+							$(document).on("click", ".stateBox.before > .stateEdit", function(){								
+								var $thisParent = $(this).parent('.stateBox.before');
+								var $thisState = $(this).prev('.state').text();
+								var $thisNextParent = $thisParent.next('.stateBox.after');
+								var $thisNextSelsct = $thisNextParent.find('.stateSelect');
+								
+								$thisParent.hide();
+								$thisNextParent.show();
+								
+								// .state text값을 비교하여 .stateSelect option에서 해당 option은 display:none 처리
+								$thisNextSelsct.find('option').each(function() {
+									var $thisTxt  = $(this).text();
+
+									if ($thisTxt == $thisState) {
+										$(this).attr("selected", "selected").css('display','none').siblings('option').css('display','block');
+										
+										return false;
+									}
+								})
+							});	
+
+							//.after 에서 변경 클릭시
+							$(document).on("change", ".stateBox.after .stateSelect", function(){
+								$(this).children("option:selected").siblings('option').removeAttr('selected');
+								$(this).children("option:selected").attr('selected','selected');
+							});						
+						
+							$(document).on("click", ".stateBox.after > .stateEdit", function(){
+								var $thisParent = $(this).parent('.stateBox.after');
+								var $thisSelectBox = $(this).prev('select.stateSelect');
+								var $thisSelectText =  $thisSelectBox.find("option:selected").text();
+								
+								var $thisPrevParent = $thisParent.prev('.stateBox.before');
+								var $thisPrevState = $thisPrevParent.find('.state');
+								var $thisPrevStateBtn = $thisPrevState.next('.stateEdit');
+
+								$thisParent.hide();
+								$thisPrevParent.show();
+
+								$thisPrevState.text($thisSelectText);
+
+								if ($thisSelectText == '승인완료') {
+									$thisPrevStateBtn.text('대기');
+								} else if ($thisSelectText == '승인대기'){
+									$thisPrevStateBtn.text('승인');
+								}
+							});
+
+							//.after 에서 취소 클릭시
+							$(document).on("click", ".stateBox.after > .stateCencel", function(){
+								var $thisParent = $(this).parent('.stateBox.after');								
+								var $thisPrevParent = $thisParent.prev('.stateBox.before');
+								
+								$thisParent.hide();
+								$thisPrevParent.show();
+							});
+
+							//숨김,게시 .before .stateEdit 클릭시
+							$(document).on("click", ".stateBox2.before2 > .stateEdit", function(){								
+								var $thisText = $(this).text();								
+
+								if ($thisText == '게시') {
+									$(this).prev('.state').text('게시');
+									$(this).text('숨김');
+								} else if ($thisText == '숨김') {
+									$(this).prev('.state').text('숨김');
+									$(this).text('게시');
+								}
+							});	
+						</script>
+					</div>
+					<div class="paging left">
+						<ul class="paginglist">
+							
+							<li class="first"><a href="#"><i class="ambicon-006_arrow_first"></i></a></li>
+							<li class="prev"><a href="#"><i class="ambicon-002_arrow_left"></i></a></li>
+
+							<li><a href="#"> 1 </a></li>
+							<li><a href="#"> 2 </a></li>
+							<li class="active"><a href="#"> 3 </a></li>
+							<li><a href="#"> 4 </a></li>
+							<li><a href="#"> 5 </a></li>
+							<li><a href="#"> 6 </a></li>
+							<li><a href="#"> 7 </a></li>
+							<li><a href="#"> 8 </a></li>
+							<li><a href="#"> 9 </a></li>
+							<li><a href="#"> 10 </a></li>
+
+							<li class="next"><a href="#"><i class="ambicon-001_arrow_right"></i></a></li>
+							<li class="last"><a href="#"><i class="ambicon-005_arrow_last"></i></a></li>
+						</ul>
+
+						<div class="fr btnArea middle">
+							<a href="#" class="amb_btnstyle gray middle">취소</a>
+							<a href="#" class="amb_btnstyle gray middle">삭제</a>
+							<a href="#" class="amb_btnstyle blue middle">목록으로</a>
+							<a href="#" class="amb_btnstyle blue middle">저장</a>
+						</div>
+
+					</div>
+
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+			
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

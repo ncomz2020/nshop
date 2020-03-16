@@ -1,0 +1,127 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">레이어 팝업 샘플</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">공통</a>
+					>
+					<a href="#">팝업 예제</a>
+					>
+					<a href="#">레이어 팝업 예제</a>
+				</div>
+
+			</h2>
+			
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">레이어 팝업 띄우기</span>
+					</h3>
+					<div class="unitBox" style="">
+						
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:15%;" />
+								<col style="" />
+								<col style="width:15%;" />
+								<col style="" />
+							</colgroup>
+							<tbody>
+								<tr>
+									<th>Branch Name</th>
+									<td>
+										<a href="javascript:void(0);" class="amb_btnstyle green middle" onclick="javascript:openModal('00_layerPopup_001_defaultSample.html' , 'popup_dialog_01')" >레이아 팝업 띄우기</a>
+									</td>
+									<th>Batch Group</th>
+									<td>
+										<a href="javascript:void(0);" class="amb_btnstyle green middle" onclick="javascript:openModal('00_layerPopup_001_defaultSample2.html' , 'popup_dialog_02')" >레이아 팝업 띄우기2</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명</span>
+					</h3>
+					<div class="unitBox grayBox" style="">
+						<xmp>
+<a href="javascript:void(0);" class="" onclick="javascript:openModal('불러올 html 페이지 url' , '레어어로 띄워질 id')" >레이아 팝업 띄우기</a>
+또는
+<a href="javascript:openModal('불러올 html 페이지 url' , '레어어로 띄워질 id')" class="">레이아 팝업 띄우기</a>
+
+으로 레이어 팝업을 띄웁니다. 따라서 
+
+<span onclick="javascript:openModal('불러올 html 페이지 url' , '레어어로 띄워질 id')"></span>
+<button onclick="javascript:openModal('불러올 html 페이지 url' , '레어어로 띄워질 id')"></button> 등등 사용하면 됩니다.
+javascript:openModal('불러올 html 페이지 url' , '레어어로 띄워질 id')에서 '레어어로 띄워질 id'는 id이므로 한페이지에 중복 사용은 불가능합니다. 반드시 다른 아이디로 불러와 주세요 
+
+------------------------------------------------------------------
+
+---- 불러오는 html 예제 ---
+00_layerPopup_001_defaultSample.html
+00_layerPopup_001_defaultSample2.html
+
+---- 불러오는 html(00_layerPopup_001_defaultSample.html) ---
+레이어 팝업으로 불러오는 html은 <html><head><body>가 없어야함
+아래와 같이 작업 되어야하며 amb_ui_common.js를 이곳에서 다시한번 불러올 경우 중복 스크립트에 의해 좌메뉴 부분이 오류가 납니다 
+
+<div class="amb_layout_common amb_admin_layout_temp_01 amb_layerpopup" style="width:900px;">
+// class에 amb_layerpopup이 추가 되어야함 
+// style="width:900px;" 는 최대 1000px를 넘지 말아야 합니다. 1000px을 넘어도 css에 최대 1000px로 처리 되어있습니다. 
+// style="width:900px;" 를 설정 하지 않을 경우 amb_layerpopup.css에 의해 기본 600px로 설정됨
+
+	<h1 class="popupHeader">
+		<span class="title">여기에 팝업 타이틀이 옵니다</span>
+		<a href="#" class="close" onClick="javascript:closeModal(this);"><i class="ambicon-015_mark_times"></i></a>
+	</h1>
+
+	<div id="content" class="content">		
+		<!-- rowBox 반복단위 -->
+		<div class="rowBox">
+			~~~~
+		</div>
+		<!-- rowBox 반복단위 -->
+
+		<!-- rowBox 반복단위 -->
+		<div class="rowBox">
+			~~~~
+		</div>
+		<!-- rowBox 반복단위 -->		
+	</div>
+</div>
+
+--- 레이어 팝업 close
+불러워진 html(00_layerPopup_001_defaultSample.html)에서 원하는 테그에 
+onClick="javascript:closeModal(this);"로 처리
+
+------------------------------------------------------------------
+
+---- 연관 js ---
+js/amb_ui_layerpopup.js
+
+						</xmp>
+						
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+			
+
+			
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
