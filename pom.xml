@@ -409,7 +409,7 @@
     
   
     <build>
-        <finalName>ROOT</finalName>
+        <finalName>nshop</finalName>
         
         <resources>
             <resource>
@@ -434,7 +434,7 @@
                 <artifactId>tomcat7-maven-plugin</artifactId>
                 <version>2.2</version>
                 <configuration>
-                    <path>/</path>
+                    <path>/nshop</path>
                     <port>8088</port>
                     <charset>UTF-8</charset>
                     <uriEncoding>UTF-8</uriEncoding>
