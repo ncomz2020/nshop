@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.admin.store.StoreMapper">
+
+	<sql id="where_clause">
+		<if test="approval_stat != null and approval_stat != ''">
+			AND APPROVAL_STAT = #{approval_stat}
+		</if>
+		<if test="operational_stat != null and operational_stat != ''">
+			AND OPERATIONAL_STAT = #{operational_stat}
+		</if>
+		<if test="startDate != null and startDate != '' and endDate != null and endDate != '' ">
+			AND DATE_FORMAT(REG_DATETIME, '%Y-%m-%d') BETWEEN #{startDate} AND #{endDate}
+		</if>
+		
+		<if test="store_name != null and store_name != ''">
+			AND STORE_NAME LIKE  CONCAT('%',TRIM(#{store_name}),'%')
+		</if>
+		<if test="comp_name != null and comp_name != ''">
+			AND COMP_NAME LIKE CONCAT('%',TRIM(#{comp_name}),'%')
+		</if>
+		<if test="president_name != null and president_name != ''">
+			AND PRESIDENT_NAME LIKE CONCAT('%',TRIM(#{president_name}),'%')
+		</if>
+		<if test="store_id != null and store_id != ''">
+			AND STORE_ID = #{store_id}
+		</if>	
+	</sql>
+	
+
+	<sql id="selectList">
+		SELECT /* StoreMapper.xml.getStoreList */
+			STORE_ID,         
+			STORE_NAME,       
+			COMP_NAME,        
+			PRESIDENT_NAME,   
+			POST_NUM,
+			COMP_ADDR,        
+			COMP_ADDR2,
+			MAIN_PHONE_NUM,   
+			FAX_NUM,          
+			COMP_REG_NUM,     
+			APPROVAL_STAT,
+			F_CODE_NAME('APPROVAL_STAT', APPROVAL_STAT, #{language}) AS APPROVAL_STAT_TEXT,
+			OPERATIONAL_STAT,
+			F_CODE_NAME('OPER_STAT', OPERATIONAL_STAT, #{language}) AS OPERATIONAL_STAT_TEXT,
+			APPROVAL_DATETIME,
+			DATE_FORMAT(REG_DATETIME, '%Y-%m-%d %H:%i:%s') AS REG_DATETIME,
+			STORE_LOGO
+		FROM 
+			T_STORE
+		WHERE 1=1
+		<include refid="where_clause" />
+		ORDER BY REG_DATETIME DESC
+	</sql>
+
+
+	<!-- 상점  리스트조회 페이징.-->
+	<select id="list" resultType="com.ncomz.nshop.domain.admin.store.StoreInfoMgmt">
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_header" />
+	   	<include refid="selectList" />
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_footer" />
+	</select>
+
+    <!-- 상점  리스트조회 전체.-->
+	<select id="getStoreList" resultType="com.ncomz.nshop.domain.admin.store.StoreInfoMgmt">
+	   	<include refid="selectList" />
+	</select>
+
+	<!-- 상점  리스트 정보 카운트-->
+	<select id="getStoreCount" resultType="int">
+		/* StoreMapper.xml.getStoreCount */
+		SELECT COUNT(*) FROM T_STORE WHERE 1=1
+		<include refid="where_clause" />
+	</select>
+
+
+	<select id="getStoreInfo" resultType="com.ncomz.nshop.domain.admin.store.StoreInfoMgmt">
+		SELECT /* StoreMapper.xml.getStoreInfo */
+			S.STORE_ID,         
+			S.STORE_NAME,
+			S.POST_NUM,
+			S.COMP_ADDR,        
+			S.COMP_ADDR2,       
+			S.COMP_NAME,        
+			S.PRESIDENT_NAME,   
+			S.COMP_ADDR,        
+			S.MAIN_PHONE_NUM,   
+			S.FAX_NUM,          
+			S.COMP_REG_NUM,     
+			S.APPROVAL_STAT,
+			F_CODE_NAME('APPROVAL_STAT', S.APPROVAL_STAT, #{language}) AS APPROVAL_STAT_TEXT,
+			S.OPERATIONAL_STAT,
+			F_CODE_NAME('OPER_STAT', S.OPERATIONAL_STAT, #{language}) AS OPERATIONAL_STAT_TEXT,
+			S.APPROVAL_DATETIME,
+			DATE_FORMAT(S.REG_DATETIME, '%Y-%m-%d %H:%i:%s') AS REG_DATETIME,
+			S.COMP_REG_COPY,
+			S.STORE_LOGO,
+			F1.ORG_FILENAME AS ORG_FILENAME1,
+			F2.ORG_FILENAME AS ORG_FILENAME2,
+			(SELECT COUNT(*) FROM T_PRODUCT WHERE STORE_ID = S.STORE_ID AND PROD_STAT != '50') AS PRODUCT_CNT
+		FROM 
+			T_STORE S LEFT OUTER JOIN T_FILE_INFO F1 ON S.COMP_REG_COPY = F1.FILE_ID
+			LEFT OUTER JOIN T_FILE_INFO F2 ON S.STORE_LOGO = F2.FILE_ID
+		WHERE S.STORE_ID = #{store_id}
+	</select>
+	
+	
+	<select id="listExcel" resultType="java.util.LinkedHashMap">
+    /* StoreMapper.xml.listExcel */
+    SELECT 	CONCAT(STORE_NAME,'(',STORE_ID,')') AS    'label_storeInfoMgmt_store_name',       
+			CONCAT(COMP_NAME,'(',COMP_REG_NUM,')') AS  'label_storeInfoMgmt_comp_name',        
+			PRESIDENT_NAME AS 'label_storeInfoMgmt_president_name',   
+			REG_DATETIME       AS 'label_storeInfoMgmt_reg_datetime',
+			APPROVAL_STAT_TEXT AS 'label_storeInfoMgmt_approval_stat_text',
+			OPERATIONAL_STAT_TEXT AS 'label_storeInfoMgmt_operational_stat_text'
+     FROM (<include refid="selectList" />) SUBTABLE
+	</select>
+	
+	
+	<update id="statUpdateAction" parameterType="com.ncomz.nshop.domain.admin.store.StoreInfoMgmt">
+	  	UPDATE T_STORE SET 
+	  	<if test="approval_stat != null and approval_stat != ''">
+	  		APPROVAL_STAT = #{approval_stat} 
+	  	</if>
+	   	<if test="approval_stat != null and approval_stat != '' and operational_stat != null and operational_stat != ''">
+	  		,
+	  	</if>
+	   	<if test="operational_stat != null and operational_stat != ''">
+	  		OPERATIONAL_STAT = #{operational_stat} 
+	  	</if>
+	  	WHERE STORE_ID = #{store_id}
+	</update>
+	
+	
+		
+ 	<insert id="insertAction" parameterType="com.ncomz.nshop.domain.admin.store.StoreInfoMgmt">
+		INSERT INTO T_STORE (
+			STORE_ID, 
+			STORE_NAME, 
+			COMP_NAME, 
+			PRESIDENT_NAME,
+			POST_NUM,
+			COMP_ADDR,        
+			COMP_ADDR2,
+			MAIN_PHONE_NUM, 
+			FAX_NUM, 
+			COMP_REG_NUM, 
+			APPROVAL_STAT, 
+			OPERATIONAL_STAT, 
+			COMP_REG_COPY, 
+			STORE_LOGO, 
+			REG_DATETIME
+		) VALUES (
+			#{store_id},
+			#{store_name},
+			#{comp_name},
+			#{president_name},
+			if(#{post_num}='', null, #{post_num}),
+			#{comp_addr},
+			#{comp_addr2},
+			#{main_phone_num},
+			#{fax_num},
+			#{comp_reg_num},
+			'N',
+			'N',
+			if(#{comp_reg_copy}='', null, #{comp_reg_copy}),
+			if(#{store_logo}='', null, #{store_logo}),
+			NOW()
+		)
+	</insert>
+	
+	<update id="updateAction" parameterType="com.ncomz.nshop.domain.admin.store.StoreInfoMgmt">
+	  	UPDATE T_STORE SET
+	  		STORE_NAME          =#{store_name}
+	  		, COMP_NAME         =#{comp_name}
+	  		, PRESIDENT_NAME    =#{president_name}
+	  		, POST_NUM          =if(#{post_num}='', null, #{post_num})
+	  		, COMP_ADDR         =#{comp_addr}
+	  		, COMP_ADDR2        =#{comp_addr2}
+	  		, MAIN_PHONE_NUM    =#{main_phone_num}
+	  		, FAX_NUM           =#{fax_num}
+	  		, COMP_REG_NUM      =#{comp_reg_num}
+	  		<if test="comp_reg_copy != null and comp_reg_copy != ''">
+	  		, COMP_REG_COPY     =#{comp_reg_copy}
+	  		</if>
+	  		<if test="store_logo != null and store_logo != ''">
+	  		, STORE_LOGO        =#{store_logo}
+	  		</if>
+	  	WHERE STORE_ID = #{store_id}
+	</update>
+	
+	<update id="updateStoreAuthStateAction" parameterType="com.ncomz.nshop.domain.admin.store.StoreInfoMgmt">
+	  	UPDATE T_STORE SET APPROVAL_STAT = #{approval_stat} WHERE STORE_ID = #{store_id}
+	</update>
+	
+	<select id="countStore" parameterType="String" resultType="Integer">
+		SELECT /*	StoreMapper.xml.countStore	*/
+				COUNT(*)
+		  FROM T_STORE
+		 WHERE 1=1
+		   AND store_id = #{store_id, jdbcType=VARCHAR}
+	</select>
+	
+ </mapper>

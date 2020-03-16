@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.common.CommonCodeMapper">
+
+	<select id="getCommonCodeList" resultType="com.ncomz.nshop.domain.common.CommonCode">
+		SELECT /* CommonCodeMapper.xml.getCommonCodeList */ 
+			C.DTL_CD,
+			IFNULL(L.DTL_NM, C.DTL_NM) AS DTL_NM
+		FROM T_COMMON_CODE C
+		LEFT OUTER JOIN T_COMMON_CODE_LANGUAGE L ON C.GRP_CD = L.GRP_CD AND C.DEPTH = L.DEPTH AND C.DTL_CD = L.DTL_CD AND L.LANGUAGE = #{language}
+		WHERE C.GRP_CD = #{grp_cd, jdbcType=VARCHAR}
+			AND C.DEPTH = 3
+			AND C.USE_YN = 'Y'
+		ORDER BY ALGN_ORD ASC
+	</select>
+	
+	<select id="listCategoryChained" parameterType="com.ncomz.nshop.domain.common.CommonCode" resultType="com.ncomz.nshop.domain.common.CommonCode">
+		select /* CommonCodeMapper.xml.listCategoryChained */
+			C.category_id
+			, C.parent_id
+			, IFNULL(L.TITLE, C.TITLE) AS title
+		from
+			T_PRODUCT_CATEGORY C
+			LEFT OUTER JOIN T_PRODUCT_CATEGORY_LANGUAGE L ON C.CATEGORY_ID = L.CATEGORY_ID AND L.LANGUAGE = #{language}
+		where
+			parent_id = #{parent_id, jdbcType=VARCHAR}
+			order by display_order
+	</select>
+	<select id="listCategoryMenu" parameterType="com.ncomz.nshop.domain.common.CommonCode" resultType="com.ncomz.nshop.domain.common.CommonCode">
+		select /* CommonCodeMapper.xml.listCategoryChained */
+			C.category_id
+			, C.parent_id
+			, L.TITLE AS title
+		from
+			T_PRODUCT_CATEGORY C, 
+            T_PRODUCT_CATEGORY_LANGUAGE L
+		where
+			C.category_id = L.category_id
+			and parent_id in 
+ 			(select
+ 				C.category_id		
+			from T_PRODUCT_CATEGORY C
+				LEFT OUTER JOIN T_PRODUCT_CATEGORY_LANGUAGE L ON C.CATEGORY_ID = L.CATEGORY_ID AND L.LANGUAGE = #{language}
+			where	C.parent_id ='0'
+			order by C.category_id
+			)
+            and LANGUAGE = #{language}
+	</select>
+ </mapper>

@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.admin.delivery.DeliveryMapper">
+
+   <!-- 오늘날짜 불러오기. -->
+   <select id="getEndDate" resultType="String">
+   /* DeliveryMapper.xml.getEndDate */
+   SELECT DATE_FORMAT(NOW(), '%Y-%m-%d')
+   </select>
+   
+   <!--  일주일전 날짜 불러오기. -->
+   <select id="getStartDate" resultType="String">
+   /* DeliveryMapper.xml.getStartDate */
+   select DATE_FORMAT(DATE_ADD(NOW(),interval -1 week), '%Y-%m-%d')
+   </select>
+   
+   <!-- 배송조회  리스트조회 전체-->
+   <select id="list" resultType="com.ncomz.nshop.domain.admin.delivery.DeliveryInfoMgmt">
+   <include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_header" />      
+   /* DeliveryMapper.xml.list */      
+         <include refid="selectInfo"/>
+      <include refid="listInfo" />              
+      <include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_footer" />
+   </select>
+   
+   <!-- 엑셀 다운로드-->
+   <select id="listExcel" resultType="java.util.LinkedHashMap">
+         SELECT /* DeliveryMapper.xml.listExcel */
+             B.PROD_ORDER_SEQ AS label_delivery_num,
+             PROD_ORDER_NO AS label_order_productOrderNumber,
+             D.CREATE_DATETIME AS label_order_orderDate,
+             PROD_NAME AS label_product_prod_name,
+             D.USER_NM AS label_delivery_search_buyer,
+             D.BASE_ADDR AS label_common_addr,
+             D.DTL_ADDR AS label_common_addr_detail,
+             D.ZIP_CD AS label_common_postno,
+             CASE WHEN STORE_ID_MEMO IS NULL THEN ''
+             	  ELSE STORE_ID_MEMO END AS label_delivery_memo,
+             D.MOBILE_NO AS label_member_join_mobileno,
+             STORE_ID_MEMO AS label_delivery_memo,
+             B.CREATE_DATETIME AS label_delivery_period_shipdate,
+             E.DTL_NM AS label_order_status,
+             CASE WHEN B.WAYBIL_NO IS NULL THEN ''
+             	  ELSE B.WAYBIL_NO END AS label_delivery_trackno
+      <include refid="listInfo" />              
+   </select>
+   
+   <!-- 배송조회 리스트 카운트-->
+   <select id="getDeliveryCount" resultType="int">
+      SELECT /* DeliveryMapper.xml.getDeliveryCount */
+            count(*)
+      <include refid="listInfo"/>
+   </select>
+   
+   <!-- 송장번호 미입력 카운트 -->
+   <select id="getDeliveryTracknoMessageCount" resultType="int">
+      SELECT /* DeliveryMapper.xml.getDeliveryTracknoMessageCount */ 
+            COUNT(*)
+      FROM
+      (
+         <include refid="selectInfo"/>
+         <include refid="listInfo" />
+      )AS FOO
+   </select>
+   
+   <!-- 배송메모 카운트 -->
+   <select id="getDeliveryMemoCount" resultType="int">
+      SELECT /* DeliveryMapper.xml.getDeliveryMemoCount */ 
+            COUNT(*)
+      FROM
+      (
+         <include refid="selectInfo"/>
+         <include refid="listInfo" />
+      )AS FOO
+   </select>
+   
+   <sql id="selectInfo">
+      SELECT /* DeliveryMapper.xml.list */
+             D.ORDER_SEQ AS ORDER_SEQ,
+             PROD_ORDER_NO,
+             B.PROD_ORDER_SEQ AS PROD_ORDER_SEQ,
+             D.CREATE_DATETIME AS ORDR_CREATE_DATETIME,
+             PROD_NAME,
+             C.PROD_ID AS PROD_ID,
+             D.USER_ID,
+             D.USER_NM,
+             D.BASE_ADDR,
+             D.DTL_ADDR,
+             D.ZIP_CD,
+             D.MOBILE_NO,
+             STORE_ID_MEMO,
+             B.WAYBIL_NO,
+             B.ECHN_WAYBIL_NO,
+             B.CREATE_DATETIME AS DLVY_CREATE_DATETIME,
+             B.UPDATE_DATETIME AS DLVY_UPDATE_DATETIME,
+             E.DTL_NM,
+             E.DTL_CD
+   </sql>
+   
+   <sql id="listInfo">
+      FROM T_PRODUCT_ORDER_REF A, T_DLVY_INFO B, T_PRODUCT C, T_ORDER_INFO D, (SELECT GRP_CD, DTL_CD, DTL_NM FROM T_COMMON_CODE WHERE grp_cd = 'ORDR_STAT') E, T_STORE F
+      WHERE 1=1
+         AND A.PROD_ORDER_SEQ = B.PROD_ORDER_SEQ
+         AND A.PROD_ID = C.PROD_ID
+         AND A.ORDER_SEQ = D.ORDER_SEQ
+         AND A.ORDER_STS_CD = E.DTL_CD
+         AND C.STORE_ID = F.STORE_ID
+      <include refid="listActionWhereClause"/>
+      ORDER BY D.ORDER_SEQ DESC, B.PROD_ORDER_SEQ 
+   </sql>
+   
+   <sql id="listActionWhereClause">
+      <!-- 상점ID별 검색  -->
+      <if test='store_id != null and store_id != ""'>
+         AND F.STORE_ID = #{store_id}
+      </if>
+
+      <!-- 기간 설정 -->
+      <choose>
+         <when test='period_opt == "P" or period_opt == null'>
+            <if test='start_date != null and start_date != ""'>
+               AND D.CREATE_DATETIME <![CDATA[>=]]> STR_TO_DATE(#{start_date}, '%Y-%m-%d')
+            </if>
+            <if test='end_date != null and end_date != ""'>
+               AND D.CREATE_DATETIME <![CDATA[<]]> DATE_ADD(STR_TO_DATE(#{end_date}, '%Y-%m-%d'), INTERVAL 1 DAY)
+            </if>
+         </when>
+         <when test='period_opt == "S"'>
+            <if test='start_date != null and start_date != ""'>
+               AND B.UPDATE_DATETIME <![CDATA[>=]]> STR_TO_DATE(#{start_date}, '%Y-%m-%d')
+            </if>
+            <if test='end_date != null and end_date != ""'>
+               AND B.UPDATE_DATETIME <![CDATA[<]]> DATE_ADD(STR_TO_DATE(#{end_date}, '%Y-%m-%d'), INTERVAL 1 DAY)
+            </if>
+         </when>
+      </choose>
+      
+      <!-- 주문상태 설정 -->
+      <if test='order_opt != null and order_opt != ""'>
+         AND DTL_NM = #{order_opt}
+      </if> 
+      
+      <!-- 검색 설정 -->
+      <if test='search_txt != "" and search_opt != null'>
+         <choose>
+            <when test='search_opt == "B"'>AND USER_NM LIKE concat('%',#{search_txt},'%')</when>
+            <when test='search_opt == "I"'>AND PROD_ORDER_NO LIKE concat('%',#{search_txt},'%')</when>
+         </choose>
+      </if>
+      
+      <!-- 리스트 타입결정 -->
+      <choose>
+         <when test='listType == "1"'>AND ( ( waybil_no IS NULL OR waybil_no = '' ) OR ( (echn_waybil_no IS NULL OR echn_waybil_no = '' ) AND dtl_cd IN ('220', '230', '240', '250') ) )</when>
+         <when test='listType == "2"'>AND ( store_id_memo != NULL OR store_id_memo != '' )</when>
+      </choose>
+   </sql>
+   
+   <!-- 선택 건 저장(주소, 세부주소, 우편번호) -->
+   <update id="selectedAddrUpadte" parameterType="com.ncomz.nshop.domain.admin.delivery.DeliveryInfoMgmt">      
+      UPDATE /* DeliveryMapper.xml.selectedAddrUpadte */ 
+             T_ORDER_INFO
+         SET DTL_ADDR = #{dtl_addr} , BASE_ADDR = #{base_addr}, ZIP_CD = #{zip_cd}
+        WHERE ORDER_SEQ = #{order_seq};       
+   </update>
+   
+   <!-- 선택 건 저장(송장번호) -->
+   <update id="selectedWaybilUpadte" parameterType="com.ncomz.nshop.domain.admin.delivery.DeliveryInfoMgmt">      
+        UPDATE /* DeliveryMapper.xml.selectedWaybilUpadte */ 
+               T_DLVY_INFO
+             SET WAYBIL_NO = #{waybil_no},
+                 ECHN_WAYBIL_NO = #{echn_waybil_no}
+          WHERE PROD_ORDER_SEQ = #{prod_order_seq};
+   </update>
+   
+   <!-- 선택 건 발송 처리 전 확인 -->
+   <select id="selectedShipCheck" resultType="String" parameterType="String">
+      SELECT /* DeliveryMapper.xml.selectedShipCheck */ 
+             CONCAT(C.WAYBIL_NO, '-', A.ORDER_STS_CD) AS RESULT
+        FROM T_PRODUCT_ORDER_REF A,
+             T_COMMON_CODE B,
+             T_DLVY_INFO C
+       WHERE A.order_sts_cd = B.dtl_cd
+         AND A.prod_order_seq = C.prod_order_seq
+         AND B.grp_cd = 'ORDR_STAT'
+         AND A.prod_order_no = #{prod_order_no};
+   </select>
+   
+   <!-- 선택 건 발송 처리-->
+   <update id="selectedShipUpdate" parameterType="com.ncomz.nshop.domain.admin.delivery.DeliveryInfoMgmt">      
+       UPDATE /* DeliveryMapper.xml.selectedWaybilUpadte */
+                T_PRODUCT_ORDER_REF A,      
+                T_COMMON_CODE B,
+                  T_DLVY_INFO C         
+            SET C.UPDATE_DATETIME = NOW(),
+                  A.order_sts_cd = 
+           CASE 
+           WHEN A.order_sts_cd = '020' THEN '030'
+           WHEN A.order_sts_cd = '220' THEN '230'
+           ELSE A.order_sts_cd
+              END         
+          WHERE A.order_sts_cd = B.dtl_cd 
+              AND A.PROD_ORDER_SEQ = C.PROD_ORDER_SEQ
+            AND B.grp_cd = 'ORDR_STAT'
+            AND A.prod_order_no = #{prod_order_no};
+   </update>
+   
+ </mapper>
