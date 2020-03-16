@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:util="http://www.springframework.org/schema/util" xmlns:p="http://www.springframework.org/schema/p" xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+	    http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+	    http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+	<!-- annotation config & scan -->
+	<context:annotation-config />
+
+	<context:component-scan base-package="com.ncomz.nshop" />
+
+	<mvc:annotation-driven />
+	<!-- 정적 파일(image,js,css) 경로 설정 -->
+	<bean class="org.springframework.http.converter.ByteArrayHttpMessageConverter">
+		<property name="supportedMediaTypes">
+			<list>
+				<value>image/svg</value>
+				<value>image/jpeg</value>
+				<value>image/png</value>
+			</list>
+		</property>
+	</bean>
+	<mvc:default-servlet-handler />
+
+	<!-- config.properties 파일을 xml로 변경 -->
+	<util:properties id="configuration" location="/WEB-INF/classes/configuration-properties.xml" />
+
+	<!-- tiles2 layout config -->
+	<bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
+		<property name="definitions">
+			<list>
+				<value>classpath:tiles-layout.xml</value>
+			</list>
+		</property>
+		<property name="preparerFactoryClass" value="org.springframework.web.servlet.view.tiles3.SpringBeanPreparerFactory" />
+	</bean>
+
+	<!-- view resolver -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="#{excelResolver.order+1}">
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJacksonJsonView" />
+			</list>
+		</property>
+		<property name="viewResolvers">
+			<list>
+				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
+					<property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView" />
+				</bean>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="excelResolver" class="org.springframework.web.servlet.view.XmlViewResolver" p:order="#{T(org.springframework.core.Ordered).HIGHEST_PRECEDENCE}">
+		<property name="location">
+			<value>classpath:mvc-config-excel-view.xml</value>
+		</property>
+	</bean>
+
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></bean>
+
+	<bean id="ehcache" class="org.springframework.cache.ehcache.EhCacheFactoryBean" scope="singleton">
+		<property name="cacheManager">
+			<bean class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+				<property name="configLocation" value="classpath:ehcache.xml" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- Application Message Bundle -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basename" value="/WEB-INF/messages/messages" />
+		<property name="cacheSeconds" value="0" />
+		<property name="defaultEncoding" value="UTF-8" />
+	</bean>
+	<bean id="messageSourceAccessor" class="org.springframework.context.support.MessageSourceAccessor">
+		<constructor-arg ref="messageSource" />
+	</bean>
+	<bean id="message" class="com.ncomz.nshop.utillty.MessageUtil">
+		<property name="messageSourceAccessor" ref="messageSourceAccessor"></property>
+	</bean>
+
+	<!--<bean id="localeResolver" class="org.springframework.web.servlet.i18n.SessionLocaleResolver"> -->
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="defaultLocale" value="ko" /><!-- 기본언어 한국어 -->
+		<property name="cookieName" value="nshopLanguage"/>
+		<property name="cookieMaxAge" value="100000"/>
+		<property name="cookiePath" value="/"/>
+	</bean>
+
+
+	<mvc:interceptors>
+
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<mvc:exclude-mapping path="/css/**" />
+			<mvc:exclude-mapping path="/js/**" />
+			<mvc:exclude-mapping path="/image/**" />
+			<mvc:exclude-mapping path="/img/**" />
+			<mvc:exclude-mapping path="/webfont/**" />
+			<bean class="com.ncomz.nshop.interceptor.CustomInterceptor">
+				<property name="noSession">
+					<list>
+						<value>/</value>
+						<value>/login/admin/login</value>
+						<value>/login/admin/loginAction</value>
+						<value>/login/admin/searchIdPw</value>
+						<value>/login/front/searchId</value>
+						<value>/login/searchIdAction</value>
+						<value>/login/searchPwAction</value>
+						<value>/login/searchIdPwAction</value>
+						<value>/login/front/loginAction</value>
+						<value>/login/admin/goSignIn</value>
+						<value>/login/front/goSignInfront</value>
+						<value>/login/chkId</value>
+						<value>/login/chkEmail</value>
+						<value>/login/joinMemberAction</value>
+						<value>/common/security/makeDummy</value>						
+						<value>/front/product/*</value>		
+						<value>/front/mypage/*</value>		
+						<value>/front/order/*</value>						
+						<value>/common/file/downloadImage/*</value>									
+					</list>
+				</property>
+				<property name="redirectPage">
+					<value>/</value>
+				</property>
+			</bean>
+		</mvc:interceptor>
+
+		<!-- configuration for handling browser back button -->
+		<mvc:interceptor>
+			<mvc:mapping path="/**/*" />
+			<bean id="webContentInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+				<property name="cacheSeconds" value="60" />
+				<property name="useExpiresHeader" value="false" />
+				<property name="useCacheControlHeader" value="false" />
+				<property name="useCacheControlNoStore" value="false" />
+			</bean>			
+			
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/**" />
+			<bean class="com.ncomz.nshop.interceptor.CategoryInfoInterceptor">
+			</bean>
+		</mvc:interceptor>
+
+		<!-- 브라우저 캐쉬 방지 설정(하루동안) -->
+		<!-- <bean class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+			<property name="cacheSeconds" value="0" />
+			<property name="useExpiresHeader" value="true" />
+			<property name="useCacheControlHeader" value="true" />
+			<property name="useCacheControlNoStore" value="true" />
+			<property name="cacheMappings">
+				<props>
+					<prop key="/image/**">86400</prop>
+					<prop key="/img/**">86400</prop>
+					<prop key="/js/**">86400</prop>
+					<prop key="/css/**">86400</prop>
+					<prop key="/webfont/**">86400</prop>
+				</props>
+			</property>
+		</bean> -->
+
+	</mvc:interceptors>
+
+	<!-- Data Source 설정 -->
+	<import resource="datasource-config.xml" />
+	<!-- <import resource="quartz-config.xml"/> -->
+	<import resource="mail-config.xml" />
+
+</beans>

@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncomz.nshop.dao.admin.common.menu.MenuMapper">
+
+	<select id="getMenuList" parameterType="com.ncomz.nshop.domain.admin.common.Menu" resultType="com.ncomz.nshop.domain.admin.common.Menu">
+		SELECT M.MENU_ID,
+			M.PARENT_ID,
+			CASE WHEN IFNULL(L.TITLE, '') = '' THEN M.TITLE ELSE L.TITLE END AS TITLE,
+			M.DISPLAY_ORDER,
+			M.URL,
+			M.ICON
+		FROM T_MENU M
+		LEFT OUTER JOIN T_MENU_LANGUAGE L ON L.MENU_ID = M.MENU_ID AND L.LANGUAGE = #{language}
+	   WHERE HIDDEN_YN = 'N' 
+		ORDER BY DISPLAY_ORDER
+	</select>
+	
+	<select id="getAllUserGroupMenuList" parameterType="com.ncomz.nshop.domain.admin.common.UserGroup" resultType="com.ncomz.nshop.domain.admin.common.Menu">
+		SELECT M.MENU_ID,
+			M.PARENT_ID,
+			CASE WHEN IFNULL(L.TITLE, '') = '' THEN M.TITLE ELSE L.TITLE END AS TITLE,
+			M.DISPLAY_ORDER,
+			M.URL,
+			M.ICON,
+			A.AUTH_TP
+		FROM T_MENU M
+			LEFT OUTER JOIN T_USER_GROUP_AUTH A ON M.MENU_ID = A.MENU_ID AND A.USR_GRP_ID = #{usr_grp_id}
+			LEFT OUTER JOIN T_MENU_LANGUAGE L ON L.MENU_ID = M.MENU_ID AND L.LANGUAGE = #{language}
+	   WHERE M.HIDDEN_YN = 'N' 
+		ORDER BY DISPLAY_ORDER
+	</select>
+	
+	<select id="getUserGroupMenuList" parameterType="com.ncomz.nshop.domain.admin.common.UserGroup" resultType="com.ncomz.nshop.domain.admin.common.Menu">
+		SELECT M.MENU_ID, /*  doyejin */
+			M.PARENT_ID,
+			CASE WHEN IFNULL(L.TITLE, '') = '' THEN M.TITLE ELSE L.TITLE END AS TITLE,
+			M.DISPLAY_ORDER,
+			M.URL,
+			M.ICON,
+			A.AUTH_TP
+		FROM T_MENU M
+			INNER JOIN T_USER_GROUP_AUTH A ON M.MENU_ID = A.MENU_ID AND A.USR_GRP_ID = #{usr_grp_id}
+			LEFT OUTER JOIN T_MENU_LANGUAGE L ON L.MENU_ID = M.MENU_ID AND L.LANGUAGE = #{language}
+	   WHERE M.HIDDEN_YN = 'N' 
+		ORDER BY DISPLAY_ORDER
+	</select>
+
+	<insert id="insertMenu" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		<selectKey keyProperty="menu_id" resultType="String" order="BEFORE">
+			SELECT IFNULL(MAX(MENU_ID), 0) + 1 FROM T_MENU
+		</selectKey>
+		INSERT INTO T_MENU (
+			MENU_ID,
+			PARENT_ID,
+			TITLE,
+			DISPLAY_ORDER,
+			URL,
+			ICON
+		) VALUES (
+			#{menu_id},
+			#{parent_id},
+			#{title},
+			(SELECT A.DISPLAY_ORDER FROM (SELECT IFNULL(MAX(DISPLAY_ORDER), 0) + 1 AS DISPLAY_ORDER FROM T_MENU WHERE PARENT_ID = #{parent_id}) A),
+			#{url},
+			#{icon}
+		)
+	</insert>
+
+	<select id="getMenu" parameterType="com.ncomz.nshop.domain.admin.common.Menu" resultType="com.ncomz.nshop.domain.admin.common.Menu">
+		SELECT MENU_ID,
+			PARENT_ID,
+			TITLE,
+			DISPLAY_ORDER,
+			URL,
+			ICON
+		FROM T_MENU
+       WHERE HIDDEN_YN = 'N' 		
+		WHERE MENU_ID = #{menu_id}
+	</select>
+
+	<update id="updateMenuInfo" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		UPDATE T_MENU SET TITLE = #{title},
+			URL = #{url},
+			ICON = #{icon}
+		WHERE MENU_ID = #{menu_id}
+	</update>
+
+	<update id="updateOldDisplayOrders" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		UPDATE T_MENU SET DISPLAY_ORDER = DISPLAY_ORDER - 1
+		WHERE PARENT_ID = #{parent_id}
+			AND DISPLAY_ORDER > #{display_order}
+	</update>
+
+	<update id="updateNewDisplayOrders" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		UPDATE T_MENU SET DISPLAY_ORDER = DISPLAY_ORDER + 1
+		WHERE PARENT_ID = #{parent_id}
+			AND DISPLAY_ORDER >= #{display_order}
+	</update>
+
+	<update id="updateMenuPosition" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		UPDATE T_MENU SET PARENT_ID = #{parent_id},
+			DISPLAY_ORDER = #{display_order}
+		WHERE MENU_ID = #{menu_id}
+	</update>
+
+	<delete id="deleteMenuInfo" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		DELETE FROM T_MENU
+		WHERE MENU_ID = #{menu_id}
+	</delete>
+	
+	<insert id="insertMenuLanguage" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		INSERT INTO T_MENU_LANGUAGE (
+			MENU_ID,
+			LANGUAGE,
+			TITLE
+		) VALUES (
+			#{menu_id},
+			#{language},
+			#{title}
+		)
+	</insert>
+	
+	<delete id="deleteMenuLanguage" parameterType="com.ncomz.nshop.domain.admin.common.Menu">
+		DELETE FROM T_MENU_LANGUAGE WHERE MENU_ID = #{menu_id}
+	</delete>
+	
+	<select id="getMenuLanguageList" parameterType="com.ncomz.nshop.domain.admin.common.Menu" resultType="com.ncomz.nshop.domain.admin.common.Menu">
+		SELECT MENU_ID,
+			LANGUAGE,
+			TITLE
+		FROM T_MENU_LANGUAGE
+		WHERE MENU_ID = #{menu_id}
+	</select>
+	
+	<select id="countMenuAuth" parameterType="com.ncomz.nshop.domain.admin.common.Menu" resultType="int">
+		SELECT COUNT(*)
+		FROM T_USER_GROUP_AUTH A,
+			T_MENU M
+		WHERE A.MENU_ID = M.MENU_ID
+			AND A.USR_GRP_ID = #{usrGrpId}
+			AND M.URL LIKE #{url} 
+	</select>
+
+</mapper>

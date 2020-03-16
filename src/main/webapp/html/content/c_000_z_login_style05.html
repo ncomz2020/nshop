@@ -1,0 +1,305 @@
+<div class="amb_layout_common amb_admin_layout_temp_01"><!-- class명 amb_layout_common :필수  / amb_admin_layout_temp_01:필수(사이트 레이아웃 결정) -->
+	
+	<div class="content loginStyle05"><!-- 로그인 스타일을 class명으로 지정함 // loginStyle04 // background 이미지 & 컨텐츠 센터형2 -->
+		
+		<!-- ////////////// 롤링 페이드 인아웃 관련 /////////////// -->
+		<!-- 롤링 페이드 인아웃 이미지 영역 -->
+		<div class="loginBgBox"> 
+			<div id="loginBg1" class="loginBg bg01" style="opacity: 1;"></div>
+		</div>
+
+		<!-- ////////////// 롤링 페이드 인아웃 관련 /////////////// -->
+
+		<!-- ////////////// background color gradient 변경효과 관련 /////////////// -->
+		<div id="gradientBg" class="bgGradient"></div>
+
+		<script type="text/javascript">
+		//background color gradient change 스크립트
+		$(document).ready(function() {	
+			var colors = new Array(
+			  [62,35,255],
+			  [77,153,77],
+			  [179,11,59],
+			  [31,108,140],
+			  [158,26,158],
+			  [225,120,14]
+			);
+
+			var step = 0;
+			var colorIndices = [0,1,2,3];
+
+			//transition speed
+			var gradientSpeed = 0.01;
+
+			function updateGradient()
+			{			  
+			if ( $===undefined ) return;
+			  
+			var c0_0 = colors[colorIndices[0]];
+			var c0_1 = colors[colorIndices[1]];
+			var c1_0 = colors[colorIndices[2]];
+			var c1_1 = colors[colorIndices[3]];
+
+			var istep = 1 - step;
+			var r1 = Math.round(istep * c0_0[0] + step * c0_1[0]);
+			var g1 = Math.round(istep * c0_0[1] + step * c0_1[1]);
+			var b1 = Math.round(istep * c0_0[2] + step * c0_1[2]);
+			var color1 = "rgb("+r1+","+g1+","+b1+")";
+
+			var r2 = Math.round(istep * c1_0[0] + step * c1_1[0]);
+			var g2 = Math.round(istep * c1_0[1] + step * c1_1[1]);
+			var b2 = Math.round(istep * c1_0[2] + step * c1_1[2]);
+			var color2 = "rgb("+r2+","+g2+","+b2+")";
+
+			$('#gradientBg').css({
+				background: "-webkit-gradient(linear, left top, right top, from("+color1+"), to("+color2+"))"}).css({
+				background: "-moz-linear-gradient(left, "+color1+" 0%, "+color2+" 100%)"});
+			  
+			  step += gradientSpeed;
+			  if ( step >= 1 )
+			  {
+				step %= 1;
+				colorIndices[0] = colorIndices[1];
+				colorIndices[2] = colorIndices[3];
+				
+				//pick two new target color indices
+				//do not pick the same as the current one
+				colorIndices[1] = ( colorIndices[1] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;
+				colorIndices[3] = ( colorIndices[3] + Math.floor( 1 + Math.random() * (colors.length - 1))) % colors.length;				
+			  }
+			}
+
+			setInterval(updateGradient,10);
+		});
+		</script>
+		<!-- ////////////// background color gradient 변경효과 관련 /////////////// -->
+		
+		<!-- 좌측 컨텐츠 영역 -->
+		<div  class="loginDetail">
+			<div id="canvas" class="canvasBg"></div>
+			
+			<!-- Main library -->
+			<script src="../js/three3D/three.min.js"></script>
+		  
+			<!-- Helpers -->
+			<script src="../js/three3D/renderers/Projector.js"></script>
+			<script src="../js/three3D/renderers/CanvasRenderer.js"></script>
+
+			<script type="text/javascript">
+
+				var SEPARATION = 100, AMOUNTX = 50, AMOUNTY = 50;
+
+				var container, stats;
+				var camera, scene, renderer;
+
+				var particles, particle, count = 0;
+
+				var mouseX = 0, mouseY = 0;
+
+				var windowHalfX = window.innerWidth / 2;
+				var windowHalfY = window.innerHeight / 2;
+
+				init_make();
+				animate();
+
+				function init_make() {
+
+					//container = document.createElement( 'canvas' );
+					container = document.getElementById("canvas");
+					//document.body.appendChild( container );
+
+					camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+					camera.position.z = 1000;
+
+					scene = new THREE.Scene();
+
+					//
+					//renderer = new THREE.CanvasRenderer({ alpha: true });
+					$('#canvas').append(container);
+					//
+
+					particles = new Array();
+
+					var PI2 = Math.PI * 2;
+					var material = new THREE.SpriteCanvasMaterial( {
+
+						color: 0xffffff,
+						opacity: 0.2,
+						program: function ( context ) {
+
+							context.beginPath();
+							context.arc( 0, 0, 0.5, 0, PI2, true );
+							context.fill();
+
+						}
+
+					} );
+
+					var i = 0;
+
+					for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+
+						for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+
+							particle = particles[ i ++ ] = new THREE.Sprite( material );
+							particle.position.x = ix * SEPARATION - ( ( AMOUNTX * SEPARATION ) / 2 );
+							particle.position.z = iy * SEPARATION - ( ( AMOUNTY * SEPARATION ) / 2 );
+							scene.add( particle );
+
+						}
+
+					}
+
+					renderer = new THREE.CanvasRenderer();
+					renderer.setSize( window.innerWidth, window.innerHeight );
+					container.appendChild( renderer.domElement );
+
+					document.addEventListener( 'mousemove', onDocumentMouseMove, false );
+					document.addEventListener( 'touchstart', onDocumentTouchStart, false );
+					document.addEventListener( 'touchmove', onDocumentTouchMove, false );
+
+					window.addEventListener( 'resize', onWindowResize, false );
+
+				}
+
+				function onWindowResize() {
+
+					windowHalfX = window.innerWidth / 2;
+					windowHalfY = window.innerHeight / 2;
+
+					camera.aspect = window.innerWidth / window.innerHeight;
+					camera.updateProjectionMatrix();
+
+					renderer.setSize( window.innerWidth, window.innerHeight );
+
+				}
+
+				//
+
+				function onDocumentMouseMove( event ) {
+					mouseX = event.clientX - windowHalfX * 2;
+					mouseY = event.clientY - windowHalfY * 2;
+				}
+
+				function onDocumentTouchStart( event ) {
+
+					if ( event.touches.length === 1 ) {
+
+						event.preventDefault();
+
+						mouseX = event.touches[ 0 ].pageX - windowHalfX;
+						mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+					}
+
+				}
+
+				function onDocumentTouchMove( event ) {
+
+					if ( event.touches.length === 1 ) {
+
+						event.preventDefault();
+
+						mouseX = event.touches[ 0 ].pageX - windowHalfX;
+						mouseY = event.touches[ 0 ].pageY - windowHalfY;
+
+					}
+
+				}
+
+				//
+
+				function animate() {
+					requestAnimationFrame( animate );
+					render();
+				}
+
+				function render() {
+
+					camera.position.x += ( mouseX - camera.position.x ) * .05;
+					camera.position.y += ( - mouseY - camera.position.y ) * .05;
+					camera.lookAt( scene.position );
+
+					var i = 0;
+
+					for ( var ix = 0; ix < AMOUNTX; ix ++ ) {
+
+						for ( var iy = 0; iy < AMOUNTY; iy ++ ) {
+
+							particle = particles[ i++ ];
+							particle.position.y = ( Math.sin( ( ix + count ) * 0.3 ) * 50 ) +
+								( Math.sin( ( iy + count ) * 0.5 ) * 50 );
+							particle.scale.x = particle.scale.y = ( Math.sin( ( ix + count ) * 0.3 ) + 1 ) * 4 +
+								( Math.sin( ( iy + count ) * 0.5 ) + 1 ) * 4;
+
+						}
+
+					}
+
+					renderer.render( scene, camera );
+
+					count += 0.1;
+
+				}
+
+			</script>
+
+		</div>
+		
+		
+		<!-- 우측 실제 로그인 영역 -->
+		<div class="loginPage">
+			<h1>
+				<span class="title">LOGIN</span>
+			</h1>
+
+			<!-- 필요없는 경우 삭제 -->
+			<div class="selectLang">
+				<a href="#" class="amb_btnstyle middle" id="" >O'ZB</a>				
+				<a href="#" class="amb_btnstyle middle active" id="" >РУС</a>				
+				<a href="#" class="amb_btnstyle middle" id="" >ENG</a>				
+			</div>
+			
+			<script type="text/javascript">
+				$(document).on("click", ".selectLang a", function(){
+					$(this).siblings().removeClass('active');
+					$(this).addClass('active');
+				});
+			</script>
+			<!-- //필요없는 경우 삭제 -->
+
+			<fieldset class="loginBox">				
+				<input type="text" class="id" placeholder="ID" />
+				<input type="password" class="pw" placeholder="PASSWORD" />
+
+				<div class="loginSetting">
+					<span class="fl">
+						<input type="checkbox" id="checkBox_01" checked/><label for="checkBox_01" class="inp_func">로그인 상태 유지</label>
+					</span>
+
+					<span class="fr">
+						<a href="#" class="underline">ID/PW 찾기</a>
+					</span>
+					
+				</div>
+
+				<div class="loginBtn">
+					<a href="00_001_defaultLayout_ex01.html" class="amb_btnstyle red large">LOGIN</a>
+				</div>
+			</fieldset>
+			<div class="copyright">Copyright @2017 회사명 All Rights Reserved</div>
+		</div>
+	</div>
+</div>
+
+<script type="text/javascript">
+$(document).ready(function() {	
+	var _this = $('.loginPage');
+
+	// 로그인 페이지에서만 필요한 ui js // body에 클래스명 추가
+	_this.parents('body').addClass('loginPage');
+
+});
+</script>
+
+
