@@ -1,0 +1,309 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">기타 Component</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">공통</a>
+					>
+					<a href="#">기타 구성 요소</a>
+				</div>
+
+			</h2>
+			
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">라디오, 체크박스 / input type="radio" , input type="checkbox" </span>
+					</h3>
+					<div class="unitBox">		
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:20%;">
+								<col style="">
+							</colgroup>	
+							<tbody>
+								<tr> 
+									<th>라디오 버튼</th>
+									<td>
+										<input type="radio" id="radio_1_01" name="radio_1"><label for="radio_1_01" class="inp_func">default</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" id="radio_1_02" name="radio_1" checked ><label for="radio_1_02" class="inp_func">checked</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="radio" id="radio_1_03" name="radio_1" disabled ><label for="radio_1_03" class="inp_func">disabled</label>
+									</td>
+								</tr>
+								<tr> 
+									<th>체크박스</th>
+									<td>
+										<input type="checkbox" id="check_1_01"><label for="check_1_01" class="inp_func">default</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_1_02" checked ><label for="check_1_02" class="inp_func">checked</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_1_03" disabled ><label for="check_1_03" class="inp_func">disabled</label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_1_04" checked disabled ><label for="check_1_04" class="inp_func">checked disabled</label>
+									</td>
+								</tr>
+
+								<tr> 
+									<th>체크박스 텍스트가 없는 경우 -> table등에 </th>
+									<td>
+										<input type="checkbox" id="check_2_01"><label for="check_2_01" class="inp_func"></label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_2_02" checked ><label for="check_2_02" class="inp_func"></label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_2_03" disabled ><label for="check_2_03" class="inp_func"></label>
+										&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										<input type="checkbox" id="check_2_04" checked disabled ><label for="check_2_04" class="inp_func"></label>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">설명 <i class="ambicon-009_arrow2_up"></i></span>
+					</h3>
+					<div class="unitBox grayBox">
+						<xmp class="codeView" style="height:auto;">
+<input type="radio" id="아이디" name="radio_1"><label for="아이디와 동일한 네임" class="inp_func">default</label>
+
+css에 의핸 커스텀된 라디오 버튼을 제공하므로 만드시 <input type="radio" id="0000" name=""><label for="0000" class="inp_func">텍스트</label>형식을 사용해야함
+
+label의 for=""의 네임을 input type="radio", input type="checkbox"의 id=""네임을 찾아 ckedcked disabled등의 상태를 표시하므로 
+반그시 랜더링된 하나의 페이지(레이어팝업)에서는 같은 id=""는 존재하면 않됨
+
+---- 연관 css ---
+css/amb_admin_layout_temp_01.css -> /* **************** detault custom radio,checkbox  style **************** */ 아래 부분
+						</xmp>
+						
+					</div>
+				</div>
+			</div>
+
+
+
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;"/>
+
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">input type="text" , textarea, input type="number"</span>
+					</h3>
+					<div class="unitBox">		
+						<table class="amb_form_table lineAll">
+							<colgroup>
+								<col style="width:20%;">
+								<col style="">
+							</colgroup>	
+							<tbody>
+								<tr> 
+									<th>input type="text" width 미설정시</th>
+									<td>
+										<input type="text" class="inp" style=""/>
+									</td>
+								</tr>
+								<tr> 
+									<th>input type="text" width 설정시</th>
+									<td>
+										<input type="text" class="inp" style="width:200px;"/>
+										<br/>
+										<span class="ex mgT5">style="width:;"의 형식으로 필요한 만큼 width를 정해주면됨 // 기본 width:80%;</span>
+									</td>
+								</tr>
+								<tr> 
+									<th>input type="text" placeholder="설정시" </th>
+									<td>
+										<input type="text" class="inp" placeholder="미리 보여줄 텍스트"/>
+
+										<span class="ex mgT5">placeholder=""를 사용하여 미리 보여줄 텍스트 출력 - 해당 내용은 value가 아님</span>
+									</td>
+								</tr>
+								<tr> 
+									<th>input type="text" disabled </th>
+									<td>
+										<input type="text" class="inp" disabled  placeholder="disabled된 모습"/>
+
+										<span class="ex mgT5">비활성 필요시 input에 애트리뷰트 disabled 추가</span>
+									</td>
+								</tr>
+								<tr> 
+									<th>textarea</th>
+									<td>
+										<textarea class="inp" style=""></textarea>
+										<br/>
+
+										<span class="ex mgT5">style="width:; height:;"의 형식으로 필요한 만큼 width와 height를 정해주면됨 // 기본 width:80%; height:없음;</span>
+									</td>
+								</tr>
+
+								<tr> 
+									<th>input type="number"<br/> input class에 spinner 추가"</th>
+									<td>
+										<input type="number" class="inp spinner" disabled placeholder="disabled된 예제"/>
+										<br/>
+										<input type="number" class="inp spinner" placeholder="wdith가 없으면 css에 의해 기본 80%" />
+										<br/>
+										<input type="number" class="inp spinner right" style="width:300px;" placeholder="wdith가 있으면 같이 (px일때)" />
+										<input type="number" class="inp spinner" style="width:20%;" placeholder="wdith가 있으면 같이 (%일때)" />
+
+										<br/>
+										<input type="number" class="inp spinner" placeholder="type=number 일때 spinner를 사용하면 css에 의해 -webkit-inner-spin-button {-webkit-appearance: none;}" />
+
+										<br/>
+
+										<span class="ex mgT5">input 박스에 숫자 nunber spinner가 필요한경우 type="number" js/amb_ui_common.js에 의해 해당기능 자동생성됨 </span>
+										<br/>
+										<span class="ex mgT5">jquery ui 기본 플러그인을 이용한 spiner -> https://jqueryui.com/spinner/ 참고</span>
+									</td>
+								</tr>
+
+								<tr> 
+									<th>input type="number"일지라도<br/>spinner 기능이 필요 없는 경우<br/>input class에 noSpinner 추가</th>
+									<td>
+										<input type="number" class="inp noSpinner" disabled placeholder="disabled된 예제"/>
+										<br/>
+										<input type="number" class="inp noSpinner" placeholder="wdith가 없으면 css에 의해 기본 80%" />
+										<br/>
+										<input type="number" class="inp noSpinner" style="width:300px;" placeholder="wdith가 있으면 같이 (px일때)" />
+										<input type="number" class="inp noSpinner" style="width:20%;" placeholder="wdith가 있으면 같이 (%일때)" />
+
+										<br/>
+										<input type="number" class="inp noSpinner" placeholder="type=number 일때 css에 의해 -webkit-inner-spin-button {-webkit-appearance: none;}" />
+
+										<br/>
+										<span class="ex mgT5">input 박스에  type="number" 일지라도 class에 noSpinner를 가지면  jquery ui 기본 플러그인을 이용한 spiner가 적용되지 않도록 함 // js/amb_ui_common.js </span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">input type="text" , textarea, input type="number" 예제</span>
+					</h3>
+
+					<div class="unitBox">		
+						<table class="amb_table">	
+							<colgroup>
+								<col style="">
+								<col style="">
+								<col style="">
+								<col style="">
+								<col style="">
+								<col style="width:12%">
+							</colgroup>					
+							<thead>
+								<tr>
+									<th>type=text</th>
+									<th>type=text</th>
+									<th>type=number</th>
+									<th>type=number</th>
+									<th>type=number</th>
+									<th>button</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>							
+									<td>
+										<input type="text" class="inp" placeholder="텍스트 기본 좌정렬" />
+									</td>
+									<td>
+										<input type="text" class="inp right" placeholder="텍스트 우정렬" />
+									</td>
+									<td>
+										<input type="number" class="inp spinner" disabled placeholder="disabled된 예제"/>
+									</td>
+									<td>
+										<input type="number" class="inp spinner right" placeholder="우정렬"/>
+									</td>
+									<td>
+										<input type="number" class="inp spinner" placeholder="기본 좌정렬" />
+									</td>
+									<td>
+										<a href="#" class="amb_btnstyle blue middle">수정</a>
+										<a href="#" class="amb_btnstyle gray middle">삭제</a>
+									</td>
+								</tr>
+								<tr>							
+									<td>
+										<input type="text" class="inp" disabled placeholder="disabled 텍스트 기본 좌정렬" />
+									</td>
+									<td>
+										<input type="text" class="inp right" disabled placeholder="disabled 텍스트 우정렬" />
+									</td>
+									<td>
+										<input type="number" class="inp spinner" disabled placeholder="disabled된 예제"/>
+									</td>
+									<td>
+										<input type="number" class="inp spinner right" placeholder="우정렬"/>
+									</td>
+									<td>
+										<input type="number" class="inp spinner" placeholder="기본 좌정렬" />
+									</td>
+									<td>
+										<a href="#" class="amb_btnstyle blue middle">수정</a>
+										<a href="#" class="amb_btnstyle gray middle">삭제</a>
+									</td>
+								</tr>
+								
+								<tr>							
+									<td>
+										<input type="text" class="inp center" placeholder="중앙앙렬" />
+									</td>
+									<td>
+										<input type="text" class="inp center" placeholder="중앙앙렬" />
+									</td>
+									<td>
+										<input type="number" class="inp noSpinner" disabled placeholder="disabled된 예제 noSpinner"/>
+									</td>
+									<td>
+										<input type="number" class="inp right noSpinner" placeholder="우정렬 noSpinner"/>
+									</td>
+									<td>
+										<input type="number" class="inp noSpinner" placeholder="기본 좌정렬 noSpinner" />
+									</td>
+									<td>
+										<a href="#" class="amb_btnstyle blue middle">수정</a>
+										<a href="#" class="amb_btnstyle gray middle">삭제</a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+			<!-- rowBox 반복단위 -->		
+
+
+
+			<hr style="display:block; height:1; border-top:1px solid #000; margin-top:30px;"/>
+
+
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

@@ -1,0 +1,173 @@
+<link id="inc_ambcss" rel="stylesheet" href="../css/inc_amb_css.css">
+<!-- 위의 css 및 인쿠르드는 독자적 팝업 페이지 제작시 디자인 확인을 위해 공통 css를 불러 오는 곳으로 실제 개발시에는 반드시 제거하여 주세요 // 중복 로딩에 의해 페이지 용량을 무겁게 합니다 --> 
+
+<!-- 실제 개별 페이지 개발자가 제작하는 부분 -->
+<div class="amb_layout_common amb_admin_layout_temp_01 amb_layerpopup" style="width:900px;"><!-- style="width:1000px;" 는 최대 1000px를 넘지 말아야 합니다. 1000px을 넘어도 css에 최대 1000px로 처리 되어있습니다. -->
+
+	<h1 class="popupHeader">
+		<span class="title">여기에 팝업 타이틀이 옵니다</span>
+		<a href="#" class="close" onClick="javascript:closeModal(this);"><i class="ambicon-015_mark_times"></i></a>
+	</h1>
+
+	<div id="content" class="content">		
+		
+		<div class="rowBox">
+			<div class="unitBox" style="">
+				<table class="amb_form_table lineAll">
+					<colgroup>
+						<col style="width:25%;" />
+						<col style="" />
+					</colgroup>	
+					<tbody>
+						<tr>
+							<th class="center">이름</th>
+							<td><a href="#" class="amb_btnstyle blue middle" onclick="javascript:openModal('00_layerPopup_001_defaultSample2.html' , 'popup_dialog_2depth')" >레이아 팝업 띄우기</a></td>
+						</tr>
+						<tr>
+							<th class="center">이름</th>
+							<td>
+								<input type="text" value="" class="inp datepicker" readonly="readonly" placeholder="date" />
+								&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+								<input type="text" value="" class="inp datepicker startDate" readonly="readonly" placeholder="date" />
+								~
+								<input type="text" value="" class="inp datepicker endDate" readonly="readonly" placeholder="date" />
+							</td>
+						</tr>
+						<tr>
+							<th class="center">이름</th>
+							<td><span class="amb_btnstyle gray middle" onClick="javascript:closeModal(this);">이렇게 컨텐츠 중간에 닫기 버튼이 있는 경우</span></td>
+						</tr>
+						<tr>
+							<th class="center">이름</th>
+							<td><input type="number" class="inp spinner right" placeholder="우정렬"/></td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<!-- rowBox 반복단위 -->
+
+		<div class="rowBox mgT20">
+			<h3>
+				<span class="title">새로운 rowBox</span>
+				<div class="fr btnArea middle">
+					<span class="inline">Total List <strong class="pColor_01">226</strong></span>&nbsp;&nbsp;
+					<select class="">
+						<option>10 line</option>
+						<option>20 line</option>
+						<option>50 line</option>
+					</select>
+					&nbsp;
+					<a href="#" class="amb_btnstyle green middle">추가</a>
+					<a href="#" class="amb_btnstyle green middle">신규</a>			
+				</div>
+			</h3>
+			<div class="unitBox" style="">
+				<table class="amb_table tableSortable theadFix" data-role-height="200"><!-- fixed thead를 사용하고자 할때시는 class에 theadFixed를 추가하고 data-role-height="100"을 이용하여 원하는 높이를 설정해주어야함. // 스크립트에 의해 를fixed thead table의 thead부분을 copy하여 자신의 앞에 복사하여 자동 생성함 // 높이 미설정시는 기본 200으로 설정됨 -->
+					<colgroup>
+						<col style="width:10%" />
+						<col style="width:13%" />
+						<col style="width:12%" />
+						<col style="" />
+						<col style="width:13%" />
+						<col style="width:15%" />
+					</colgroup>					
+					<thead>								
+						<tr>
+							<th class="sorter-false">Basy M/Y</th>
+							<th class="sorter-false">Billing Period</th>
+							<th class="sorter-false">Process Day</th>
+							<th>Customer ID</th>
+							<th class="sorter-false">Billing Period</th>
+							<th>Process Day</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>09/2015</td>
+							<td>G05</td>
+							<td>05/09/2016</td>
+							<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+							<td>G05</td>
+							<td>05/09/2016</td>
+						</tr>
+						<tr>
+							<td class="left">09/2015</td>
+							<td class="right">G05</td>
+							<td>05/09/2016</td>
+							<td><input type="text" class="inp"/></td>
+							<td>G08</td>
+							<td>06/09/2016</td>
+						</tr>
+						<tr>
+							<td>09/2015</td>
+							<td>G05</td>
+							<td>05/09/2016</td>
+							<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+							<td>G25</td>
+							<td>08/09/2016</td>
+						</tr>
+						<tr>
+							<td>09/2015</td>
+							<td>G05</td>
+							<td>05/09/2016</td>
+							<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+							<td>G25</td>
+							<td>08/09/2016</td>
+						</tr>
+						<tr>
+							<td>09/2015</td>
+							<td>G05</td>
+							<td>05/09/2016</td>
+							<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+							<td>G25</td>
+							<td>08/09/2016</td>
+						</tr>
+						<tr>
+							<td>09/2015</td>
+							<td>G05</td>
+							<td>05/09/2016</td>
+							<td><a href="#">contents contents contents contents  contents  contents  contents  </a></td>
+							<td>G25</td>
+							<td>08/09/2016</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+			<div class="paging left">
+				<ul class="paginglist">
+							
+					<li class="first"><a href="#"><i class="ambicon-006_arrow_first"></i></a></li>
+					<li class="prev"><a href="#"><i class="ambicon-002_arrow_left"></i></a></li>
+
+					<li><a href="#"> 1 </a></li>
+					<li><a href="#"> 2 </a></li>
+					<li class="active"><a href="#"> 3 </a></li>
+					<li><a href="#"> 4 </a></li>
+					<li><a href="#"> 5 </a></li>
+					<li><a href="#"> 6 </a></li>
+					<li><a href="#"> 7 </a></li>
+					<li><a href="#"> 8 </a></li>
+					<li><a href="#"> 9 </a></li>
+					<li><a href="#"> 10 </a></li>
+
+					<li class="next"><a href="#"><i class="ambicon-001_arrow_right"></i></a></li>
+					<li class="last"><a href="#"><i class="ambicon-005_arrow_last"></i></a></li>
+				</ul>
+
+				<div class="fr btnArea middle">
+					<a href="#" class="amb_btnstyle gray middle">삭제</a>
+					<a href="#" class="amb_btnstyle gray middle">해지</a>
+					<a href="#" class="amb_btnstyle blue middle">등록</a>
+					<a href="#" class="amb_btnstyle blue middle">확인</a>
+					<a href="#" class="amb_btnstyle blue middle">완료</a>
+				</div>
+
+			</div>
+		</div>
+		<!-- rowBox 반복단위 -->
+
+		
+	</div>
+</div>
+

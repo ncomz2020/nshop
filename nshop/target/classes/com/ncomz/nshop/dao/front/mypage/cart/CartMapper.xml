@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.front.mypage.cart.CartMapper">
+
+	<select id="list" resultType="com.ncomz.nshop.domain.front.mypage.cart.Cart">
+		   /* 
+        SELECT  prod_detail,
+				cart.prod_id,
+				prod_name,
+				cart.store_id, 
+				prod_name,
+				prod_price,
+				order_cnt
+        FROM T_WISH_PRODUCT_REF cart
+        INNER JOIN T_PRODUCT product
+		ON cart.prod_id = product.prod_id 
+		ORDER BY STORE_ID, WISH_SEQ
+       */
+         
+        SELECT  wish_seq,
+		        prod_detail,
+				cart.prod_id,
+				prod_name,
+				cart.store_id, 
+				prod_name,
+				prod_price,
+				order_cnt,
+				STORE_COUNT.store_cnt as store_cnt
+        FROM T_WISH_PRODUCT_REF cart
+        INNER JOIN T_PRODUCT product
+		ON cart.prod_id = product.prod_id 
+		INNER JOIN (
+				
+			SELECT store_id, COUNT(*) AS store_cnt
+			FROM T_WISH_PRODUCT_REF 
+			WHERE usr_id = #{usr_id}
+			GROUP BY store_id 
+		)AS STORE_COUNT
+		ON STORE_COUNT.store_id = cart.store_id
+		<if test="wish_seq != null and wish_seq != ''">
+			AND wish_seq IN (#{wish_seq})
+		</if>
+		WHERE cart.usr_id = #{usr_id}
+		ORDER BY store_id
+        
+	</select>	
+			
+ 	<insert id="insertAction" parameterType="com.ncomz.nshop.domain.front.mypage.cart.Cart">
+		<selectKey keyProperty="wish_seq" resultType="String" order="BEFORE">
+			SELECT IFNULL(MAX(WISH_SEQ), 0) + 1 FROM T_WISH_PRODUCT_REF
+		</selectKey>
+		INSERT INTO T_WISH_PRODUCT_REF (
+			WISH_SEQ, 
+			USR_ID, 
+			PROD_ID, 
+			ORDER_CNT,
+			STORE_ID
+		) VALUES (
+			cast(#{wish_seq} as unsigned),
+			#{usr_id},
+			#{prod_id},
+			#{order_cnt},
+			#{store_id}
+		)
+	</insert>
+	
+	<delete id="deleteAction" parameterType="com.ncomz.nshop.domain.front.mypage.cart.Cart">
+		DELETE
+	  	FROM T_WISH_PRODUCT_REF
+	 	WHERE  WISH_SEQ = #{wish_seq}
+	</delete>
+	
+	<select id="checkCart" parameterType="com.ncomz.nshop.domain.front.mypage.cart.Cart" resultType="com.ncomz.nshop.domain.front.mypage.cart.Cart">
+		SELECT wish_seq, usr_id, prod_id, order_cnt, store_id
+		FROM T_WISH_PRODUCT_REF
+		where usr_id = #{usr_id}
+		and prod_id = #{prod_id}
+	</select>
+	
+	<update id="updateCart">
+		update T_WISH_PRODUCT_REF
+		set 
+			ORDER_CNT = #{order_cnt}
+		where WISH_SEQ = #{wish_seq}
+	</update>
+ </mapper>

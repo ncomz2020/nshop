@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.login.LoginMapper">
+ 	<select id="countPresenceId" parameterType="String" resultType="Integer">
+ 		SELECT /*	LoginMapper.xml.countPresenceId	*/
+ 				COUNT(*)
+		  FROM T_USER
+		 WHERE 1=1
+		   AND USR_ID = #{usrId, jdbcType=VARCHAR}
+ 	</select>
+ 
+ 	<select id="getAccountLock" parameterType="String" resultType="String">
+		SELECT /* LoginMapper.xml.getAccountLock */
+			ACNT_LOCK_YN
+		FROM
+			T_USER
+		WHERE
+			USR_ID = #{usrId, jdbcType=VARCHAR}
+     </select>
+     
+     <select id="login" resultType="com.ncomz.nshop.domain.common.SessionUser">
+		  SELECT /* LoginMapper.xml.login */
+				usr_id,
+				usr_nm,
+				usr_grp_id,
+				(SELECT usr_grp_nm FROM T_USER_GROUP WHERE usr_grp_id = a.usr_grp_id) AS usr_grp_nm,
+				ip_band,
+				login_fail_cnt,
+	 			lst_login_dt,
+				lst_login_tm,
+				store_id
+			FROM T_USER a
+		   WHERE BINARY usr_id=#{usrId, jdbcType=VARCHAR}
+		     AND pwd=#{pswd, jdbcType=VARCHAR}
+		     AND use_yn='Y'
+		     AND usr_grp_id != 3
+     </select>
+     
+     <select id="loginfront" resultType="com.ncomz.nshop.domain.common.SessionUser">
+		  SELECT /* LoginMapper.xml.login */
+				usr_id,
+				usr_nm,
+				usr_grp_id,
+				(SELECT usr_grp_nm FROM T_USER_GROUP WHERE usr_grp_id = a.usr_grp_id) AS usr_grp_nm,
+				ip_band,
+				login_fail_cnt,
+	 			lst_login_dt,
+				lst_login_tm,
+				store_id
+			FROM T_USER a
+		   WHERE BINARY usr_id=#{usrId, jdbcType=VARCHAR}
+		     AND pwd=#{pswd, jdbcType=VARCHAR}
+		     AND use_yn='Y'
+		     AND usr_grp_id = 3
+     </select>
+     
+     <update id="updateLastLoginDateTime" parameterType="com.ncomz.nshop.domain.common.SessionUser">
+		UPDATE /* LoginMapper.xml.updateLastLoginDateTime */
+			T_USER
+		SET
+			lst_login_dt = CONCAT(COALESCE(SUBSTRING_INDEX(lst_login_dt, '|', -1), ''), '|', DATE_FORMAT(now(), '%Y%m%d')),
+			lst_login_tm = CONCAT(COALESCE(SUBSTRING_INDEX(lst_login_tm, '|', -1), ''), '|', TIME_FORMAT(now(), '%H%i%s')),
+			login_fail_cnt = 0
+		WHERE
+			usr_id=#{sessionUser.usr_id, jdbcType=VARCHAR}
+     </update>
+     
+     <select id="getLoginDate" parameterType="String" resultType="org.apache.commons.collections.map.CaseInsensitiveMap">
+		SELECT /* LoginMapper.xml.getLoginDate */
+ 			lst_login_dt as login_dt,
+			lst_login_tm as login_tm
+  		FROM
+			T_USER
+		WHERE
+			usr_id = #{usrId, jdbcType=VARCHAR}
+     </select>
+     
+     <update id="updateLoginFailCount" parameterType="com.ncomz.nshop.domain.authorization.User">
+		UPDATE /* LoginMapper.xml.updateLoginFailCount */
+			T_USER
+		SET
+			login_fail_cnt = login_fail_cnt + 1
+		WHERE
+			usr_id=#{usrId, jdbcType=VARCHAR}
+     </update>
+     
+     <update id="setAccountLock" parameterType="String">
+		UPDATE /* LoginMapper.xml.setAccountLock */
+			T_USER
+		SET
+			acnt_lock_yn = 'Y'
+		WHERE
+			usr_id = #{usrId, jdbcType=VARCHAR}
+     </update>
+     
+     <select id="getLoginFailCount" parameterType="String" resultType="Integer">
+		SELECT /* LoginMapper.xml.getLoginFailCount */
+			login_fail_cnt
+		FROM
+			T_USER
+		WHERE
+			usr_id = #{usrId, jdbcType=VARCHAR}
+     </select>
+     
+     <select id="countEmail" parameterType="String" resultType="Integer">
+     	SELECT /* LoginMapper.xml.countEmail */
+     			COUNT(*)
+     	  FROM T_USER
+     	 WHERE 1=1
+     	   AND email = #{email, jdbcType=VARCHAR}
+     </select>
+     
+     <select id="chkId" parameterType="String" resultType="Integer">
+     	SELECT /*	LoginMapper.xml.chkId	*/
+     		COUNT(*)
+     	  FROM T_USER
+     	 WHERE 1=1
+     	   AND usr_id = #{usr_id, jdbcType=VARCHAR}
+     </select>
+     
+     <select id="chkEmail" parameterType="String" resultType="Integer">
+     	SELECT /*	LoginMapper.xml.chkId	*/
+     		COUNT(*)
+     	  FROM T_USER
+     	 WHERE 1=1
+     	   AND email = #{email, jdbcType=VARCHAR}
+     </select>
+     
+     <insert id="insertNewMember" parameterType="com.ncomz.nshop.domain.authorization.User">
+     	INSERT INTO T_USER	/* LoginMapper.xml.insertNewMember */
+     	(usr_id, usr_grp_id, usr_nm, pwd, email, tel_no, mobile_no, ip_band, login_fail_cnt, pswd_due_dt, pswd_chng_cycl, lst_login_dt, lst_login_tm, acnt_lock_yn, old_pwdno1, old_pwdno2, store_id,base_addr,dtl_addr,zip_cd,gender,birth,join_date,use_yn)
+     	VALUES
+     	(#{usr_id, jdbcType=VARCHAR}, #{usr_grp_id, jdbcType=VARCHAR}, #{usr_nm, jdbcType=VARCHAR}, #{pwd , jdbcType=VARCHAR}, #{email, jdbcType=VARCHAR}
+     	, #{tel_no, jdbcType=VARCHAR}, #{mobile_no, jdbcType=VARCHAR}, '*.*.*.*', #{login_fail_cnt, jdbcType=VARCHAR}
+     	, '99991231','30','','','N','','',#{store_id, jdbcType=VARCHAR}
+     	, #{base_addr, jdbcType=VARCHAR}, #{dtl_addr, jdbcType=VARCHAR}, #{zip_cd, jdbcType=VARCHAR}, #{gender, jdbcType=VARCHAR}, #{birth, jdbcType=VARCHAR}, DATE_FORMAT(NOW(), '%Y%m%d%H%i%s'),'Y' )
+     </insert>
+     
+     <update id="updatePswd" parameterType="com.ncomz.nshop.domain.authorization.User">
+     	UPDATE T_USER	/*	LoginMapper.xml.updatePswd	*/
+     	   SET PWD = #{pwd, jdbcType=VARCHAR}
+     	 WHERE 1=1
+     	   AND EMAIL = #{email,	jdbcType=VARCHAR}
+     </update>
+
+     <update id="updatePsw" parameterType="com.ncomz.nshop.domain.authorization.User">
+     	UPDATE T_USER	/*	LoginMapper.xml.updatePsw	*/
+     	   SET PWD = #{pwd, jdbcType=VARCHAR}
+     	 WHERE 1=1
+     	   AND EMAIL = #{email,	jdbcType=VARCHAR} AND USR_NM = #{usr_nm, jdbcType=VARCHAR}
+     </update>
+            
+     <select id="searchId" resultType="String" parameterType="String">
+		  SELECT /* LoginMapper.xml.searchId */
+					USR_ID 
+			FROM 	T_USER
+			WHERE	USR_NM = #{usr_nm, jdbcType=VARCHAR}
+			  AND	EMAIL = #{email, jdbcType=VARCHAR}
+     </select>   
+ </mapper>

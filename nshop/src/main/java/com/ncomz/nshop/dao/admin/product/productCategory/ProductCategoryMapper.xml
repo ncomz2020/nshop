@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncomz.nshop.dao.admin.product.productCategory.ProductCategoryMapper">
+
+	<select id="getProductCategoryList" resultType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		SELECT C.CATEGORY_ID,
+			C.PARENT_ID,
+			CASE WHEN IFNULL(L.TITLE, '') = '' THEN C.TITLE ELSE L.TITLE END AS TITLE,
+			C.DISPLAY_ORDER,
+			C.EXPAND
+		FROM T_PRODUCT_CATEGORY C
+		LEFT OUTER JOIN T_PRODUCT_CATEGORY_LANGUAGE L ON C.CATEGORY_ID = L.CATEGORY_ID AND L.LANGUAGE = #{language}
+		ORDER BY DISPLAY_ORDER
+	</select>
+
+	<insert id="insertProductCategory" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		<selectKey keyProperty="category_id" resultType="String" order="BEFORE">
+			SELECT IFNULL(MAX(CATEGORY_ID), 0) + 1 FROM T_PRODUCT_CATEGORY
+		</selectKey>
+		INSERT INTO T_PRODUCT_CATEGORY (
+			CATEGORY_ID,
+			PARENT_ID,
+			TITLE,
+			DISPLAY_ORDER,
+			EXPAND
+		) VALUES (
+			#{category_id},
+			#{parent_id},
+			#{title},
+			(SELECT A.DISPLAY_ORDER FROM (SELECT IFNULL(MAX(DISPLAY_ORDER), 0) + 1 AS DISPLAY_ORDER FROM T_PRODUCT_CATEGORY WHERE PARENT_ID = #{parent_id}) A),
+			'Y'
+		)
+	</insert>
+
+	<select id="getProductCategory" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory" resultType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		SELECT CATEGORY_ID,
+			PARENT_ID,
+			TITLE,
+			DISPLAY_ORDER
+		FROM T_PRODUCT_CATEGORY
+		WHERE CATEGORY_ID = #{category_id}
+	</select>
+
+	<update id="updateProductCategoryInfo" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		UPDATE T_PRODUCT_CATEGORY SET TITLE = #{title}
+		WHERE CATEGORY_ID = #{category_id}
+	</update>
+
+	<update id="updateOldDisplayOrders" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		UPDATE T_PRODUCT_CATEGORY SET DISPLAY_ORDER = DISPLAY_ORDER - 1
+		WHERE PARENT_ID = #{parent_id}
+			AND DISPLAY_ORDER > #{display_order}
+	</update>
+
+	<update id="updateNewDisplayOrders" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		UPDATE T_PRODUCT_CATEGORY SET DISPLAY_ORDER = DISPLAY_ORDER + 1
+		WHERE PARENT_ID = #{parent_id}
+			AND DISPLAY_ORDER >= #{display_order}
+	</update>
+
+	<update id="updateProductCategoryPosition" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		UPDATE T_PRODUCT_CATEGORY SET PARENT_ID = #{parent_id},
+			DISPLAY_ORDER = #{display_order}
+		WHERE CATEGORY_ID = #{category_id}
+	</update>
+	
+	<delete id="deleteProductCategoryInfo" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		DELETE FROM T_PRODUCT_CATEGORY
+		WHERE CATEGORY_ID = #{category_id}
+	</delete>
+	
+	<update id="updateProductCategoryExpand" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		UPDATE T_PRODUCT_CATEGORY SET EXPAND = #{expand}
+		WHERE CATEGORY_ID = #{category_id}
+	</update>
+	
+	<select id="countProductCategoryChildren" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory" resultType="int">
+		SELECT COUNT(*) FROM T_PRODUCT_CATEGORY WHERE PARENT_ID = #{category_id}
+	</select>
+	 
+	<insert id="insertProductCategoryLanguage" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		INSERT INTO T_PRODUCT_CATEGORY_LANGUAGE (
+			CATEGORY_ID,
+			LANGUAGE,
+			TITLE
+		) VALUES (
+			#{category_id},
+			#{language},
+			#{title}
+		)
+	</insert>
+	
+	<select id="getProductCategoryLanguageList" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory" resultType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		SELECT CATEGORY_ID,
+			LANGUAGE,
+			TITLE
+		FROM T_PRODUCT_CATEGORY_LANGUAGE
+		WHERE CATEGORY_ID = #{category_id}
+	</select>
+	
+	<delete id="deleteProductCategoryLanguage" parameterType="com.ncomz.nshop.domain.admin.product.ProductCategory">
+		DELETE FROM T_PRODUCT_CATEGORY_LANGUAGE WHERE CATEGORY_ID = #{category_id}
+	</delete>
+	
+</mapper>

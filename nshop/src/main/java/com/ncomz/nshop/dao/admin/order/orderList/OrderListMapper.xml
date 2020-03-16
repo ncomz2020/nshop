@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+ <mapper namespace="com.ncomz.nshop.dao.admin.order.orderList.OrderListMapper">
+	
+	<select id="getEndDate" resultType="String">
+	/*com.ncomz.nshop.dao.admin.order.orderList.OrderListMapper*/
+	SELECT DATE_FORMAT(NOW(), '%Y-%m-%d')
+	</select>
+	
+	<select id="getStartDate" resultType="String">
+	/*com.ncomz.nshop.dao.admin.order.orderList.OrderListMapper*/
+	select DATE_FORMAT(DATE_ADD(NOW(),interval -1 week), '%Y-%m-%d')
+	</select>
+	
+	<select id="getOrderCount" resultType="int">
+		/* OrderListMapper.xml.getOrderCount */
+		SELECT COUNT(*) FROM (
+		<include refid="selectOrderList" />
+		) listA
+	</select>
+	
+	<select id="getOrderlist" resultType="com.ncomz.nshop.domain.admin.order.OrderInfoMgmt">
+		/* OrderListMapper.xml.getOrderlist */
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_header" />
+		<include refid="selectOrderList" />
+		 ORDER BY A.ORDER_SEQ DESC, B.STORE_ID, B.PROD_ORDER_SEQ
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_footer" />
+	</select>
+	
+	<select id="getCancelOrderlist" resultType="com.ncomz.nshop.domain.admin.order.OrderInfoMgmt">
+		/* OrderListMapper.xml.getCancelOrderlist */
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_header" />
+		<include refid="selectOrderList" />
+		 ORDER BY I.CHNG_APLY_DATETIME DESC, B.STORE_ID, B.PROD_ORDER_SEQ
+		<include refid="com.ncomz.nshop.dao.common.CommonMapper.paging_footer" />
+	</select>
+	
+	<select id="getOrderInfo" parameterType="com.ncomz.nshop.domain.admin.order.OrderInfoMgmt" resultType="com.ncomz.nshop.domain.admin.order.OrderInfoMgmt">
+		/* OrderListMapper.xml.getOrderInfo */
+		SELECT 
+		<include refid="selectColumn"/>
+			   , '2500' AS DLVY_AMT, A.ORDER_WAY_CD, A.PAYMENT_WAY_CD, A.MEMO AS DLVY_MEMO, A.USER_NM, A.MOBILE_NO AS R_MOBILE_NO, A.BASE_ADDR, A.DTL_ADDR, B.CNT, 
+		       F.DTL_NM AS PAYMENT_WAY_NAME,
+		       G.MOBILE_NO AS S_MOBILE_NO, G.EMAIL, G.USR_NM
+		  FROM T_ORDER_INFO A
+		  RIGHT OUTER JOIN (SELECT CNT, B1.*
+							  FROM (  SELECT COUNT(*) AS CNT,  store_id, MAX(ORDER_SEQ) AS ORDER_SEQ
+									    FROM T_PRODUCT_ORDER_REF
+							           WHERE ORDER_SEQ = #{order_seq}
+									   GROUP BY STORE_ID
+									 ) A1,
+								   ( SELECT *
+								       FROM T_PRODUCT_ORDER_REF
+								     ) B1
+							WHERE A1.STORE_ID = B1.STORE_ID
+							  AND B1.ORDER_SEQ = #{order_seq}
+							ORDER BY PROD_ORDER_SEQ
+						  ) B
+			ON A.ORDER_SEQ = B.ORDER_SEQ
+		  LEFT OUTER JOIN T_PRODUCT C
+		    ON B.PROD_ID = C.PROD_ID  
+		  LEFT OUTER JOIN (SELECT MIN(file_id) AS file_id, key_id
+						     FROM T_FILE_INFO
+					   	    GROUP BY key_id) D
+		    ON B.PROD_ID = D.key_id
+		  LEFT OUTER JOIN (SELECT DTL_NM, DTL_CD
+		  					 FROM T_COMMON_CODE 
+		  				    WHERE GRP_CD = 'ORDR_STAT') E
+		    ON B.ORDER_STS_CD = E.DTL_CD
+		  LEFT OUTER JOIN(SELECT DTL_NM, DTL_CD
+		  					FROM T_COMMON_CODE 
+		  				   WHERE GRP_CD = 'PAY' ) F
+	        ON A.PAYMENT_WAY_CD = F.DTL_CD
+		  LEFT OUTER JOIN T_USER G
+		    ON A.USER_ID = G.USR_ID		
+        LEFT OUTER JOIN T_DLVY_INFO H
+	            ON B.PROD_ORDER_SEQ = H.PROD_ORDER_SEQ    
+		 WHERE 1=1
+		   AND A.ORDER_SEQ=#{order_seq}
+		   <if test='store_id != null and store_id != ""'>
+		   	AND B.STORE_ID=#{store_id}
+		   </if>
+ 		 ORDER BY B.STORE_ID, B.PROD_ORDER_SEQ
+	</select>
+	
+	<insert id="insertOrderHist" parameterType="com.ncomz.nshop.domain.admin.order.OrderInfoMgmt">
+		/* OrderListMapper.xml.insertOrderHist */
+			INSERT INTO T_ORDER_HIST
+			(
+				STS_UPDATE_DATETIME
+				, ORDER_STS_CD
+				, PROD_ORDER_SEQ
+				, SELLER_MEMO
+			)
+			VALUES
+			<foreach collection="objectOrderSeqList" item="prod_order_seq" separator=",">
+			(
+				now()
+				, #{order_sts_cd}
+				, #{prod_order_seq}
+				, #{chng_dtl_rsn}
+			)
+		</foreach>
+	</insert>
+	 
+	<update id="statusModifyAction" parameterType="com.ncomz.nshop.domain.admin.order.OrderInfoMgmt">
+		/* OrderListMapper.xml.statusModifyAction */
+		UPDATE T_PRODUCT_ORDER_REF SET
+			ORDER_STS_CD = #{order_sts_cd}, UPDATE_USER_ID = #{store_id}, UPDATE_DATETIME = now()
+		WHERE PROD_ORDER_SEQ IN (
+			<foreach collection="objectOrderSeqList" item="prod_order_seq" separator=",">
+			 #{prod_order_seq}
+			</foreach>
+		)
+	</update>
+	
+	<update id="memoModifyAction" parameterType="com.ncomz.nshop.domain.admin.order.OrderInfoMgmt">
+		/* OrderListMapper.xml.memoModifyAction */
+		UPDATE T_PRODUCT_ORDER_REF SET
+			   STORE_ID_MEMO = #{store_id_memo}, UPDATE_USER_ID = #{store_id}, UPDATE_DATETIME = now()
+		 WHERE ORDER_SEQ=#{order_seq}
+		   AND STORE_ID=#{store_id}
+	</update>
+	
+	<sql id="stsCheck">
+		<if test='objectList != "" and objectList != null'> 
+			AND ORDER_STS_CD IN (
+					<foreach collection="objectList" item="order_sts_cd" separator=",">
+					 #{order_sts_cd}
+					</foreach>
+				 )
+		</if>
+		
+		<if test='objectList == "" or objectList == null'> 
+			AND ORDER_STS_CD IN ('')
+		</if>
+	</sql>
+	
+	<sql id="whereClause">		
+		<!-- 로그인 사용자 조회  -->
+		<if test='store_id != null and store_id != ""'>
+			AND B.store_id = #{store_id}
+		</if>	
+		
+		<!-- 주문/취소 목록에 따른 조건 -->
+		<if test='list_sts_cd != "C"'>
+			<!-- 주문기간 -->
+			<if test='start_date != null and start_date != ""'>
+				AND A.ORDER_DATETIME <![CDATA[>=]]> STR_TO_DATE(#{start_date}, '%Y-%m-%d')
+			</if>
+			<if test='end_date != null and end_date != ""'>
+				AND A.ORDER_DATETIME <![CDATA[<]]> DATE_ADD(STR_TO_DATE(#{end_date}, '%Y-%m-%d'), INTERVAL 1 DAY)
+			</if>	
+		</if>
+		
+		<if test='list_sts_cd == "C"'>
+			<!-- 신청기간 -->
+			<if test='start_date != null and start_date != ""'>
+				AND I.CHNG_APLY_DATETIME <![CDATA[>=]]> STR_TO_DATE(#{start_date}, '%Y-%m-%d')
+			</if>
+			<if test='end_date != null and end_date != ""'>
+				AND I.CHNG_APLY_DATETIME <![CDATA[<]]> DATE_ADD(STR_TO_DATE(#{end_date}, '%Y-%m-%d'), INTERVAL 1 DAY)
+			</if>	
+		</if>
+		
+		<!-- 주문상태 조건 -->
+		<include refid="stsCheck"/>
+		
+		<!-- 검색조건 -->
+		<if test='search_type != null and search_type != "" and search_txt != null and search_txt != ""'>
+			<choose>
+				<when test='search_type == "10"'>AND A.ORDER_NO LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "20"'>AND B.PROD_ORDER_NO LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "30"'>AND C.prod_name LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "40"'>AND A.USER_ID LIKE concat('%',#{search_txt},'%')</when>
+				<when test='search_type == "50"'>AND B.STORE_ID LIKE concat('%',#{search_txt},'%')</when>
+			</choose>
+		</if>
+	</sql>	
+	
+	<sql id="selectColumn">
+		A.ORDER_SEQ, A.ORDER_NO, A.ORDER_DATETIME, A.USER_ID, A.CREATE_DATETIME,
+		B.PROD_ORDER_SEQ, B.PROD_ORDER_NO, B.ORDER_STS_CD, B.ORDER_CNT, B.PAYMENT_AMT, B.ORDER_AMT, B.STORE_ID, B.STORE_NAME, B.STORE_ID_MEMO,
+		C.prod_name, 
+		D.key_id, D.file_id,
+		E.DTL_NM AS ORDER_STS_NAME,
+		H.WAYBIL_NO, ECHN_WAYBIL_NO
+	</sql>
+	
+	<sql id="selectOrderList">
+		SELECT 
+		<include refid="selectColumn"/>
+			   ,I.CHNG_APLY_DATETIME, I.CHNG_RSN, I.CHNG_DTL_RSN
+		  FROM T_ORDER_INFO A
+		 RIGHT OUTER JOIN T_PRODUCT_ORDER_REF B
+		    ON A.ORDER_SEQ = B.ORDER_SEQ
+		  LEFT OUTER JOIN T_PRODUCT C
+		    ON B.PROD_ID = C.PROD_ID  
+		  LEFT OUTER JOIN (SELECT MIN(file_id) AS file_id, key_id
+		  					 FROM T_FILE_INFO
+		 					GROUP BY key_id) D
+		    ON B.PROD_ID = D.key_id
+		  LEFT OUTER JOIN (SELECT DTL_NM, DTL_CD
+		  					 FROM T_COMMON_CODE  
+		  					WHERE GRP_CD = 'ORDR_STAT') E
+		    ON B.ORDER_STS_CD = E.DTL_CD
+          LEFT OUTER JOIN T_DLVY_INFO H
+	            ON B.PROD_ORDER_SEQ = H.PROD_ORDER_SEQ
+	      LEFT OUTER JOIN (SELECT PROD_ORDER_SEQ, CHNG_CD,CHNG_RSN, CHNG_DTL_RSN, CHNG_APLY_DATETIME
+					 	     FROM (SELECT A.dtl_nm AS CHNG_RSN, PROD_ORDER_SEQ, CHNG_CD,CHNG_DTL_RSN, CHNG_APLY_DATETIME
+			                         FROM T_COMMON_CODE A
+			                        INNER JOIN T_ANTI_ORDER B
+			                           ON A.dtl_cd = B.CHNG_RSN
+			                        WHERE (CASE WHEN B.CHNG_CD  = '100' THEN grp_cd = 'CANCEL'
+			                                     WHEN B.CHNG_CD  = '200' THEN grp_cd = 'CHNG'
+			                                     WHEN B.CHNG_CD  = '300' THEN grp_cd = 'REFUSE' END)
+						              AND A.dtl_cd =  B.CHNG_RSN 
+						            ORDER BY PROD_ORDER_SEQ DESC) A
+					 	   GROUP BY PROD_ORDER_SEQ ) I
+	            ON B.PROD_ORDER_SEQ = I.PROD_ORDER_SEQ   
+		 WHERE 1=1
+		<include refid="whereClause"/>
+	</sql>
+ </mapper>

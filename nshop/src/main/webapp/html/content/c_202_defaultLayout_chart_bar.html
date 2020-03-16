@@ -1,0 +1,316 @@
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->
+		
+		<!-- 실제 컨텐츠가 들어 가는 부분  -->
+		<div id="content" class="content">
+
+			
+			
+			<!-- location 및 페이지 타이틀 // 해당 부분을 공통으로 관리할지는 협의후 결정해야함 -->
+			<h2>
+				<span class="title">Bar Chart 예제 [http://www.chartjs.org ]2.4.0 사용 // MIT라이센스 //  개발시 www.chartjs.org 참고</span>
+				<div class="location">
+					<a href="#">Home</a>
+					>
+					<a href="#">샘플 페이지</a>
+					>
+					<a href="#">Chart 예제</a>
+					>
+					<a href="#">Bar 차트</a>
+				</div>
+			</h2>
+
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+
+				<div class="g_column w_1_1">
+					<h3>
+						<span class="title">Bar 차트 - 기본형</span>
+
+						<span class="ex"> (horizontalBar / 기본형)</span>
+					</h3>
+					<div class="unitBox chartBox barChartBox" style="min-height:300px;">
+						<canvas id="barChart01" style=""></canvas>
+						<div id="chardLegend01" class="chartLegend"></div><!-- 커스텀으로 제작된 legend 부분 -->
+							
+						<script>
+							//data 부분
+							var barData = {
+								labels: ["2016-10-11", "2016-10-12", "2016-10-13", "2016-10-14", "2016-10-15", "2016-10-16", "2016-10-17"],
+								datasets: [{
+									label: "기업회원",
+									data: [107, 120, 184, 198, 210, 259, 129],
+									backgroundColor: "rgba(49,141,231,0.6)",
+									borderColor : "rgba(49,141,231,1.0)"
+								},{
+									label: "개인회원",
+									data: [120, 184, 198, 107, 259, 120, 198],
+									backgroundColor: "rgba(243,73,80,0.7)",
+									borderColor : "rgba(243,73,80,1.0)"
+								}]
+							};
+							
+							//각종 세부 option부분
+							var options = {
+								legend: {display: false},
+								scales:{
+									xAxes: [{
+												gridLines: {display:false,},
+												categoryPercentage: 0.3,
+												ticks: {},
+												
+											}],
+									yAxes: [{
+												position: "left",
+												gridLines: {display:true, color:"rgba(0, 0, 0, 0.07)", drawTicks:false, tickMarkLength:10, zeroLineColor:"rgba(0, 0, 0, 0.2)", lineWidth:1},
+												ticks: {padding:20, min:0, }
+												
+											}]
+								},
+								// 커스텀 툴팁
+								tooltips: {
+									mode : 'label',
+									callbacks: {
+										title: function (tooltipItem, data) { 
+											var total01 = data.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index];
+											var total02 = data.datasets[tooltipItem[1].datasetIndex].data[tooltipItem[1].index];
+											return 'Total : ' + (total01 + total02) + '명 ';
+										},
+										label: function (tooltipItem, data) {
+											var amount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+											var tt = data.datasets[tooltipItem.datasetIndex].label;
+											return tt + ': '+ amount + '명 ';
+										}
+									},
+								},
+								
+								// 커스텀 라벨
+								legendCallback: function(chart) {
+									console.log(chart.data);
+									var text = [];
+									text.push('<ul>');
+									for (var i=0; i<chart.data.datasets.length; i++) {
+										text.push('<li>');
+										text.push('<span style="background-color:' + chart.data.datasets[i].borderColor + '"></span>' + chart.data.datasets[i].label + '');
+										text.push('</li>');
+									}
+									text.push('</ul>');
+									return text.join("");
+								}
+
+							};
+
+							var ctx = document.getElementById("barChart01").getContext("2d");
+							var myChart  = new Chart(ctx, {
+								type: 'bar',
+								data: barData,
+								options: options
+							});
+
+							document.getElementById('chardLegend01').innerHTML = myChart.generateLegend();							
+						</script>						
+					</div>
+				</div>
+
+			</div>
+			<!-- rowBox 반복단위 -->
+
+
+			
+
+
+
+			
+			<!-- rowBox 반복단위 -->
+			<div class="rowBox mgT30">
+
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">Bar 차트 - 가로형</span>
+
+						<span class="ex"> (horizontalBar / 기본형)</span>
+					</h3>
+					<div class="unitBox chartBox barChartBox" style="min-height:300px;">
+						<canvas id="barChart03" style=""></canvas>
+						<div id="chardLegend03" class="chartLegend"></div><!-- 커스텀으로 제작된 legend 부분 -->
+							
+						<script>
+							//data 부분
+							var barData = {
+								labels: ["2016-10-11", "2016-10-12", "2016-10-13", "2016-10-14", "2016-10-15", "2016-10-16", "2016-10-17"],
+								datasets: [{
+									label: "기업회원",
+									data: [107, 120, 184, 198, 210, 259, 129],
+									backgroundColor: "rgba(65,181,103,0.7)",
+									borderColor : "rgba(65,181,103,1.0)"
+								},{
+									label: "개인회원",
+									data: [120, 184, 198, 107, 259, 120, 198],
+									backgroundColor: "rgba(243,73,80,0.7)",
+									borderColor : "rgba(243,73,80,1.0)"
+								}]
+							};
+							
+							//각종 세부 option부분
+							var options = {
+								legend: {display: false},
+								scales:{
+									xAxes: [{
+												gridLines: {display:true, color:"rgba(0, 0, 0, 0.1)", drawTicks:false, tickMarkLength:30, zeroLineColor:"rgba(0, 0, 0, 0.3)", lineWidth:1},
+												stacked: false,
+												ticks: {display:false,},
+												
+											}],
+									yAxes: [{
+												gridLines: {display:false, },
+												stacked: false,
+												categoryPercentage: 0.5,
+												ticks: {autoSkip: false,},
+												
+											}]
+								},
+								// 커스텀 툴팁
+								tooltips: {
+									mode : 'label',
+									callbacks: {
+										title: function (tooltipItem, data) { 
+											var total01 = data.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index];
+											var total02 = data.datasets[tooltipItem[1].datasetIndex].data[tooltipItem[1].index];
+											return 'Total : ' + (total01 + total02) + '명 ';
+										},
+										label: function (tooltipItem, data) {
+											var amount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+											var tt = data.datasets[tooltipItem.datasetIndex].label;
+											return tt + ': '+ amount + '명 ';
+										}
+									},
+								},
+								
+								// 커스텀 라벨
+								legendCallback: function(chart) {
+									console.log(chart.data);
+									var text = [];
+									text.push('<ul>');
+									for (var i=0; i<chart.data.datasets.length; i++) {
+										text.push('<li>');
+										text.push('<span style="background-color:' + chart.data.datasets[i].borderColor + '"></span>' + chart.data.datasets[i].label + '');
+										text.push('</li>');
+									}
+									text.push('</ul>');
+									return text.join("");
+								}
+
+							};
+
+							var ctx = document.getElementById("barChart03").getContext("2d");
+							var myChart  = new Chart(ctx, {
+								type: 'horizontalBar',
+								data: barData,
+								options: options
+							});
+
+							document.getElementById('chardLegend03').innerHTML = myChart.generateLegend();
+							
+						</script>						
+					</div>
+				</div>
+
+
+
+				<div class="g_column w_2_1">
+					<h3>
+						<span class="title">Bar 차트 - 가로형</span>
+						<span class="ex"> (horizontalBar / stacked 형)</span>
+					</h3>
+					<div class="unitBox chartBox barChartBox" style="min-height:300px; padding-top:50px;">
+						<canvas id="barChart04" style=""></canvas>
+						<div id="chardLegend04" class="chartLegend"></div>
+							
+						<script>
+							//data 부분
+							var barData = {
+								labels: ["2016-10-11", "2016-10-12", "2016-10-13", "2016-10-14", "2016-10-15", "2016-10-16", "2016-10-17"],
+								datasets: [{
+									label: "기업회원",
+									data: [107, 120, 184, 198, 210, 259, 129],
+									backgroundColor: "rgba(49,141,231,0.6)",
+									borderColor : "rgba(49,141,231,1.0)"
+								},{
+									label: "개인회원",
+									data: [120, 184, 198, 107, 259, 120, 198],
+									backgroundColor: "rgba(76,79,98,0.3)",
+									borderColor : "rgba(76,79,98,0.5)"
+								}]
+							};
+							
+							//각종 세부 option부분
+							var options = {
+								legend: {display: false},
+								scales:{
+									xAxes: [{
+												gridLines: {display:true, color:"rgba(0, 0, 0, 0.1)", drawTicks:false, tickMarkLength:30, zeroLineColor:"rgba(0, 0, 0, 0.3)", lineWidth:1},
+												stacked: true,
+												ticks: {display:false,},
+												
+											}],
+									yAxes: [{
+												gridLines: {display:false, },
+												stacked: true,
+												categoryPercentage: 0.5,
+												ticks: {autoSkip: false,},										
+											}]
+								},
+								
+								// 커스텀 툴팁
+								tooltips: {
+									mode : 'label',
+									callbacks: {
+										title: function (tooltipItem, data) { 
+											var total01 = data.datasets[tooltipItem[0].datasetIndex].data[tooltipItem[0].index];
+											var total02 = data.datasets[tooltipItem[1].datasetIndex].data[tooltipItem[1].index];
+											return 'Total : ' + (total01 + total02) + '명 ';
+										},
+										label: function (tooltipItem, data) {
+											var amount = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
+											var tt = data.datasets[tooltipItem.datasetIndex].label;
+											return tt + ': '+ amount + '명 ';
+										}
+									},
+								},
+
+								// 커스텀 라벨
+								legendCallback: function(chart) {
+									console.log(chart.data);
+									var text = [];
+									text.push('<ul>');
+									for (var i=0; i<chart.data.datasets.length; i++) {
+										text.push('<li>');
+										text.push('<span style="background-color:' + chart.data.datasets[i].borderColor + '"></span>' + chart.data.datasets[i].label + '');
+										text.push('</li>');
+									}
+									text.push('</ul>');
+									return text.join("");
+								}
+								
+
+							};
+
+							var ctx = document.getElementById("barChart04").getContext("2d");
+							var myChart  = new Chart(ctx, {
+								type: 'horizontalBar',
+								data: barData,
+								options: options
+							});
+
+							document.getElementById('chardLegend04').innerHTML = myChart.generateLegend();
+							
+						</script>						
+					</div>
+				</div>
+
+
+
+			</div>
+			<!-- rowBox 반복단위 -->
+
+		</div>
+		<!--  ////////////// 실제 개별 페이지 개발자 작업영역 ////////////// -->

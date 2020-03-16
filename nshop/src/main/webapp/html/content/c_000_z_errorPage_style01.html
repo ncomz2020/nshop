@@ -1,0 +1,65 @@
+<!--  default layout 구조 -->
+<div class="amb_layout_common amb_admin_layout_temp_01"><!-- class명 amb_layout_common :필수  / amb_admin_layout_temp_01:필수(사이트 레이아웃 결정) -->
+
+	<div class="errorPage">
+		<h1>
+			<img src="../img/error.png" />
+			<div class="tit">
+				죄송합니다<br/>
+				선택한 페이지를 찾을 수 없습니다.
+			</div>
+		</h1>
+		<div class="detail">
+			요청 하신 페이지가 존재하지 않습니다.<br/>
+			잠시후 다시 접속해 주시기 바랍니다.
+
+			<!-- 버튼이 필요한 경우는 이렇게 추가 -->
+			<div class="mgT30">
+				<a href="#" class="amb_btnstyle gray middle">이전페이지</a>
+				<a href="#" class="amb_btnstyle blue middle">메인으로</a>
+			</div>
+			<!-- // 버튼이 필요한 경우는 이렇게 추가 -->
+		</div>
+			
+		<div class="copy">
+			Copyright @2016 Ncomz All Rights Reserved
+		</div>
+	</div>
+
+	<script type="text/javascript">
+		// 브라우저 센터 정렬을 위해
+		$(document).ready( function(){
+			var _this = $('.errorPage');
+			var thisWidth = _this.outerWidth();
+			var thisHeight = _this.outerHeight();
+			var marginLeftValue = thisWidth/2;
+			var marginTopValue = thisHeight/2;
+
+			//fullPageError
+			if ($('body').hasClass('fullPage'))
+			{
+				_this.parent('.amb_admin_layout_temp_01').css('height','100%');
+				_this.css({'margin-left': - marginLeftValue + 'px' , 'margin-top': - marginTopValue + 'px'});
+			} 
+			
+			//insidePageError
+			else 			
+			{				
+				//자신의 상위에 #content 가 있을시
+				if (_this.parents('#content').hasClass('content'))
+				{
+					_this.parents('#content').addClass('insidePageError');
+					_this.parent('.amb_admin_layout_temp_01').removeClass('amb_layout_common amb_admin_layout_temp_01');
+				} 
+				
+				//자신의 상위에 #content 가 없을시
+				else 
+				{
+					_this.parent('.amb_admin_layout_temp_01').addClass('content insidePageError').attr('id', 'content');
+					_this.parent('.amb_admin_layout_temp_01').removeClass('amb_layout_common amb_admin_layout_temp_01');
+				}			    
+			}			
+		});		
+	</script>
+
+</div>

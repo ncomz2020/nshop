@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+ <!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://www.mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ncomz.nshop.dao.admin.common.code.CodeMapper">
+
+	<select id="getCodeList" parameterType="com.ncomz.nshop.domain.admin.common.Code" resultType="com.ncomz.nshop.domain.admin.common.Code">
+		SELECT C.GRP_CD,
+			C.DTL_CD,
+			CASE WHEN IFNULL(L.DTL_NM, '') = '' THEN C.DTL_NM ELSE L.DTL_NM END AS DTL_NM,
+			C.ALGN_ORD,
+			C.DEPTH,
+			C.USE_YN
+		FROM T_COMMON_CODE C
+		LEFT OUTER JOIN T_COMMON_CODE_LANGUAGE L ON C.GRP_CD = L.GRP_CD AND C.DTL_CD = L.DTL_CD AND C.DEPTH = L.DEPTH AND LANGUAGE = #{language}
+		ORDER BY DEPTH ASC, ALGN_ORD ASC
+	</select>
+	
+	<insert id="insertCode" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		INSERT INTO T_COMMON_CODE (
+			GRP_CD,
+			DTL_CD,
+			DTL_NM,
+			ALGN_ORD,
+			USE_YN,
+			CREATE_USER_ID,
+			CREATE_DATETIME,
+			UPDATE_USER_ID,
+			UPDATE_DATETIME,
+			DEPTH
+		) VALUES (
+			#{grp_cd},
+			#{dtl_cd},
+			#{dtl_nm},
+			(SELECT A.ALGN_ORD FROM (SELECT IFNULL(MAX(ALGN_ORD), 0) + 1 AS ALGN_ORD FROM T_COMMON_CODE WHERE GRP_CD = #{grp_cd}) A),
+			'Y',
+			#{create_user_id},
+			now(),
+			#{create_user_id},
+			now(),
+			#{depth}
+		)
+	</insert>
+
+	<select id="getCode" parameterType="com.ncomz.nshop.domain.admin.common.Code" resultType="com.ncomz.nshop.domain.admin.common.Code">
+		SELECT
+			GRP_CD,
+			DTL_CD,
+			DTL_NM,
+			ALGN_ORD,
+			DEPTH,
+			USE_YN
+		FROM T_COMMON_CODE
+		WHERE GRP_CD = #{grp_cd}
+			AND DEPTH = #{depth}
+			AND DTL_CD = #{dtl_cd}
+	</select>
+
+	<update id="updateCodeInfo" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		UPDATE T_COMMON_CODE SET DTL_NM = #{dtl_nm}
+		WHERE GRP_CD = #{grp_cd} AND DEPTH = #{depth}
+		AND DTL_CD = #{dtl_cd}
+	</update>
+
+	<update id="updateOldDisplayOrders" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		UPDATE T_COMMON_CODE SET ALGN_ORD = ALGN_ORD - 1
+		WHERE GRP_CD = #{grp_cd}
+			AND DEPTH = #{depth}
+			AND ALGN_ORD > #{algn_ord}
+	</update>
+
+	<update id="updateNewDisplayOrders" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		UPDATE T_COMMON_CODE SET ALGN_ORD = ALGN_ORD + 1
+		WHERE GRP_CD = #{grp_cd}
+			AND DEPTH = #{depth}
+			AND ALGN_ORD >= #{algn_ord}
+	</update>
+
+	<update id="updateCodePosition" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		UPDATE T_COMMON_CODE SET 
+			ALGN_ORD = #{algn_ord}
+		WHERE GRP_CD = #{grp_cd}
+			AND DEPTH = #{depth}
+			AND DTL_CD = #{dtl_cd}
+	</update>
+
+	<delete id="deleteCodeInfo" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		DELETE FROM T_COMMON_CODE
+		WHERE GRP_CD = #{grp_cd}
+			AND DEPTH = #{depth}
+			AND DTL_CD = #{dtl_cd}
+	</delete>
+	
+	<select id="checkDuplicate" parameterType="com.ncomz.nshop.domain.admin.common.Code" resultType="int">
+		SELECT COUNT(*) FROM T_COMMON_CODE WHERE GRP_CD = #{grp_cd} AND DEPTH = #{depth} AND DTL_CD = #{dtl_cd}
+	</select>
+	
+	<select id="getChildrenCount" parameterType="com.ncomz.nshop.domain.admin.common.Code" resultType="int">
+		SELECT COUNT(*) FROM T_COMMON_CODE WHERE GRP_CD = #{dtl_cd} AND DEPTH = #{depth} + 1
+	</select>
+	
+	<update id="updateCodeUseYn" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		UPDATE T_COMMON_CODE SET USE_YN = #{use_yn}
+		WHERE GRP_CD = #{grp_cd}
+			AND DEPTH = #{depth}
+			AND DTL_CD = #{dtl_cd}
+	</update>
+	
+	<select id="getGroupCodeList" parameterType="String" resultType="com.ncomz.nshop.domain.admin.common.Code">
+		SELECT GRP_CD,
+			DTL_CD,
+			DTL_NM,
+			ALGN_ORD,
+			DEPTH,
+			USE_YN
+		FROM T_COMMON_CODE
+		WHERE DEPTH = 3
+			AND USE_YN = 'Y'
+			AND GRP_CD = #{grp_cd}
+		ORDER BY ALGN_ORD ASC
+	</select>
+	
+	<insert id="insertCodeLanguage" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		INSERT INTO T_COMMON_CODE_LANGUAGE (
+			GRP_CD,
+			DEPTH,
+			DTL_CD,
+			LANGUAGE,
+			DTL_NM
+		) VALUES (
+			#{grp_cd},
+			#{depth},
+			#{dtl_cd},
+			#{language},
+			#{dtl_nm}
+		)
+	</insert>
+	
+	<delete id="deleteCodeLanguage" parameterType="com.ncomz.nshop.domain.admin.common.Code">
+		DELETE FROM T_COMMON_CODE_LANGUAGE
+		WHERE GRP_CD = #{grp_cd} AND DEPTH = #{depth} AND DTL_CD = #{dtl_cd}
+	</delete>
+	
+	<select id="getCodeLanguageList" parameterType="com.ncomz.nshop.domain.admin.common.Code" resultType="com.ncomz.nshop.domain.admin.common.Code">
+		SELECT GRP_CD,
+			DEPTH,
+			DTL_CD,
+			LANGUAGE,
+			DTL_NM
+		FROM T_COMMON_CODE_LANGUAGE
+		WHERE GRP_CD = #{grp_cd} AND DEPTH = #{depth} AND DTL_CD = #{dtl_cd}
+	</select>
+
+</mapper>
