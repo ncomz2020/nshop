@@ -4,9 +4,9 @@
 	<comment>common configuration</comment>
 	<entry key="jdbc.driverClass.master">com.mysql.jdbc.Driver</entry>
 	<!-- <entry key="jdbc.url.master">jdbc:mysql://61.40.220.161:3306/nshop?characterEncoding=utf-8</entry> -->
-	<entry key="jdbc.url.master">jdbc:mysql://192.168.10.161:3306/nshop?characterEncoding=utf-8</entry>
-	<entry key="jdbc.username.master">nshop</entry>
-	<entry key="jdbc.password.master">nshop</entry>
+	<entry key="jdbc.url.master">jdbc:mysql://ncomzsqldev.mysql.database.azure.com:3306/nshop?characterEncoding=utf-8&amp;serverTimezone=UTC&amp;requireSSL=false&amp;useSSL=true</entry>
+	<entry key="jdbc.username.master">ncomzadmin@ncomzsqldev</entry>
+	<entry key="jdbc.password.master">nc120227!</entry>
 	<entry key="fileDirectoryPath">/home/nshop</entry>
 	
 	<!-- mail setting -->
