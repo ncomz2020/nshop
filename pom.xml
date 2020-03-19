@@ -452,6 +452,10 @@
                     <!-- <keystoreType>pkcs12</keystoreType> -->
                     <!-- <contextReloadable>true</contextReloadable> -->
                     <JAVA_OPTS>-Xms256m -Xmx512m -XX:MaxPermSize=256m</JAVA_OPTS>
+        			<server>tomcatserver</server>
+			        <username>admin</username>
+			        <password>admin</password>
+                	<url>http://localhost:8080</url>
                 </configuration>
             </plugin>
         </plugins>
